@@ -1,0 +1,55 @@
+{
+  "platform_version": "v0.4.5.2-final",
+  "artifact_policy": "explicit_allowlist",
+  "qwen_validation": {
+    "provider": "qwen",
+    "model": "qwen3.8-flash",
+    "runs": [
+      "CL-20260915-031",
+      "CL-20260915-032"
+    ],
+    "batches": [
+      "BATCH-20260915-016"
+    ],
+    "run_validation": {
+      "CL-20260915-031": {
+        "provider": "qwen",
+        "model": "qwen3.8-flash",
+        "status": "COMPLETED",
+        "case_id": "CASE_MERGE_001",
+        "diff": "NEW_FAIL",
+        "severity": "HIGH",
+        "boundary_fact_count": 3,
+        "completed_stages": [
+          "AI Issue Interpretation",
+          "AI Scenario Factor Plan",
+          "Boundary Detection",
+          "Candidate Filter",
+          "Coarse Exploration — Attempt 1",
+          "Fine Generalization",
+          "Metric Sensitivity Analysis",
+          "Parameter Space Generation"
+        ]
+      },
+      "CL-20260915-032": {
+        "provider": "qwen",
+        "model": "qwen3.8-flash",
+        "status": "COMPLETED",
+        "case_id": "CASE_BRAKE_001",
+        "diff": "REPEATED_FAIL",
+        "severity": "MEDIUM",
+        "boundary_fact_count": 3,
+        "completed_stages": [
+          "AI Issue Interpretation",
+          "AI Scenario Factor Plan",
+          "Boundary Detection",
+          "Candidate Filter",
+          "Coarse Exploration — Attempt 1",
+          "Fine Generalization",
+          "Metric Sensitivity Analysis",
+          "Parameter Space Generation"
+        ]
+      }
+    }
+  }
+}

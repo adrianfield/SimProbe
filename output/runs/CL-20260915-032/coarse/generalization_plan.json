@@ -1,0 +1,26 @@
+{
+  "scenario_type": "lead_brake",
+  "parameter_ranges": {
+    "ego_speed_kph": [
+      85.0,
+      100.0,
+      115.0
+    ],
+    "initial_gap_m": [
+      10.0,
+      32.0,
+      50.0
+    ],
+    "lead_decel_mps2": [
+      -6.5,
+      -5.0,
+      -3.5
+    ],
+    "lead_speed_kph": [
+      55.0,
+      75.0,
+      95.0
+    ]
+  },
+  "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+}

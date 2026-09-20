@@ -1,0 +1,726 @@
+{
+  "status": "DETECTED",
+  "method": "axis_aligned_adjacent_state_change",
+  "parameters": {
+    "rear_speed_kph": {
+      "min": 90.0,
+      "max": 102.5,
+      "coarse_min": 90.0,
+      "coarse_max": 140.0,
+      "seed_value": 115.0,
+      "source": "local_grid_cell"
+    },
+    "rear_distance_m": {
+      "min": 15.0,
+      "max": 35.0,
+      "coarse_min": 15.0,
+      "coarse_max": 55.0,
+      "seed_value": 35.0,
+      "source": "anchor_transition_interval"
+    },
+    "ego_speed_kph": {
+      "min": 80.0,
+      "max": 85.0,
+      "coarse_min": 65.0,
+      "coarse_max": 85.0,
+      "seed_value": 75.0,
+      "source": "local_grid_cell"
+    },
+    "merge_time_s": {
+      "min": 2.5,
+      "max": 3.5,
+      "coarse_min": 2.0,
+      "coarse_max": 4.0,
+      "seed_value": 3.0,
+      "source": "local_grid_cell"
+    }
+  },
+  "transition_pairs": [
+    {
+      "case_a": "CASE_MERGE_001_C064",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C067",
+      "result_b": "PASS",
+      "changed_parameter": "rear_distance_m",
+      "interval": {
+        "min": 15.0,
+        "max": 35.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 20.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.641755
+      },
+      "anchor_score": 311.065921
+    },
+    {
+      "case_a": "CASE_MERGE_001_C040",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C043",
+      "result_b": "PASS",
+      "changed_parameter": "rear_distance_m",
+      "interval": {
+        "min": 35.0,
+        "max": 55.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.559017,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 20.0,
+        "seed_proximity": 0.64143,
+        "metric_boundary_evidence": 0.562717
+      },
+      "anchor_score": 311.020736
+    },
+    {
+      "case_a": "CASE_MERGE_001_C055",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C058",
+      "result_b": "PASS",
+      "changed_parameter": "rear_distance_m",
+      "interval": {
+        "min": 15.0,
+        "max": 35.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 2.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.901388,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 20.0,
+        "seed_proximity": 0.525932,
+        "metric_boundary_evidence": 0.641755
+      },
+      "anchor_score": 310.838436
+    },
+    {
+      "case_a": "CASE_MERGE_001_C073",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C076",
+      "result_b": "PASS",
+      "changed_parameter": "rear_distance_m",
+      "interval": {
+        "min": 15.0,
+        "max": 35.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 4.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.901388,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 20.0,
+        "seed_proximity": 0.525932,
+        "metric_boundary_evidence": 0.641755
+      },
+      "anchor_score": 310.838436
+    },
+    {
+      "case_a": "CASE_MERGE_001_C040",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C067",
+      "result_b": "PASS",
+      "changed_parameter": "ego_speed_kph",
+      "interval": {
+        "min": 75.0,
+        "max": 85.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 35.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.559017,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 10.0,
+        "seed_proximity": 0.64143,
+        "metric_boundary_evidence": 0.510852
+      },
+      "anchor_score": 310.761408
+    },
+    {
+      "case_a": "CASE_MERGE_001_C031",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C034",
+      "result_b": "PASS",
+      "changed_parameter": "rear_distance_m",
+      "interval": {
+        "min": 35.0,
+        "max": 55.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 2.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 20.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.562717
+      },
+      "anchor_score": 310.670731
+    },
+    {
+      "case_a": "CASE_MERGE_001_C049",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C052",
+      "result_b": "PASS",
+      "changed_parameter": "rear_distance_m",
+      "interval": {
+        "min": 35.0,
+        "max": 55.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 4.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 20.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.562717
+      },
+      "anchor_score": 310.670731
+    },
+    {
+      "case_a": "CASE_MERGE_001_C043",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C044",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 55.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.559017,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.64143,
+        "metric_boundary_evidence": 0.486901
+      },
+      "anchor_score": 310.641656
+    },
+    {
+      "case_a": "CASE_MERGE_001_C031",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C058",
+      "result_b": "PASS",
+      "changed_parameter": "ego_speed_kph",
+      "interval": {
+        "min": 75.0,
+        "max": 85.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 35.0,
+        "merge_time_s": 2.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 10.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.510852
+      },
+      "anchor_score": 310.411403
+    },
+    {
+      "case_a": "CASE_MERGE_001_C049",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C076",
+      "result_b": "PASS",
+      "changed_parameter": "ego_speed_kph",
+      "interval": {
+        "min": 75.0,
+        "max": 85.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 35.0,
+        "merge_time_s": 4.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 10.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.510852
+      },
+      "anchor_score": 310.411403
+    },
+    {
+      "case_a": "CASE_MERGE_001_C067",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C068",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 35.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.559017,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.64143,
+        "metric_boundary_evidence": 0.427769
+      },
+      "anchor_score": 310.345994
+    },
+    {
+      "case_a": "CASE_MERGE_001_C016",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C043",
+      "result_b": "PASS",
+      "changed_parameter": "ego_speed_kph",
+      "interval": {
+        "min": 65.0,
+        "max": 75.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 55.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 10.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.486901
+      },
+      "anchor_score": 310.291651
+    },
+    {
+      "case_a": "CASE_MERGE_001_C034",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C035",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 55.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 2.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.486901
+      },
+      "anchor_score": 310.291651
+    },
+    {
+      "case_a": "CASE_MERGE_001_C052",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C053",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 55.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 4.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.486901
+      },
+      "anchor_score": 310.291651
+    },
+    {
+      "case_a": "CASE_MERGE_001_C007",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C034",
+      "result_b": "PASS",
+      "changed_parameter": "ego_speed_kph",
+      "interval": {
+        "min": 65.0,
+        "max": 75.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 55.0,
+        "merge_time_s": 2.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.901388,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 10.0,
+        "seed_proximity": 0.525932,
+        "metric_boundary_evidence": 0.486901
+      },
+      "anchor_score": 310.064166
+    },
+    {
+      "case_a": "CASE_MERGE_001_C025",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C052",
+      "result_b": "PASS",
+      "changed_parameter": "ego_speed_kph",
+      "interval": {
+        "min": 65.0,
+        "max": 75.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 55.0,
+        "merge_time_s": 4.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.901388,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 10.0,
+        "seed_proximity": 0.525932,
+        "metric_boundary_evidence": 0.486901
+      },
+      "anchor_score": 310.064166
+    },
+    {
+      "case_a": "CASE_MERGE_001_C058",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C059",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 35.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 2.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.427769
+      },
+      "anchor_score": 309.995989
+    },
+    {
+      "case_a": "CASE_MERGE_001_C076",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C077",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 35.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 4.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.427769
+      },
+      "anchor_score": 309.995989
+    },
+    {
+      "case_a": "CASE_MERGE_001_C070",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C071",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 55.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.35214
+      },
+      "anchor_score": 309.617847
+    },
+    {
+      "case_a": "CASE_MERGE_001_C061",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C062",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 55.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 2.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.901388,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.525932,
+        "metric_boundary_evidence": 0.35214
+      },
+      "anchor_score": 309.390362
+    }
+  ],
+  "transition_pair_count": 21,
+  "selected_transition_pairs": [
+    {
+      "case_a": "CASE_MERGE_001_C064",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C067",
+      "result_b": "PASS",
+      "changed_parameter": "rear_distance_m",
+      "interval": {
+        "min": 15.0,
+        "max": 35.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.75,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 20.0,
+        "seed_proximity": 0.571429,
+        "metric_boundary_evidence": 0.641755
+      },
+      "anchor_score": 311.065921,
+      "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+    },
+    {
+      "case_a": "CASE_MERGE_001_C040",
+      "result_a": "FAIL",
+      "case_b": "CASE_MERGE_001_C067",
+      "result_b": "PASS",
+      "changed_parameter": "ego_speed_kph",
+      "interval": {
+        "min": 75.0,
+        "max": 85.0
+      },
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 35.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.559017,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 10.0,
+        "seed_proximity": 0.64143,
+        "metric_boundary_evidence": 0.510852
+      },
+      "anchor_score": 310.761408,
+      "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+    },
+    {
+      "case_a": "CASE_MERGE_001_C043",
+      "result_a": "PASS",
+      "case_b": "CASE_MERGE_001_C044",
+      "result_b": "FAIL",
+      "changed_parameter": "rear_speed_kph",
+      "interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "fixed_parameters": {
+        "rear_distance_m": 55.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 3.0
+      },
+      "severity_delta": 2,
+      "priority": 3,
+      "distance_to_seed": 0.559017,
+      "score_components": {
+        "state_transition_value": 3,
+        "transition_type": "PASS↔FAIL",
+        "normalized_parameter_interval": 0.5,
+        "interval_width": 25.0,
+        "seed_proximity": 0.64143,
+        "metric_boundary_evidence": 0.486901
+      },
+      "anchor_score": 310.641656,
+      "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+    }
+  ],
+  "anchor_pair": {
+    "case_a": "CASE_MERGE_001_C064",
+    "result_a": "FAIL",
+    "case_b": "CASE_MERGE_001_C067",
+    "result_b": "PASS",
+    "changed_parameter": "rear_distance_m",
+    "interval": {
+      "min": 15.0,
+      "max": 35.0
+    },
+    "fixed_parameters": {
+      "rear_speed_kph": 90.0,
+      "ego_speed_kph": 85.0,
+      "merge_time_s": 3.0
+    },
+    "severity_delta": 2,
+    "priority": 3,
+    "distance_to_seed": 0.75,
+    "score_components": {
+      "state_transition_value": 3,
+      "transition_type": "PASS↔FAIL",
+      "normalized_parameter_interval": 0.5,
+      "interval_width": 20.0,
+      "seed_proximity": 0.571429,
+      "metric_boundary_evidence": 0.641755
+    },
+    "anchor_score": 311.065921,
+    "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+  },
+  "boundary_evidence_score": 0.91,
+  "observed_states": [
+    "PASS",
+    "FAIL"
+  ],
+  "evaluated_cases": 81,
+  "reason": "Transition pairs use state span, normalized interval, seed proximity and metric-threshold evidence; selected anchors prioritize parameter-axis diversity."
+}

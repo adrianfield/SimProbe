@@ -1,0 +1,26 @@
+{
+  "scenario_type": "highway_merge",
+  "parameter_ranges": {
+    "ego_speed_kph": [
+      65.0,
+      75.0,
+      85.0
+    ],
+    "merge_time_s": [
+      2.0,
+      3.0,
+      4.0
+    ],
+    "rear_distance_m": [
+      15.0,
+      35.0,
+      55.0
+    ],
+    "rear_speed_kph": [
+      90.0,
+      115.0,
+      140.0
+    ]
+  },
+  "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+}

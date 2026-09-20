@@ -1,0 +1,11 @@
+.env
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.streamlit/secrets.toml
+playwright-report/
+test-results/
+output/final_acceptance_qwen/
+acceptance/**/screenshots/tmp/
+acceptance/**/playwright-temp/

@@ -1,0 +1,1199 @@
+[
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F001",
+    "generated_case_id": "CASE_MERGE_001_F001",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 17.5,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F002",
+    "generated_case_id": "CASE_MERGE_001_F002",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 20.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F003",
+    "generated_case_id": "CASE_MERGE_001_F003",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 22.5,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F004",
+    "generated_case_id": "CASE_MERGE_001_F004",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 25.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F005",
+    "generated_case_id": "CASE_MERGE_001_F005",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 27.5,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F006",
+    "generated_case_id": "CASE_MERGE_001_F006",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 30.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F007",
+    "generated_case_id": "CASE_MERGE_001_F007",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 32.5,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F008",
+    "generated_case_id": "CASE_MERGE_001_F008",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 76.25,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F009",
+    "generated_case_id": "CASE_MERGE_001_F009",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 77.5,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F010",
+    "generated_case_id": "CASE_MERGE_001_F010",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 78.75,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F011",
+    "generated_case_id": "CASE_MERGE_001_F011",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 80.0,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F012",
+    "generated_case_id": "CASE_MERGE_001_F012",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 81.25,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F013",
+    "generated_case_id": "CASE_MERGE_001_F013",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 82.5,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F014",
+    "generated_case_id": "CASE_MERGE_001_F014",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 83.75,
+      "rear_speed_kph": 90.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F015",
+    "generated_case_id": "CASE_MERGE_001_F015",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 93.125,
+      "rear_distance_m": 55.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F016",
+    "generated_case_id": "CASE_MERGE_001_F016",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 96.25,
+      "rear_distance_m": 55.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F017",
+    "generated_case_id": "CASE_MERGE_001_F017",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 99.375,
+      "rear_distance_m": 55.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F018",
+    "generated_case_id": "CASE_MERGE_001_F018",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 102.5,
+      "rear_distance_m": 55.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F019",
+    "generated_case_id": "CASE_MERGE_001_F019",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 105.625,
+      "rear_distance_m": 55.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F020",
+    "generated_case_id": "CASE_MERGE_001_F020",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 108.75,
+      "rear_distance_m": 55.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001_F021",
+    "generated_case_id": "CASE_MERGE_001_F021",
+    "seed_case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "rear_vehicle_on_target_lane": {
+        "canonical_actor_id": "rear_vehicle_on_target_lane",
+        "display_name_zh": "目标车道后车",
+        "type": "vehicle",
+        "role": "target_lane_rear"
+      }
+    },
+    "road": {
+      "road_ref": "highway_merge_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 111.875,
+      "rear_distance_m": 55.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "merge_time_s": {
+        "min": 1.0,
+        "max": 8.0,
+        "unit": "s"
+      },
+      "rear_distance_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "rear_speed_kph": {
+        "min": 0.0,
+        "max": 200.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_MERGE_001"
+    }
+  }
+]

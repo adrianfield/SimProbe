@@ -1,0 +1,1199 @@
+[
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F001",
+    "generated_case_id": "CASE_BRAKE_001_F001",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 34.25,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F002",
+    "generated_case_id": "CASE_BRAKE_001_F002",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 36.5,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F003",
+    "generated_case_id": "CASE_BRAKE_001_F003",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 38.75,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F004",
+    "generated_case_id": "CASE_BRAKE_001_F004",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 41.0,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F005",
+    "generated_case_id": "CASE_BRAKE_001_F005",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 43.25,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F006",
+    "generated_case_id": "CASE_BRAKE_001_F006",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 45.5,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F007",
+    "generated_case_id": "CASE_BRAKE_001_F007",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 47.75,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F008",
+    "generated_case_id": "CASE_BRAKE_001_F008",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -4.8125
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F009",
+    "generated_case_id": "CASE_BRAKE_001_F009",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -4.625
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F010",
+    "generated_case_id": "CASE_BRAKE_001_F010",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -4.4375
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F011",
+    "generated_case_id": "CASE_BRAKE_001_F011",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -4.25
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F012",
+    "generated_case_id": "CASE_BRAKE_001_F012",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -4.0625
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F013",
+    "generated_case_id": "CASE_BRAKE_001_F013",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -3.875
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F014",
+    "generated_case_id": "CASE_BRAKE_001_F014",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 85.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -3.6875
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F015",
+    "generated_case_id": "CASE_BRAKE_001_F015",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 86.875,
+      "lead_speed_kph": 95.0,
+      "initial_gap_m": 10.0,
+      "lead_decel_mps2": -3.5
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F016",
+    "generated_case_id": "CASE_BRAKE_001_F016",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 88.75,
+      "lead_speed_kph": 95.0,
+      "initial_gap_m": 10.0,
+      "lead_decel_mps2": -3.5
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F017",
+    "generated_case_id": "CASE_BRAKE_001_F017",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 90.625,
+      "lead_speed_kph": 95.0,
+      "initial_gap_m": 10.0,
+      "lead_decel_mps2": -3.5
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F018",
+    "generated_case_id": "CASE_BRAKE_001_F018",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 92.5,
+      "lead_speed_kph": 95.0,
+      "initial_gap_m": 10.0,
+      "lead_decel_mps2": -3.5
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F019",
+    "generated_case_id": "CASE_BRAKE_001_F019",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 94.375,
+      "lead_speed_kph": 95.0,
+      "initial_gap_m": 10.0,
+      "lead_decel_mps2": -3.5
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F020",
+    "generated_case_id": "CASE_BRAKE_001_F020",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 96.25,
+      "lead_speed_kph": 95.0,
+      "initial_gap_m": 10.0,
+      "lead_decel_mps2": -3.5
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001_F021",
+    "generated_case_id": "CASE_BRAKE_001_F021",
+    "seed_case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "round_name": "fine",
+    "actors": {
+      "ego_vehicle": {
+        "canonical_actor_id": "ego_vehicle",
+        "display_name_zh": "自车",
+        "type": "vehicle",
+        "role": "ego"
+      },
+      "lead_vehicle": {
+        "canonical_actor_id": "lead_vehicle",
+        "display_name_zh": "前车",
+        "type": "vehicle",
+        "role": "lead"
+      }
+    },
+    "road": {
+      "road_ref": "highway_follow_01"
+    },
+    "parameters": {
+      "ego_speed_kph": 98.125,
+      "lead_speed_kph": 95.0,
+      "initial_gap_m": 10.0,
+      "lead_decel_mps2": -3.5
+    },
+    "constraints": {
+      "ego_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      },
+      "initial_gap_m": {
+        "min": 3.0,
+        "max": 150.0,
+        "unit": "m"
+      },
+      "lead_decel_mps2": {
+        "min": -10.0,
+        "max": 0.0,
+        "unit": "m/s²"
+      },
+      "lead_speed_kph": {
+        "min": 0.0,
+        "max": 180.0,
+        "unit": "km/h"
+      }
+    },
+    "provenance": {
+      "source": "boundary_refinement",
+      "source_case_id": "CASE_BRAKE_001"
+    }
+  }
+]

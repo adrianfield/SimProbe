@@ -1,0 +1,3645 @@
+{
+  "schema_version": "2.0",
+  "run_id": "CL-20260915-031",
+  "started_at": "2026-09-15T23:06:22+08:00",
+  "backend": "LocalKinematicSimulator + EvaluationEngine (local surrogate)",
+  "llm_provider": "qwen",
+  "llm_model": "qwen3.8-flash",
+  "source_task_context": {
+    "case_id": "CASE_MERGE_001",
+    "diff": "NEW_FAIL",
+    "severity": "HIGH",
+    "version_prev": "V1.8.2",
+    "version_curr": "V1.8.3",
+    "prev_result": "PASS",
+    "curr_result": "FAIL"
+  },
+  "candidate_filter": {
+    "method": "deterministic_priority_table",
+    "selected_case_id": "CASE_MERGE_001",
+    "priority": 0,
+    "reason": "确定性候选规则命中：当前版本新增失败，且严重度为高。 priority=0。"
+  },
+  "issue_prioritization": {
+    "source": "deterministic_candidate_filter",
+    "decisions": [
+      {
+        "case_id": "CASE_MERGE_001",
+        "priority": 0,
+        "should_expand": true,
+        "reason": "确定性候选规则命中：当前版本新增失败，且严重度为高。 priority=0。"
+      }
+    ]
+  },
+  "ai_issue_interpretation": {
+    "scenario_type": "highway_merge",
+    "actors": [
+      "ego_vehicle",
+      "rear_vehicle_on_target_lane"
+    ],
+    "interaction_summary": "在本地 surrogate 数据中观察到，自车执行高速汇入操作时，目标车道后车在汇入窗口内持续接近。数据显示最小碰撞时间为 1.32 s，最小间距为 5.60 m，且未发生物理接触。当前观察仅限于该 Local surrogate 场景下的纵向间距变化趋势，建议通过更高保真度的仿真进行进一步验证。",
+    "candidate_factors": [
+      "ego_speed_kph",
+      "merge_time_s",
+      "rear_distance_m",
+      "rear_speed_kph"
+    ],
+    "risk_hypothesis": "在当前局部代理模型中，汇入窗口内的纵向间距缩小趋势可能导致安全裕度降低。"
+  },
+  "ai_factor_plan": {
+    "scenario_type": "highway_merge",
+    "factors": [
+      {
+        "name": "rear_distance_m",
+        "priority": "high",
+        "reason": "在当前局部代理数据中，后向间距直接决定纵向安全裕度。"
+      },
+      {
+        "name": "merge_time_s",
+        "priority": "medium",
+        "reason": "汇入时长影响风险窗口的持续时间及重叠阶段的时间点。"
+      },
+      {
+        "name": "rear_speed_kph",
+        "priority": "medium",
+        "reason": "后车速度改变相对接近速率，进而影响最小间距趋势。"
+      },
+      {
+        "name": "ego_speed_kph",
+        "priority": "low",
+        "reason": "自车速度在当前观察中与后车间距变化的关联弱于其他因素。"
+      }
+    ],
+    "hypothesis": "在当前局部代理模型中，较短的后向间距配合较长的汇入时长可能导致纵向安全裕度降低。"
+  },
+  "parameter_space": {
+    "scenario_type": "highway_merge",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        65.0,
+        75.0,
+        85.0
+      ],
+      "merge_time_s": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "rear_distance_m": [
+        15.0,
+        35.0,
+        55.0
+      ],
+      "rear_speed_kph": [
+        90.0,
+        115.0,
+        140.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+  },
+  "coarse_attempt_1": {
+    "candidate_space_size": 81,
+    "sampling_strategy": "FULL_CARTESIAN",
+    "selected_case_count": 81,
+    "coverage_summary": {
+      "seed_nearest_included": true,
+      "axes": {
+        "ego_speed_kph": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": 65.0,
+          "maximum_selected": 85.0,
+          "covers_extrema": true
+        },
+        "merge_time_s": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": 2.0,
+          "maximum_selected": 4.0,
+          "covers_extrema": true
+        },
+        "rear_distance_m": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": 15.0,
+          "maximum_selected": 55.0,
+          "covers_extrema": true
+        },
+        "rear_speed_kph": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": 90.0,
+          "maximum_selected": 140.0,
+          "covers_extrema": true
+        }
+      }
+    },
+    "effective_plan": {
+      "scenario_type": "highway_merge",
+      "parameter_ranges": {
+        "ego_speed_kph": [
+          65.0,
+          75.0,
+          85.0
+        ],
+        "merge_time_s": [
+          2.0,
+          3.0,
+          4.0
+        ],
+        "rear_distance_m": [
+          15.0,
+          35.0,
+          55.0
+        ],
+        "rear_speed_kph": [
+          90.0,
+          115.0,
+          140.0
+        ]
+      },
+      "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+    },
+    "generated": 81,
+    "valid": 81,
+    "rejected": 0,
+    "result_distribution": {
+      "PASS": 9,
+      "HIGH_RISK": 0,
+      "FAIL": 72
+    }
+  },
+  "metric_sensitivity": {
+    "method": "axis_aligned_local_metric_slopes",
+    "score_definition": "min(normalized TTC FAIL margin, normalized gap FAIL margin); collision subtracts 2",
+    "thresholds": {
+      "fail_ttc_s": 1.5,
+      "high_risk_ttc_s": 3.0,
+      "fail_gap_m": 4.0,
+      "high_risk_gap_m": 10.0
+    },
+    "parameters": [
+      {
+        "parameter": "ego_speed_kph",
+        "direction": "increase_for_safer",
+        "strength": 0.064816666667,
+        "signed_median_slope": 0.064816666667,
+        "support_count": 54,
+        "consistent_support_count": 40,
+        "evidence_refs": [
+          "ego_speed_kph:CASE_MERGE_001_C001->CASE_MERGE_001_C028",
+          "ego_speed_kph:CASE_MERGE_001_C028->CASE_MERGE_001_C055",
+          "ego_speed_kph:CASE_MERGE_001_C002->CASE_MERGE_001_C029",
+          "ego_speed_kph:CASE_MERGE_001_C029->CASE_MERGE_001_C056",
+          "ego_speed_kph:CASE_MERGE_001_C003->CASE_MERGE_001_C030",
+          "ego_speed_kph:CASE_MERGE_001_C030->CASE_MERGE_001_C057",
+          "ego_speed_kph:CASE_MERGE_001_C004->CASE_MERGE_001_C031",
+          "ego_speed_kph:CASE_MERGE_001_C031->CASE_MERGE_001_C058",
+          "ego_speed_kph:CASE_MERGE_001_C005->CASE_MERGE_001_C032",
+          "ego_speed_kph:CASE_MERGE_001_C032->CASE_MERGE_001_C059",
+          "ego_speed_kph:CASE_MERGE_001_C006->CASE_MERGE_001_C033",
+          "ego_speed_kph:CASE_MERGE_001_C033->CASE_MERGE_001_C060",
+          "ego_speed_kph:CASE_MERGE_001_C007->CASE_MERGE_001_C034",
+          "ego_speed_kph:CASE_MERGE_001_C034->CASE_MERGE_001_C061",
+          "ego_speed_kph:CASE_MERGE_001_C008->CASE_MERGE_001_C035",
+          "ego_speed_kph:CASE_MERGE_001_C035->CASE_MERGE_001_C062",
+          "ego_speed_kph:CASE_MERGE_001_C009->CASE_MERGE_001_C036",
+          "ego_speed_kph:CASE_MERGE_001_C036->CASE_MERGE_001_C063",
+          "ego_speed_kph:CASE_MERGE_001_C010->CASE_MERGE_001_C037",
+          "ego_speed_kph:CASE_MERGE_001_C037->CASE_MERGE_001_C064",
+          "ego_speed_kph:CASE_MERGE_001_C011->CASE_MERGE_001_C038",
+          "ego_speed_kph:CASE_MERGE_001_C038->CASE_MERGE_001_C065",
+          "ego_speed_kph:CASE_MERGE_001_C012->CASE_MERGE_001_C039",
+          "ego_speed_kph:CASE_MERGE_001_C039->CASE_MERGE_001_C066",
+          "ego_speed_kph:CASE_MERGE_001_C013->CASE_MERGE_001_C040",
+          "ego_speed_kph:CASE_MERGE_001_C040->CASE_MERGE_001_C067",
+          "ego_speed_kph:CASE_MERGE_001_C014->CASE_MERGE_001_C041",
+          "ego_speed_kph:CASE_MERGE_001_C041->CASE_MERGE_001_C068",
+          "ego_speed_kph:CASE_MERGE_001_C015->CASE_MERGE_001_C042",
+          "ego_speed_kph:CASE_MERGE_001_C042->CASE_MERGE_001_C069",
+          "ego_speed_kph:CASE_MERGE_001_C016->CASE_MERGE_001_C043",
+          "ego_speed_kph:CASE_MERGE_001_C043->CASE_MERGE_001_C070",
+          "ego_speed_kph:CASE_MERGE_001_C017->CASE_MERGE_001_C044",
+          "ego_speed_kph:CASE_MERGE_001_C044->CASE_MERGE_001_C071",
+          "ego_speed_kph:CASE_MERGE_001_C018->CASE_MERGE_001_C045",
+          "ego_speed_kph:CASE_MERGE_001_C045->CASE_MERGE_001_C072",
+          "ego_speed_kph:CASE_MERGE_001_C019->CASE_MERGE_001_C046",
+          "ego_speed_kph:CASE_MERGE_001_C046->CASE_MERGE_001_C073",
+          "ego_speed_kph:CASE_MERGE_001_C020->CASE_MERGE_001_C047",
+          "ego_speed_kph:CASE_MERGE_001_C047->CASE_MERGE_001_C074",
+          "ego_speed_kph:CASE_MERGE_001_C021->CASE_MERGE_001_C048",
+          "ego_speed_kph:CASE_MERGE_001_C048->CASE_MERGE_001_C075",
+          "ego_speed_kph:CASE_MERGE_001_C022->CASE_MERGE_001_C049",
+          "ego_speed_kph:CASE_MERGE_001_C049->CASE_MERGE_001_C076",
+          "ego_speed_kph:CASE_MERGE_001_C023->CASE_MERGE_001_C050",
+          "ego_speed_kph:CASE_MERGE_001_C050->CASE_MERGE_001_C077",
+          "ego_speed_kph:CASE_MERGE_001_C024->CASE_MERGE_001_C051",
+          "ego_speed_kph:CASE_MERGE_001_C051->CASE_MERGE_001_C078",
+          "ego_speed_kph:CASE_MERGE_001_C025->CASE_MERGE_001_C052",
+          "ego_speed_kph:CASE_MERGE_001_C052->CASE_MERGE_001_C079",
+          "ego_speed_kph:CASE_MERGE_001_C026->CASE_MERGE_001_C053",
+          "ego_speed_kph:CASE_MERGE_001_C053->CASE_MERGE_001_C080",
+          "ego_speed_kph:CASE_MERGE_001_C027->CASE_MERGE_001_C054",
+          "ego_speed_kph:CASE_MERGE_001_C054->CASE_MERGE_001_C081"
+        ]
+      },
+      {
+        "parameter": "rear_speed_kph",
+        "direction": "decrease_for_safer",
+        "strength": 0.064816666667,
+        "signed_median_slope": -0.064816666667,
+        "support_count": 54,
+        "consistent_support_count": 44,
+        "evidence_refs": [
+          "rear_speed_kph:CASE_MERGE_001_C001->CASE_MERGE_001_C002",
+          "rear_speed_kph:CASE_MERGE_001_C002->CASE_MERGE_001_C003",
+          "rear_speed_kph:CASE_MERGE_001_C004->CASE_MERGE_001_C005",
+          "rear_speed_kph:CASE_MERGE_001_C005->CASE_MERGE_001_C006",
+          "rear_speed_kph:CASE_MERGE_001_C007->CASE_MERGE_001_C008",
+          "rear_speed_kph:CASE_MERGE_001_C008->CASE_MERGE_001_C009",
+          "rear_speed_kph:CASE_MERGE_001_C010->CASE_MERGE_001_C011",
+          "rear_speed_kph:CASE_MERGE_001_C011->CASE_MERGE_001_C012",
+          "rear_speed_kph:CASE_MERGE_001_C013->CASE_MERGE_001_C014",
+          "rear_speed_kph:CASE_MERGE_001_C014->CASE_MERGE_001_C015",
+          "rear_speed_kph:CASE_MERGE_001_C016->CASE_MERGE_001_C017",
+          "rear_speed_kph:CASE_MERGE_001_C017->CASE_MERGE_001_C018",
+          "rear_speed_kph:CASE_MERGE_001_C019->CASE_MERGE_001_C020",
+          "rear_speed_kph:CASE_MERGE_001_C020->CASE_MERGE_001_C021",
+          "rear_speed_kph:CASE_MERGE_001_C022->CASE_MERGE_001_C023",
+          "rear_speed_kph:CASE_MERGE_001_C023->CASE_MERGE_001_C024",
+          "rear_speed_kph:CASE_MERGE_001_C025->CASE_MERGE_001_C026",
+          "rear_speed_kph:CASE_MERGE_001_C026->CASE_MERGE_001_C027",
+          "rear_speed_kph:CASE_MERGE_001_C028->CASE_MERGE_001_C029",
+          "rear_speed_kph:CASE_MERGE_001_C029->CASE_MERGE_001_C030",
+          "rear_speed_kph:CASE_MERGE_001_C031->CASE_MERGE_001_C032",
+          "rear_speed_kph:CASE_MERGE_001_C032->CASE_MERGE_001_C033",
+          "rear_speed_kph:CASE_MERGE_001_C034->CASE_MERGE_001_C035",
+          "rear_speed_kph:CASE_MERGE_001_C035->CASE_MERGE_001_C036",
+          "rear_speed_kph:CASE_MERGE_001_C037->CASE_MERGE_001_C038",
+          "rear_speed_kph:CASE_MERGE_001_C038->CASE_MERGE_001_C039",
+          "rear_speed_kph:CASE_MERGE_001_C040->CASE_MERGE_001_C041",
+          "rear_speed_kph:CASE_MERGE_001_C041->CASE_MERGE_001_C042",
+          "rear_speed_kph:CASE_MERGE_001_C043->CASE_MERGE_001_C044",
+          "rear_speed_kph:CASE_MERGE_001_C044->CASE_MERGE_001_C045",
+          "rear_speed_kph:CASE_MERGE_001_C046->CASE_MERGE_001_C047",
+          "rear_speed_kph:CASE_MERGE_001_C047->CASE_MERGE_001_C048",
+          "rear_speed_kph:CASE_MERGE_001_C049->CASE_MERGE_001_C050",
+          "rear_speed_kph:CASE_MERGE_001_C050->CASE_MERGE_001_C051",
+          "rear_speed_kph:CASE_MERGE_001_C052->CASE_MERGE_001_C053",
+          "rear_speed_kph:CASE_MERGE_001_C053->CASE_MERGE_001_C054",
+          "rear_speed_kph:CASE_MERGE_001_C055->CASE_MERGE_001_C056",
+          "rear_speed_kph:CASE_MERGE_001_C056->CASE_MERGE_001_C057",
+          "rear_speed_kph:CASE_MERGE_001_C058->CASE_MERGE_001_C059",
+          "rear_speed_kph:CASE_MERGE_001_C059->CASE_MERGE_001_C060",
+          "rear_speed_kph:CASE_MERGE_001_C061->CASE_MERGE_001_C062",
+          "rear_speed_kph:CASE_MERGE_001_C062->CASE_MERGE_001_C063",
+          "rear_speed_kph:CASE_MERGE_001_C064->CASE_MERGE_001_C065",
+          "rear_speed_kph:CASE_MERGE_001_C065->CASE_MERGE_001_C066",
+          "rear_speed_kph:CASE_MERGE_001_C067->CASE_MERGE_001_C068",
+          "rear_speed_kph:CASE_MERGE_001_C068->CASE_MERGE_001_C069",
+          "rear_speed_kph:CASE_MERGE_001_C070->CASE_MERGE_001_C071",
+          "rear_speed_kph:CASE_MERGE_001_C071->CASE_MERGE_001_C072",
+          "rear_speed_kph:CASE_MERGE_001_C073->CASE_MERGE_001_C074",
+          "rear_speed_kph:CASE_MERGE_001_C074->CASE_MERGE_001_C075",
+          "rear_speed_kph:CASE_MERGE_001_C076->CASE_MERGE_001_C077",
+          "rear_speed_kph:CASE_MERGE_001_C077->CASE_MERGE_001_C078",
+          "rear_speed_kph:CASE_MERGE_001_C079->CASE_MERGE_001_C080",
+          "rear_speed_kph:CASE_MERGE_001_C080->CASE_MERGE_001_C081"
+        ]
+      },
+      {
+        "parameter": "rear_distance_m",
+        "direction": "increase_for_safer",
+        "strength": 0.053608333333,
+        "signed_median_slope": 0.053608333333,
+        "support_count": 54,
+        "consistent_support_count": 38,
+        "evidence_refs": [
+          "rear_distance_m:CASE_MERGE_001_C001->CASE_MERGE_001_C004",
+          "rear_distance_m:CASE_MERGE_001_C004->CASE_MERGE_001_C007",
+          "rear_distance_m:CASE_MERGE_001_C002->CASE_MERGE_001_C005",
+          "rear_distance_m:CASE_MERGE_001_C005->CASE_MERGE_001_C008",
+          "rear_distance_m:CASE_MERGE_001_C003->CASE_MERGE_001_C006",
+          "rear_distance_m:CASE_MERGE_001_C006->CASE_MERGE_001_C009",
+          "rear_distance_m:CASE_MERGE_001_C010->CASE_MERGE_001_C013",
+          "rear_distance_m:CASE_MERGE_001_C013->CASE_MERGE_001_C016",
+          "rear_distance_m:CASE_MERGE_001_C011->CASE_MERGE_001_C014",
+          "rear_distance_m:CASE_MERGE_001_C014->CASE_MERGE_001_C017",
+          "rear_distance_m:CASE_MERGE_001_C012->CASE_MERGE_001_C015",
+          "rear_distance_m:CASE_MERGE_001_C015->CASE_MERGE_001_C018",
+          "rear_distance_m:CASE_MERGE_001_C019->CASE_MERGE_001_C022",
+          "rear_distance_m:CASE_MERGE_001_C022->CASE_MERGE_001_C025",
+          "rear_distance_m:CASE_MERGE_001_C020->CASE_MERGE_001_C023",
+          "rear_distance_m:CASE_MERGE_001_C023->CASE_MERGE_001_C026",
+          "rear_distance_m:CASE_MERGE_001_C021->CASE_MERGE_001_C024",
+          "rear_distance_m:CASE_MERGE_001_C024->CASE_MERGE_001_C027",
+          "rear_distance_m:CASE_MERGE_001_C028->CASE_MERGE_001_C031",
+          "rear_distance_m:CASE_MERGE_001_C031->CASE_MERGE_001_C034",
+          "rear_distance_m:CASE_MERGE_001_C029->CASE_MERGE_001_C032",
+          "rear_distance_m:CASE_MERGE_001_C032->CASE_MERGE_001_C035",
+          "rear_distance_m:CASE_MERGE_001_C030->CASE_MERGE_001_C033",
+          "rear_distance_m:CASE_MERGE_001_C033->CASE_MERGE_001_C036",
+          "rear_distance_m:CASE_MERGE_001_C037->CASE_MERGE_001_C040",
+          "rear_distance_m:CASE_MERGE_001_C040->CASE_MERGE_001_C043",
+          "rear_distance_m:CASE_MERGE_001_C038->CASE_MERGE_001_C041",
+          "rear_distance_m:CASE_MERGE_001_C041->CASE_MERGE_001_C044",
+          "rear_distance_m:CASE_MERGE_001_C039->CASE_MERGE_001_C042",
+          "rear_distance_m:CASE_MERGE_001_C042->CASE_MERGE_001_C045",
+          "rear_distance_m:CASE_MERGE_001_C046->CASE_MERGE_001_C049",
+          "rear_distance_m:CASE_MERGE_001_C049->CASE_MERGE_001_C052",
+          "rear_distance_m:CASE_MERGE_001_C047->CASE_MERGE_001_C050",
+          "rear_distance_m:CASE_MERGE_001_C050->CASE_MERGE_001_C053",
+          "rear_distance_m:CASE_MERGE_001_C048->CASE_MERGE_001_C051",
+          "rear_distance_m:CASE_MERGE_001_C051->CASE_MERGE_001_C054",
+          "rear_distance_m:CASE_MERGE_001_C055->CASE_MERGE_001_C058",
+          "rear_distance_m:CASE_MERGE_001_C058->CASE_MERGE_001_C061",
+          "rear_distance_m:CASE_MERGE_001_C056->CASE_MERGE_001_C059",
+          "rear_distance_m:CASE_MERGE_001_C059->CASE_MERGE_001_C062",
+          "rear_distance_m:CASE_MERGE_001_C057->CASE_MERGE_001_C060",
+          "rear_distance_m:CASE_MERGE_001_C060->CASE_MERGE_001_C063",
+          "rear_distance_m:CASE_MERGE_001_C064->CASE_MERGE_001_C067",
+          "rear_distance_m:CASE_MERGE_001_C067->CASE_MERGE_001_C070",
+          "rear_distance_m:CASE_MERGE_001_C065->CASE_MERGE_001_C068",
+          "rear_distance_m:CASE_MERGE_001_C068->CASE_MERGE_001_C071",
+          "rear_distance_m:CASE_MERGE_001_C066->CASE_MERGE_001_C069",
+          "rear_distance_m:CASE_MERGE_001_C069->CASE_MERGE_001_C072",
+          "rear_distance_m:CASE_MERGE_001_C073->CASE_MERGE_001_C076",
+          "rear_distance_m:CASE_MERGE_001_C076->CASE_MERGE_001_C079",
+          "rear_distance_m:CASE_MERGE_001_C074->CASE_MERGE_001_C077",
+          "rear_distance_m:CASE_MERGE_001_C077->CASE_MERGE_001_C080",
+          "rear_distance_m:CASE_MERGE_001_C075->CASE_MERGE_001_C078",
+          "rear_distance_m:CASE_MERGE_001_C078->CASE_MERGE_001_C081"
+        ]
+      },
+      {
+        "parameter": "merge_time_s",
+        "direction": "no_reliable_direction",
+        "strength": 0.0,
+        "signed_median_slope": 0.0,
+        "support_count": 54,
+        "consistent_support_count": 0,
+        "evidence_refs": [
+          "merge_time_s:CASE_MERGE_001_C001->CASE_MERGE_001_C010",
+          "merge_time_s:CASE_MERGE_001_C010->CASE_MERGE_001_C019",
+          "merge_time_s:CASE_MERGE_001_C002->CASE_MERGE_001_C011",
+          "merge_time_s:CASE_MERGE_001_C011->CASE_MERGE_001_C020",
+          "merge_time_s:CASE_MERGE_001_C003->CASE_MERGE_001_C012",
+          "merge_time_s:CASE_MERGE_001_C012->CASE_MERGE_001_C021",
+          "merge_time_s:CASE_MERGE_001_C004->CASE_MERGE_001_C013",
+          "merge_time_s:CASE_MERGE_001_C013->CASE_MERGE_001_C022",
+          "merge_time_s:CASE_MERGE_001_C005->CASE_MERGE_001_C014",
+          "merge_time_s:CASE_MERGE_001_C014->CASE_MERGE_001_C023",
+          "merge_time_s:CASE_MERGE_001_C006->CASE_MERGE_001_C015",
+          "merge_time_s:CASE_MERGE_001_C015->CASE_MERGE_001_C024",
+          "merge_time_s:CASE_MERGE_001_C007->CASE_MERGE_001_C016",
+          "merge_time_s:CASE_MERGE_001_C016->CASE_MERGE_001_C025",
+          "merge_time_s:CASE_MERGE_001_C008->CASE_MERGE_001_C017",
+          "merge_time_s:CASE_MERGE_001_C017->CASE_MERGE_001_C026",
+          "merge_time_s:CASE_MERGE_001_C009->CASE_MERGE_001_C018",
+          "merge_time_s:CASE_MERGE_001_C018->CASE_MERGE_001_C027",
+          "merge_time_s:CASE_MERGE_001_C028->CASE_MERGE_001_C037",
+          "merge_time_s:CASE_MERGE_001_C037->CASE_MERGE_001_C046",
+          "merge_time_s:CASE_MERGE_001_C029->CASE_MERGE_001_C038",
+          "merge_time_s:CASE_MERGE_001_C038->CASE_MERGE_001_C047",
+          "merge_time_s:CASE_MERGE_001_C030->CASE_MERGE_001_C039",
+          "merge_time_s:CASE_MERGE_001_C039->CASE_MERGE_001_C048",
+          "merge_time_s:CASE_MERGE_001_C031->CASE_MERGE_001_C040",
+          "merge_time_s:CASE_MERGE_001_C040->CASE_MERGE_001_C049",
+          "merge_time_s:CASE_MERGE_001_C032->CASE_MERGE_001_C041",
+          "merge_time_s:CASE_MERGE_001_C041->CASE_MERGE_001_C050",
+          "merge_time_s:CASE_MERGE_001_C033->CASE_MERGE_001_C042",
+          "merge_time_s:CASE_MERGE_001_C042->CASE_MERGE_001_C051",
+          "merge_time_s:CASE_MERGE_001_C034->CASE_MERGE_001_C043",
+          "merge_time_s:CASE_MERGE_001_C043->CASE_MERGE_001_C052",
+          "merge_time_s:CASE_MERGE_001_C035->CASE_MERGE_001_C044",
+          "merge_time_s:CASE_MERGE_001_C044->CASE_MERGE_001_C053",
+          "merge_time_s:CASE_MERGE_001_C036->CASE_MERGE_001_C045",
+          "merge_time_s:CASE_MERGE_001_C045->CASE_MERGE_001_C054",
+          "merge_time_s:CASE_MERGE_001_C055->CASE_MERGE_001_C064",
+          "merge_time_s:CASE_MERGE_001_C064->CASE_MERGE_001_C073",
+          "merge_time_s:CASE_MERGE_001_C056->CASE_MERGE_001_C065",
+          "merge_time_s:CASE_MERGE_001_C065->CASE_MERGE_001_C074",
+          "merge_time_s:CASE_MERGE_001_C057->CASE_MERGE_001_C066",
+          "merge_time_s:CASE_MERGE_001_C066->CASE_MERGE_001_C075",
+          "merge_time_s:CASE_MERGE_001_C058->CASE_MERGE_001_C067",
+          "merge_time_s:CASE_MERGE_001_C067->CASE_MERGE_001_C076",
+          "merge_time_s:CASE_MERGE_001_C059->CASE_MERGE_001_C068",
+          "merge_time_s:CASE_MERGE_001_C068->CASE_MERGE_001_C077",
+          "merge_time_s:CASE_MERGE_001_C060->CASE_MERGE_001_C069",
+          "merge_time_s:CASE_MERGE_001_C069->CASE_MERGE_001_C078",
+          "merge_time_s:CASE_MERGE_001_C061->CASE_MERGE_001_C070",
+          "merge_time_s:CASE_MERGE_001_C070->CASE_MERGE_001_C079",
+          "merge_time_s:CASE_MERGE_001_C062->CASE_MERGE_001_C071",
+          "merge_time_s:CASE_MERGE_001_C071->CASE_MERGE_001_C080",
+          "merge_time_s:CASE_MERGE_001_C063->CASE_MERGE_001_C072",
+          "merge_time_s:CASE_MERGE_001_C072->CASE_MERGE_001_C081"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C001->CASE_MERGE_001_C028",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C001",
+        "case_b": "CASE_MERGE_001_C028",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.026666667,
+        "local_slope": 0.002666666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C028->CASE_MERGE_001_C055",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C028",
+        "case_b": "CASE_MERGE_001_C055",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -0.0185,
+        "safety_margin_delta": 2.914833333,
+        "local_slope": 0.291483333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C002->CASE_MERGE_001_C029",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C002",
+        "case_b": "CASE_MERGE_001_C029",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -3.407333333,
+        "safety_margin_b": -2.759333333,
+        "safety_margin_delta": 0.648,
+        "local_slope": 0.0648
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C029->CASE_MERGE_001_C056",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C029",
+        "case_b": "CASE_MERGE_001_C056",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.759333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.240666667,
+        "local_slope": -0.024066666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C003->CASE_MERGE_001_C030",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C003",
+        "case_b": "CASE_MERGE_001_C030",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -5.027833333,
+        "safety_margin_b": -4.379666667,
+        "safety_margin_delta": 0.648166667,
+        "local_slope": 0.064816666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C030->CASE_MERGE_001_C057",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C030",
+        "case_b": "CASE_MERGE_001_C057",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -4.379666667,
+        "safety_margin_b": -3.7315,
+        "safety_margin_delta": 0.648166667,
+        "local_slope": 0.064816666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C004->CASE_MERGE_001_C031",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C004",
+        "case_b": "CASE_MERGE_001_C031",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 2.24,
+        "local_slope": 0.224
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C031->CASE_MERGE_001_C058",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C031",
+        "case_b": "CASE_MERGE_001_C058",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 4.048166667,
+        "local_slope": 0.404816666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C005->CASE_MERGE_001_C032",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C005",
+        "case_b": "CASE_MERGE_001_C032",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.02,
+        "local_slope": 0.002
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C032->CASE_MERGE_001_C059",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C032",
+        "case_b": "CASE_MERGE_001_C059",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.033333333,
+        "local_slope": -0.003333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C006->CASE_MERGE_001_C033",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C006",
+        "case_b": "CASE_MERGE_001_C033",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": -2.974666667,
+        "safety_margin_delta": -0.028,
+        "local_slope": -0.0028
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C033->CASE_MERGE_001_C060",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C033",
+        "case_b": "CASE_MERGE_001_C060",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.974666667,
+        "safety_margin_b": -2.939333333,
+        "safety_margin_delta": 0.035333333,
+        "local_slope": 0.003533333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C007->CASE_MERGE_001_C034",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C007",
+        "case_b": "CASE_MERGE_001_C034",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 5.453333333,
+        "local_slope": 0.545333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C034->CASE_MERGE_001_C061",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C034",
+        "case_b": "CASE_MERGE_001_C061",
+        "parameter_delta": 10.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 4.1815,
+        "local_slope": 0.41815
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C008->CASE_MERGE_001_C035",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C008",
+        "case_b": "CASE_MERGE_001_C035",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -0.006666667,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C035->CASE_MERGE_001_C062",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C035",
+        "case_b": "CASE_MERGE_001_C062",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.033333333,
+        "local_slope": -0.003333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C009->CASE_MERGE_001_C036",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C009",
+        "case_b": "CASE_MERGE_001_C036",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 0.004,
+        "local_slope": 0.0004
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C036->CASE_MERGE_001_C063",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C036",
+        "case_b": "CASE_MERGE_001_C063",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.969333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.030666667,
+        "local_slope": -0.003066666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C010->CASE_MERGE_001_C037",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C010",
+        "case_b": "CASE_MERGE_001_C037",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.026666667,
+        "local_slope": 0.002666666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C037->CASE_MERGE_001_C064",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C037",
+        "case_b": "CASE_MERGE_001_C064",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -0.0185,
+        "safety_margin_delta": 2.914833333,
+        "local_slope": 0.291483333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C011->CASE_MERGE_001_C038",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C011",
+        "case_b": "CASE_MERGE_001_C038",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -5.027833333,
+        "safety_margin_b": -4.0555,
+        "safety_margin_delta": 0.972333333,
+        "local_slope": 0.097233333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C038->CASE_MERGE_001_C065",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C038",
+        "case_b": "CASE_MERGE_001_C065",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -4.0555,
+        "safety_margin_b": -3.083333333,
+        "safety_margin_delta": 0.972166667,
+        "local_slope": 0.097216666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C012->CASE_MERGE_001_C039",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C012",
+        "case_b": "CASE_MERGE_001_C039",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -7.458333333,
+        "safety_margin_b": -6.486166667,
+        "safety_margin_delta": 0.972166667,
+        "local_slope": 0.097216666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C039->CASE_MERGE_001_C066",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C039",
+        "case_b": "CASE_MERGE_001_C066",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -6.486166667,
+        "safety_margin_b": -5.513833333,
+        "safety_margin_delta": 0.972333333,
+        "local_slope": 0.097233333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C013->CASE_MERGE_001_C040",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C013",
+        "case_b": "CASE_MERGE_001_C040",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 2.24,
+        "local_slope": 0.224
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C040->CASE_MERGE_001_C067",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C040",
+        "case_b": "CASE_MERGE_001_C067",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 4.048166667,
+        "local_slope": 0.404816666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C014->CASE_MERGE_001_C041",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C014",
+        "case_b": "CASE_MERGE_001_C041",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.02,
+        "local_slope": 0.002
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C041->CASE_MERGE_001_C068",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C041",
+        "case_b": "CASE_MERGE_001_C068",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.033333333,
+        "local_slope": -0.003333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C015->CASE_MERGE_001_C042",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C015",
+        "case_b": "CASE_MERGE_001_C042",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -4.125,
+        "safety_margin_b": -3.152833333,
+        "safety_margin_delta": 0.972166667,
+        "local_slope": 0.097216666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C042->CASE_MERGE_001_C069",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C042",
+        "case_b": "CASE_MERGE_001_C069",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -3.152833333,
+        "safety_margin_b": -2.939333333,
+        "safety_margin_delta": 0.2135,
+        "local_slope": 0.02135
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C016->CASE_MERGE_001_C043",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C016",
+        "case_b": "CASE_MERGE_001_C043",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 5.453333333,
+        "local_slope": 0.545333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C043->CASE_MERGE_001_C070",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C043",
+        "case_b": "CASE_MERGE_001_C070",
+        "parameter_delta": 10.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 4.1815,
+        "local_slope": 0.41815
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C017->CASE_MERGE_001_C044",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C017",
+        "case_b": "CASE_MERGE_001_C044",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -0.006666667,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C044->CASE_MERGE_001_C071",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C044",
+        "case_b": "CASE_MERGE_001_C071",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.033333333,
+        "local_slope": -0.003333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C018->CASE_MERGE_001_C045",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C018",
+        "case_b": "CASE_MERGE_001_C045",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 0.004,
+        "local_slope": 0.0004
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C045->CASE_MERGE_001_C072",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C045",
+        "case_b": "CASE_MERGE_001_C072",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.969333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.030666667,
+        "local_slope": -0.003066666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C019->CASE_MERGE_001_C046",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C019",
+        "case_b": "CASE_MERGE_001_C046",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -3.407333333,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.474,
+        "local_slope": 0.0474
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C046->CASE_MERGE_001_C073",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C046",
+        "case_b": "CASE_MERGE_001_C073",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -0.0185,
+        "safety_margin_delta": 2.914833333,
+        "local_slope": 0.291483333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C020->CASE_MERGE_001_C047",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C020",
+        "case_b": "CASE_MERGE_001_C047",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -6.648166667,
+        "safety_margin_b": -5.351833333,
+        "safety_margin_delta": 1.296333333,
+        "local_slope": 0.129633333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C047->CASE_MERGE_001_C074",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C047",
+        "case_b": "CASE_MERGE_001_C074",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -5.351833333,
+        "safety_margin_b": -4.0555,
+        "safety_margin_delta": 1.296333333,
+        "local_slope": 0.129633333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C021->CASE_MERGE_001_C048",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C021",
+        "case_b": "CASE_MERGE_001_C048",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -9.888833333,
+        "safety_margin_b": -8.592666667,
+        "safety_margin_delta": 1.296166667,
+        "local_slope": 0.129616666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C048->CASE_MERGE_001_C075",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C048",
+        "case_b": "CASE_MERGE_001_C075",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -8.592666667,
+        "safety_margin_b": -7.296333333,
+        "safety_margin_delta": 1.296333333,
+        "local_slope": 0.129633333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C022->CASE_MERGE_001_C049",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C022",
+        "case_b": "CASE_MERGE_001_C049",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 2.24,
+        "local_slope": 0.224
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C049->CASE_MERGE_001_C076",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C049",
+        "case_b": "CASE_MERGE_001_C076",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 4.048166667,
+        "local_slope": 0.404816666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C023->CASE_MERGE_001_C050",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C023",
+        "case_b": "CASE_MERGE_001_C050",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -3.314833333,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.348166667,
+        "local_slope": 0.034816666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C050->CASE_MERGE_001_C077",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C050",
+        "case_b": "CASE_MERGE_001_C077",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.033333333,
+        "local_slope": -0.003333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C024->CASE_MERGE_001_C051",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C024",
+        "case_b": "CASE_MERGE_001_C051",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -6.5555,
+        "safety_margin_b": -5.259333333,
+        "safety_margin_delta": 1.296166667,
+        "local_slope": 0.129616666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C051->CASE_MERGE_001_C078",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C051",
+        "case_b": "CASE_MERGE_001_C078",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -5.259333333,
+        "safety_margin_b": -3.963,
+        "safety_margin_delta": 1.296333333,
+        "local_slope": 0.129633333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C025->CASE_MERGE_001_C052",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C025",
+        "case_b": "CASE_MERGE_001_C052",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 5.453333333,
+        "local_slope": 0.545333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C052->CASE_MERGE_001_C079",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C052",
+        "case_b": "CASE_MERGE_001_C079",
+        "parameter_delta": 10.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 4.1815,
+        "local_slope": 0.41815
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C026->CASE_MERGE_001_C053",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C026",
+        "case_b": "CASE_MERGE_001_C053",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -0.006666667,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C053->CASE_MERGE_001_C080",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C053",
+        "case_b": "CASE_MERGE_001_C080",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.033333333,
+        "local_slope": -0.003333333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C027->CASE_MERGE_001_C054",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C027",
+        "case_b": "CASE_MERGE_001_C054",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -3.222166667,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 0.252833333,
+        "local_slope": 0.025283333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_MERGE_001_C054->CASE_MERGE_001_C081",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_MERGE_001_C054",
+        "case_b": "CASE_MERGE_001_C081",
+        "parameter_delta": 10.0,
+        "safety_margin_a": -2.969333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.030666667,
+        "local_slope": -0.003066666667
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C001->CASE_MERGE_001_C010",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C001",
+        "case_b": "CASE_MERGE_001_C010",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C010->CASE_MERGE_001_C019",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C010",
+        "case_b": "CASE_MERGE_001_C019",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -3.407333333,
+        "safety_margin_delta": -0.447333333,
+        "local_slope": -0.447333333333
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C002->CASE_MERGE_001_C011",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C002",
+        "case_b": "CASE_MERGE_001_C011",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.407333333,
+        "safety_margin_b": -5.027833333,
+        "safety_margin_delta": -1.6205,
+        "local_slope": -1.6205
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C011->CASE_MERGE_001_C020",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C011",
+        "case_b": "CASE_MERGE_001_C020",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -5.027833333,
+        "safety_margin_b": -6.648166667,
+        "safety_margin_delta": -1.620333333,
+        "local_slope": -1.620333333333
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C003->CASE_MERGE_001_C012",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C003",
+        "case_b": "CASE_MERGE_001_C012",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -5.027833333,
+        "safety_margin_b": -7.458333333,
+        "safety_margin_delta": -2.4305,
+        "local_slope": -2.4305
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C012->CASE_MERGE_001_C021",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C012",
+        "case_b": "CASE_MERGE_001_C021",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -7.458333333,
+        "safety_margin_b": -9.888833333,
+        "safety_margin_delta": -2.4305,
+        "local_slope": -2.4305
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C004->CASE_MERGE_001_C013",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C004",
+        "case_b": "CASE_MERGE_001_C013",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C013->CASE_MERGE_001_C022",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C013",
+        "case_b": "CASE_MERGE_001_C022",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C005->CASE_MERGE_001_C014",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C005",
+        "case_b": "CASE_MERGE_001_C014",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C014->CASE_MERGE_001_C023",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C014",
+        "case_b": "CASE_MERGE_001_C023",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -3.314833333,
+        "safety_margin_delta": -0.328166667,
+        "local_slope": -0.328166666667
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C006->CASE_MERGE_001_C015",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C006",
+        "case_b": "CASE_MERGE_001_C015",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": -4.125,
+        "safety_margin_delta": -1.178333333,
+        "local_slope": -1.178333333333
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C015->CASE_MERGE_001_C024",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C015",
+        "case_b": "CASE_MERGE_001_C024",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -4.125,
+        "safety_margin_b": -6.5555,
+        "safety_margin_delta": -2.4305,
+        "local_slope": -2.4305
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C007->CASE_MERGE_001_C016",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C007",
+        "case_b": "CASE_MERGE_001_C016",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C016->CASE_MERGE_001_C025",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C016",
+        "case_b": "CASE_MERGE_001_C025",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C008->CASE_MERGE_001_C017",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C008",
+        "case_b": "CASE_MERGE_001_C017",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C017->CASE_MERGE_001_C026",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C017",
+        "case_b": "CASE_MERGE_001_C026",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C009->CASE_MERGE_001_C018",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C009",
+        "case_b": "CASE_MERGE_001_C018",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C018->CASE_MERGE_001_C027",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C018",
+        "case_b": "CASE_MERGE_001_C027",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -3.222166667,
+        "safety_margin_delta": -0.248833333,
+        "local_slope": -0.248833333333
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C028->CASE_MERGE_001_C037",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C028",
+        "case_b": "CASE_MERGE_001_C037",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C037->CASE_MERGE_001_C046",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C037",
+        "case_b": "CASE_MERGE_001_C046",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C029->CASE_MERGE_001_C038",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C029",
+        "case_b": "CASE_MERGE_001_C038",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.759333333,
+        "safety_margin_b": -4.0555,
+        "safety_margin_delta": -1.296166667,
+        "local_slope": -1.296166666667
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C038->CASE_MERGE_001_C047",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C038",
+        "case_b": "CASE_MERGE_001_C047",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -4.0555,
+        "safety_margin_b": -5.351833333,
+        "safety_margin_delta": -1.296333333,
+        "local_slope": -1.296333333333
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C030->CASE_MERGE_001_C039",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C030",
+        "case_b": "CASE_MERGE_001_C039",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -4.379666667,
+        "safety_margin_b": -6.486166667,
+        "safety_margin_delta": -2.1065,
+        "local_slope": -2.1065
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C039->CASE_MERGE_001_C048",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C039",
+        "case_b": "CASE_MERGE_001_C048",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -6.486166667,
+        "safety_margin_b": -8.592666667,
+        "safety_margin_delta": -2.1065,
+        "local_slope": -2.1065
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C031->CASE_MERGE_001_C040",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C031",
+        "case_b": "CASE_MERGE_001_C040",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C040->CASE_MERGE_001_C049",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C040",
+        "case_b": "CASE_MERGE_001_C049",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C032->CASE_MERGE_001_C041",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C032",
+        "case_b": "CASE_MERGE_001_C041",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C041->CASE_MERGE_001_C050",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C041",
+        "case_b": "CASE_MERGE_001_C050",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C033->CASE_MERGE_001_C042",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C033",
+        "case_b": "CASE_MERGE_001_C042",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.974666667,
+        "safety_margin_b": -3.152833333,
+        "safety_margin_delta": -0.178166667,
+        "local_slope": -0.178166666667
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C042->CASE_MERGE_001_C051",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C042",
+        "case_b": "CASE_MERGE_001_C051",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.152833333,
+        "safety_margin_b": -5.259333333,
+        "safety_margin_delta": -2.1065,
+        "local_slope": -2.1065
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C034->CASE_MERGE_001_C043",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C034",
+        "case_b": "CASE_MERGE_001_C043",
+        "parameter_delta": 1.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C043->CASE_MERGE_001_C052",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C043",
+        "case_b": "CASE_MERGE_001_C052",
+        "parameter_delta": 1.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C035->CASE_MERGE_001_C044",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C035",
+        "case_b": "CASE_MERGE_001_C044",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C044->CASE_MERGE_001_C053",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C044",
+        "case_b": "CASE_MERGE_001_C053",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C036->CASE_MERGE_001_C045",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C036",
+        "case_b": "CASE_MERGE_001_C045",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.969333333,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C045->CASE_MERGE_001_C054",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C045",
+        "case_b": "CASE_MERGE_001_C054",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.969333333,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C055->CASE_MERGE_001_C064",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C055",
+        "case_b": "CASE_MERGE_001_C064",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": -0.0185,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C064->CASE_MERGE_001_C073",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C064",
+        "case_b": "CASE_MERGE_001_C073",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": -0.0185,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C056->CASE_MERGE_001_C065",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C056",
+        "case_b": "CASE_MERGE_001_C065",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.083333333,
+        "safety_margin_delta": -0.083333333,
+        "local_slope": -0.083333333333
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C065->CASE_MERGE_001_C074",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C065",
+        "case_b": "CASE_MERGE_001_C074",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.083333333,
+        "safety_margin_b": -4.0555,
+        "safety_margin_delta": -0.972166667,
+        "local_slope": -0.972166666667
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C057->CASE_MERGE_001_C066",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C057",
+        "case_b": "CASE_MERGE_001_C066",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.7315,
+        "safety_margin_b": -5.513833333,
+        "safety_margin_delta": -1.782333333,
+        "local_slope": -1.782333333333
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C066->CASE_MERGE_001_C075",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C066",
+        "case_b": "CASE_MERGE_001_C075",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -5.513833333,
+        "safety_margin_b": -7.296333333,
+        "safety_margin_delta": -1.7825,
+        "local_slope": -1.7825
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C058->CASE_MERGE_001_C067",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C058",
+        "case_b": "CASE_MERGE_001_C067",
+        "parameter_delta": 1.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C067->CASE_MERGE_001_C076",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C067",
+        "case_b": "CASE_MERGE_001_C076",
+        "parameter_delta": 1.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C059->CASE_MERGE_001_C068",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C059",
+        "case_b": "CASE_MERGE_001_C068",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C068->CASE_MERGE_001_C077",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C068",
+        "case_b": "CASE_MERGE_001_C077",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C060->CASE_MERGE_001_C069",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C060",
+        "case_b": "CASE_MERGE_001_C069",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.939333333,
+        "safety_margin_b": -2.939333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C069->CASE_MERGE_001_C078",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C069",
+        "case_b": "CASE_MERGE_001_C078",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -2.939333333,
+        "safety_margin_b": -3.963,
+        "safety_margin_delta": -1.023666667,
+        "local_slope": -1.023666666667
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C061->CASE_MERGE_001_C070",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C061",
+        "case_b": "CASE_MERGE_001_C070",
+        "parameter_delta": 1.0,
+        "safety_margin_a": 6.648166667,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C070->CASE_MERGE_001_C079",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C070",
+        "case_b": "CASE_MERGE_001_C079",
+        "parameter_delta": 1.0,
+        "safety_margin_a": 6.648166667,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C062->CASE_MERGE_001_C071",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C062",
+        "case_b": "CASE_MERGE_001_C071",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C071->CASE_MERGE_001_C080",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C071",
+        "case_b": "CASE_MERGE_001_C080",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C063->CASE_MERGE_001_C072",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C063",
+        "case_b": "CASE_MERGE_001_C072",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "merge_time_s:CASE_MERGE_001_C072->CASE_MERGE_001_C081",
+        "parameter": "merge_time_s",
+        "case_a": "CASE_MERGE_001_C072",
+        "case_b": "CASE_MERGE_001_C081",
+        "parameter_delta": 1.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C001->CASE_MERGE_001_C004",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C001",
+        "case_b": "CASE_MERGE_001_C004",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C004->CASE_MERGE_001_C007",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C004",
+        "case_b": "CASE_MERGE_001_C007",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C002->CASE_MERGE_001_C005",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C002",
+        "case_b": "CASE_MERGE_001_C005",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.407333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": 0.420666667,
+        "local_slope": 0.021033333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C005->CASE_MERGE_001_C008",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C005",
+        "case_b": "CASE_MERGE_001_C008",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.026666667,
+        "local_slope": 0.001333333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C003->CASE_MERGE_001_C006",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C003",
+        "case_b": "CASE_MERGE_001_C006",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -5.027833333,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": 2.081166667,
+        "local_slope": 0.104058333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C006->CASE_MERGE_001_C009",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C006",
+        "case_b": "CASE_MERGE_001_C009",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": -0.026666667,
+        "local_slope": -0.001333333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C010->CASE_MERGE_001_C013",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C010",
+        "case_b": "CASE_MERGE_001_C013",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C013->CASE_MERGE_001_C016",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C013",
+        "case_b": "CASE_MERGE_001_C016",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C011->CASE_MERGE_001_C014",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C011",
+        "case_b": "CASE_MERGE_001_C014",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -5.027833333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": 2.041166667,
+        "local_slope": 0.102058333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C014->CASE_MERGE_001_C017",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C014",
+        "case_b": "CASE_MERGE_001_C017",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.026666667,
+        "local_slope": 0.001333333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C012->CASE_MERGE_001_C015",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C012",
+        "case_b": "CASE_MERGE_001_C015",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -7.458333333,
+        "safety_margin_b": -4.125,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C015->CASE_MERGE_001_C018",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C015",
+        "case_b": "CASE_MERGE_001_C018",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -4.125,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": 1.151666667,
+        "local_slope": 0.057583333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C019->CASE_MERGE_001_C022",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C019",
+        "case_b": "CASE_MERGE_001_C022",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.407333333,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": 0.434,
+        "local_slope": 0.0217
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C022->CASE_MERGE_001_C025",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C022",
+        "case_b": "CASE_MERGE_001_C025",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C020->CASE_MERGE_001_C023",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C020",
+        "case_b": "CASE_MERGE_001_C023",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -6.648166667,
+        "safety_margin_b": -3.314833333,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C023->CASE_MERGE_001_C026",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C023",
+        "case_b": "CASE_MERGE_001_C026",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.314833333,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.354833333,
+        "local_slope": 0.017741666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C021->CASE_MERGE_001_C024",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C021",
+        "case_b": "CASE_MERGE_001_C024",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -9.888833333,
+        "safety_margin_b": -6.5555,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C024->CASE_MERGE_001_C027",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C024",
+        "case_b": "CASE_MERGE_001_C027",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -6.5555,
+        "safety_margin_b": -3.222166667,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C028->CASE_MERGE_001_C031",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C028",
+        "case_b": "CASE_MERGE_001_C031",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 2.2,
+        "local_slope": 0.11
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C031->CASE_MERGE_001_C034",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C031",
+        "case_b": "CASE_MERGE_001_C034",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 3.2,
+        "local_slope": 0.16
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C029->CASE_MERGE_001_C032",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C029",
+        "case_b": "CASE_MERGE_001_C032",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.759333333,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -0.207333333,
+        "local_slope": -0.010366666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C032->CASE_MERGE_001_C035",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C032",
+        "case_b": "CASE_MERGE_001_C035",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C030->CASE_MERGE_001_C033",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C030",
+        "case_b": "CASE_MERGE_001_C033",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -4.379666667,
+        "safety_margin_b": -2.974666667,
+        "safety_margin_delta": 1.405,
+        "local_slope": 0.07025
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C033->CASE_MERGE_001_C036",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C033",
+        "case_b": "CASE_MERGE_001_C036",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.974666667,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 0.005333333,
+        "local_slope": 0.000266666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C037->CASE_MERGE_001_C040",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C037",
+        "case_b": "CASE_MERGE_001_C040",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 2.2,
+        "local_slope": 0.11
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C040->CASE_MERGE_001_C043",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C040",
+        "case_b": "CASE_MERGE_001_C043",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 3.2,
+        "local_slope": 0.16
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C038->CASE_MERGE_001_C041",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C038",
+        "case_b": "CASE_MERGE_001_C041",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -4.0555,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 1.088833333,
+        "local_slope": 0.054441666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C041->CASE_MERGE_001_C044",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C041",
+        "case_b": "CASE_MERGE_001_C044",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C039->CASE_MERGE_001_C042",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C039",
+        "case_b": "CASE_MERGE_001_C042",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -6.486166667,
+        "safety_margin_b": -3.152833333,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C042->CASE_MERGE_001_C045",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C042",
+        "case_b": "CASE_MERGE_001_C045",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.152833333,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 0.1835,
+        "local_slope": 0.009175
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C046->CASE_MERGE_001_C049",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C046",
+        "case_b": "CASE_MERGE_001_C049",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -0.733333333,
+        "safety_margin_delta": 2.2,
+        "local_slope": 0.11
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C049->CASE_MERGE_001_C052",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C049",
+        "case_b": "CASE_MERGE_001_C052",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": 2.466666667,
+        "safety_margin_delta": 3.2,
+        "local_slope": 0.16
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C047->CASE_MERGE_001_C050",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C047",
+        "case_b": "CASE_MERGE_001_C050",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -5.351833333,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 2.385166667,
+        "local_slope": 0.119258333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C050->CASE_MERGE_001_C053",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C050",
+        "case_b": "CASE_MERGE_001_C053",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C048->CASE_MERGE_001_C051",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C048",
+        "case_b": "CASE_MERGE_001_C051",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -8.592666667,
+        "safety_margin_b": -5.259333333,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C051->CASE_MERGE_001_C054",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C051",
+        "case_b": "CASE_MERGE_001_C054",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -5.259333333,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": 2.29,
+        "local_slope": 0.1145
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C055->CASE_MERGE_001_C058",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C055",
+        "case_b": "CASE_MERGE_001_C058",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C058->CASE_MERGE_001_C061",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C058",
+        "case_b": "CASE_MERGE_001_C061",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C056->CASE_MERGE_001_C059",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C056",
+        "case_b": "CASE_MERGE_001_C059",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C059->CASE_MERGE_001_C062",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C059",
+        "case_b": "CASE_MERGE_001_C062",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C057->CASE_MERGE_001_C060",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C057",
+        "case_b": "CASE_MERGE_001_C060",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.7315,
+        "safety_margin_b": -2.939333333,
+        "safety_margin_delta": 0.792166667,
+        "local_slope": 0.039608333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C060->CASE_MERGE_001_C063",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C060",
+        "case_b": "CASE_MERGE_001_C063",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.939333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.060666667,
+        "local_slope": -0.003033333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C064->CASE_MERGE_001_C067",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C064",
+        "case_b": "CASE_MERGE_001_C067",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C067->CASE_MERGE_001_C070",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C067",
+        "case_b": "CASE_MERGE_001_C070",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C065->CASE_MERGE_001_C068",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C065",
+        "case_b": "CASE_MERGE_001_C068",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.083333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.083333333,
+        "local_slope": 0.004166666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C068->CASE_MERGE_001_C071",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C068",
+        "case_b": "CASE_MERGE_001_C071",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C066->CASE_MERGE_001_C069",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C066",
+        "case_b": "CASE_MERGE_001_C069",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -5.513833333,
+        "safety_margin_b": -2.939333333,
+        "safety_margin_delta": 2.5745,
+        "local_slope": 0.128725
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C069->CASE_MERGE_001_C072",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C069",
+        "case_b": "CASE_MERGE_001_C072",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.939333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.060666667,
+        "local_slope": -0.003033333333
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C073->CASE_MERGE_001_C076",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C073",
+        "case_b": "CASE_MERGE_001_C076",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": 3.314833333,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C076->CASE_MERGE_001_C079",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C076",
+        "case_b": "CASE_MERGE_001_C079",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": 6.648166667,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C074->CASE_MERGE_001_C077",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C074",
+        "case_b": "CASE_MERGE_001_C077",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -4.0555,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 1.0555,
+        "local_slope": 0.052775
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C077->CASE_MERGE_001_C080",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C077",
+        "case_b": "CASE_MERGE_001_C080",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C075->CASE_MERGE_001_C078",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C075",
+        "case_b": "CASE_MERGE_001_C078",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -7.296333333,
+        "safety_margin_b": -3.963,
+        "safety_margin_delta": 3.333333333,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "rear_distance_m:CASE_MERGE_001_C078->CASE_MERGE_001_C081",
+        "parameter": "rear_distance_m",
+        "case_a": "CASE_MERGE_001_C078",
+        "case_b": "CASE_MERGE_001_C081",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -3.963,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.963,
+        "local_slope": 0.04815
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C001->CASE_MERGE_001_C002",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C001",
+        "case_b": "CASE_MERGE_001_C002",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -3.407333333,
+        "safety_margin_delta": -0.447333333,
+        "local_slope": -0.017893333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C002->CASE_MERGE_001_C003",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C002",
+        "case_b": "CASE_MERGE_001_C003",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.407333333,
+        "safety_margin_b": -5.027833333,
+        "safety_margin_delta": -1.6205,
+        "local_slope": -0.06482
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C004->CASE_MERGE_001_C005",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C004",
+        "case_b": "CASE_MERGE_001_C005",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000533333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C005->CASE_MERGE_001_C006",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C005",
+        "case_b": "CASE_MERGE_001_C006",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": 0.04,
+        "local_slope": 0.0016
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C007->CASE_MERGE_001_C008",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C007",
+        "case_b": "CASE_MERGE_001_C008",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.026666667,
+        "local_slope": 0.001066666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C008->CASE_MERGE_001_C009",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C008",
+        "case_b": "CASE_MERGE_001_C009",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000533333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C010->CASE_MERGE_001_C011",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C010",
+        "case_b": "CASE_MERGE_001_C011",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -5.027833333,
+        "safety_margin_delta": -2.067833333,
+        "local_slope": -0.082713333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C011->CASE_MERGE_001_C012",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C011",
+        "case_b": "CASE_MERGE_001_C012",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -5.027833333,
+        "safety_margin_b": -7.458333333,
+        "safety_margin_delta": -2.4305,
+        "local_slope": -0.09722
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C013->CASE_MERGE_001_C014",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C013",
+        "case_b": "CASE_MERGE_001_C014",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000533333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C014->CASE_MERGE_001_C015",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C014",
+        "case_b": "CASE_MERGE_001_C015",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -4.125,
+        "safety_margin_delta": -1.138333333,
+        "local_slope": -0.045533333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C016->CASE_MERGE_001_C017",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C016",
+        "case_b": "CASE_MERGE_001_C017",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.026666667,
+        "local_slope": 0.001066666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C017->CASE_MERGE_001_C018",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C017",
+        "case_b": "CASE_MERGE_001_C018",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -2.973333333,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000533333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C019->CASE_MERGE_001_C020",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C019",
+        "case_b": "CASE_MERGE_001_C020",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.407333333,
+        "safety_margin_b": -6.648166667,
+        "safety_margin_delta": -3.240833333,
+        "local_slope": -0.129633333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C020->CASE_MERGE_001_C021",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C020",
+        "case_b": "CASE_MERGE_001_C021",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -6.648166667,
+        "safety_margin_b": -9.888833333,
+        "safety_margin_delta": -3.240666667,
+        "local_slope": -0.129626666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C022->CASE_MERGE_001_C023",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C022",
+        "case_b": "CASE_MERGE_001_C023",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.973333333,
+        "safety_margin_b": -3.314833333,
+        "safety_margin_delta": -0.3415,
+        "local_slope": -0.01366
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C023->CASE_MERGE_001_C024",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C023",
+        "case_b": "CASE_MERGE_001_C024",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.314833333,
+        "safety_margin_b": -6.5555,
+        "safety_margin_delta": -3.240666667,
+        "local_slope": -0.129626666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C025->CASE_MERGE_001_C026",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C025",
+        "case_b": "CASE_MERGE_001_C026",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.96,
+        "safety_margin_delta": 0.026666667,
+        "local_slope": 0.001066666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C026->CASE_MERGE_001_C027",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C026",
+        "case_b": "CASE_MERGE_001_C027",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.96,
+        "safety_margin_b": -3.222166667,
+        "safety_margin_delta": -0.262166667,
+        "local_slope": -0.010486666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C028->CASE_MERGE_001_C029",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C028",
+        "case_b": "CASE_MERGE_001_C029",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.759333333,
+        "safety_margin_delta": 0.174,
+        "local_slope": 0.00696
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C029->CASE_MERGE_001_C030",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C029",
+        "case_b": "CASE_MERGE_001_C030",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.759333333,
+        "safety_margin_b": -4.379666667,
+        "safety_margin_delta": -1.620333333,
+        "local_slope": -0.064813333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C031->CASE_MERGE_001_C032",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C031",
+        "case_b": "CASE_MERGE_001_C032",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -2.233333333,
+        "local_slope": -0.089333333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C032->CASE_MERGE_001_C033",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C032",
+        "case_b": "CASE_MERGE_001_C033",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.974666667,
+        "safety_margin_delta": -0.008,
+        "local_slope": -0.00032
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C034->CASE_MERGE_001_C035",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C034",
+        "case_b": "CASE_MERGE_001_C035",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -5.433333333,
+        "local_slope": -0.217333333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C035->CASE_MERGE_001_C036",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C035",
+        "case_b": "CASE_MERGE_001_C036",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": -0.002666667,
+        "local_slope": -0.000106666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C037->CASE_MERGE_001_C038",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C037",
+        "case_b": "CASE_MERGE_001_C038",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -4.0555,
+        "safety_margin_delta": -1.122166667,
+        "local_slope": -0.044886666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C038->CASE_MERGE_001_C039",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C038",
+        "case_b": "CASE_MERGE_001_C039",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -4.0555,
+        "safety_margin_b": -6.486166667,
+        "safety_margin_delta": -2.430666667,
+        "local_slope": -0.097226666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C040->CASE_MERGE_001_C041",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C040",
+        "case_b": "CASE_MERGE_001_C041",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -2.233333333,
+        "local_slope": -0.089333333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C041->CASE_MERGE_001_C042",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C041",
+        "case_b": "CASE_MERGE_001_C042",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -3.152833333,
+        "safety_margin_delta": -0.186166667,
+        "local_slope": -0.007446666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C043->CASE_MERGE_001_C044",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C043",
+        "case_b": "CASE_MERGE_001_C044",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -5.433333333,
+        "local_slope": -0.217333333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C044->CASE_MERGE_001_C045",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C044",
+        "case_b": "CASE_MERGE_001_C045",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": -0.002666667,
+        "local_slope": -0.000106666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C046->CASE_MERGE_001_C047",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C046",
+        "case_b": "CASE_MERGE_001_C047",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -5.351833333,
+        "safety_margin_delta": -2.4185,
+        "local_slope": -0.09674
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C047->CASE_MERGE_001_C048",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C047",
+        "case_b": "CASE_MERGE_001_C048",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -5.351833333,
+        "safety_margin_b": -8.592666667,
+        "safety_margin_delta": -3.240833333,
+        "local_slope": -0.129633333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C049->CASE_MERGE_001_C050",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C049",
+        "case_b": "CASE_MERGE_001_C050",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -0.733333333,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -2.233333333,
+        "local_slope": -0.089333333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C050->CASE_MERGE_001_C051",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C050",
+        "case_b": "CASE_MERGE_001_C051",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -5.259333333,
+        "safety_margin_delta": -2.292666667,
+        "local_slope": -0.091706666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C052->CASE_MERGE_001_C053",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C052",
+        "case_b": "CASE_MERGE_001_C053",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 2.466666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -5.433333333,
+        "local_slope": -0.217333333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C053->CASE_MERGE_001_C054",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C053",
+        "case_b": "CASE_MERGE_001_C054",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.969333333,
+        "safety_margin_delta": -0.002666667,
+        "local_slope": -0.000106666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C055->CASE_MERGE_001_C056",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C055",
+        "case_b": "CASE_MERGE_001_C056",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -2.9815,
+        "local_slope": -0.11926
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C056->CASE_MERGE_001_C057",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C056",
+        "case_b": "CASE_MERGE_001_C057",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.7315,
+        "safety_margin_delta": -0.7315,
+        "local_slope": -0.02926
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C058->CASE_MERGE_001_C059",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C058",
+        "case_b": "CASE_MERGE_001_C059",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -6.314833333,
+        "local_slope": -0.252593333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C059->CASE_MERGE_001_C060",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C059",
+        "case_b": "CASE_MERGE_001_C060",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -2.939333333,
+        "safety_margin_delta": 0.060666667,
+        "local_slope": 0.002426666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C061->CASE_MERGE_001_C062",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C061",
+        "case_b": "CASE_MERGE_001_C062",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 6.648166667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -9.648166667,
+        "local_slope": -0.385926666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C062->CASE_MERGE_001_C063",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C062",
+        "case_b": "CASE_MERGE_001_C063",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C064->CASE_MERGE_001_C065",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C064",
+        "case_b": "CASE_MERGE_001_C065",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": -3.083333333,
+        "safety_margin_delta": -3.064833333,
+        "local_slope": -0.122593333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C065->CASE_MERGE_001_C066",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C065",
+        "case_b": "CASE_MERGE_001_C066",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.083333333,
+        "safety_margin_b": -5.513833333,
+        "safety_margin_delta": -2.4305,
+        "local_slope": -0.09722
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C067->CASE_MERGE_001_C068",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C067",
+        "case_b": "CASE_MERGE_001_C068",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -6.314833333,
+        "local_slope": -0.252593333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C068->CASE_MERGE_001_C069",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C068",
+        "case_b": "CASE_MERGE_001_C069",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -2.939333333,
+        "safety_margin_delta": 0.060666667,
+        "local_slope": 0.002426666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C070->CASE_MERGE_001_C071",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C070",
+        "case_b": "CASE_MERGE_001_C071",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 6.648166667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -9.648166667,
+        "local_slope": -0.385926666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C071->CASE_MERGE_001_C072",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C071",
+        "case_b": "CASE_MERGE_001_C072",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C073->CASE_MERGE_001_C074",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C073",
+        "case_b": "CASE_MERGE_001_C074",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -0.0185,
+        "safety_margin_b": -4.0555,
+        "safety_margin_delta": -4.037,
+        "local_slope": -0.16148
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C074->CASE_MERGE_001_C075",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C074",
+        "case_b": "CASE_MERGE_001_C075",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -4.0555,
+        "safety_margin_b": -7.296333333,
+        "safety_margin_delta": -3.240833333,
+        "local_slope": -0.129633333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C076->CASE_MERGE_001_C077",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C076",
+        "case_b": "CASE_MERGE_001_C077",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 3.314833333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -6.314833333,
+        "local_slope": -0.252593333333
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C077->CASE_MERGE_001_C078",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C077",
+        "case_b": "CASE_MERGE_001_C078",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.963,
+        "safety_margin_delta": -0.963,
+        "local_slope": -0.03852
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C079->CASE_MERGE_001_C080",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C079",
+        "case_b": "CASE_MERGE_001_C080",
+        "parameter_delta": 25.0,
+        "safety_margin_a": 6.648166667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -9.648166667,
+        "local_slope": -0.385926666667
+      },
+      {
+        "evidence_id": "rear_speed_kph:CASE_MERGE_001_C080->CASE_MERGE_001_C081",
+        "parameter": "rear_speed_kph",
+        "case_a": "CASE_MERGE_001_C080",
+        "case_b": "CASE_MERGE_001_C081",
+        "parameter_delta": 25.0,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      }
+    ]
+  },
+  "ai_adaptive_replan": null,
+  "effective_replan": null,
+  "coarse_attempt_2": null,
+  "ai_feedback": null,
+  "llm_schema_trace": [
+    {
+      "schema_name": "ai_issue_interpretation",
+      "reasoning_effort": "none",
+      "schema_validation_attempt_1": {
+        "status": "SUCCESS",
+        "validation_errors": []
+      },
+      "schema_repair_triggered": false,
+      "schema_validation_attempt_2": null,
+      "schema_retry_count": 0,
+      "repair_result": null
+    },
+    {
+      "schema_name": "ai_scenario_factor_plan",
+      "reasoning_effort": "none",
+      "schema_validation_attempt_1": {
+        "status": "SUCCESS",
+        "validation_errors": []
+      },
+      "schema_repair_triggered": false,
+      "schema_validation_attempt_2": null,
+      "schema_retry_count": 0,
+      "repair_result": null
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-09-15T23:06:22+08:00",
+      "step": "Candidate Filter",
+      "status": "COMPLETED",
+      "summary": "确定性候选规则命中：当前版本新增失败，且严重度为高。 priority=0。",
+      "data": {
+        "method": "deterministic_priority_table",
+        "selected_case_id": "CASE_MERGE_001",
+        "priority": 0,
+        "reason": "确定性候选规则命中：当前版本新增失败，且严重度为高。 priority=0。"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:27+08:00",
+      "step": "AI Issue Interpretation",
+      "status": "COMPLETED",
+      "summary": "在本地 surrogate 数据中观察到，自车执行高速汇入操作时，目标车道后车在汇入窗口内持续接近。数据显示最小碰撞时间为 1.32 s，最小间距为 5.60 m，且未发生物理接触。当前观察仅限于该 Local surrogate 场景下的纵向间距变化趋势，建议通过更高保真度的仿真进行进一步验证。",
+      "data": {
+        "input_fields": [
+          "diff",
+          "issue_description",
+          "log_summary",
+          "metric_snapshot",
+          "severity",
+          "version_curr",
+          "version_prev"
+        ],
+        "output": {
+          "scenario_type": "highway_merge",
+          "actors": [
+            "ego_vehicle",
+            "rear_vehicle_on_target_lane"
+          ],
+          "interaction_summary": "在本地 surrogate 数据中观察到，自车执行高速汇入操作时，目标车道后车在汇入窗口内持续接近。数据显示最小碰撞时间为 1.32 s，最小间距为 5.60 m，且未发生物理接触。当前观察仅限于该 Local surrogate 场景下的纵向间距变化趋势，建议通过更高保真度的仿真进行进一步验证。",
+          "candidate_factors": [
+            "ego_speed_kph",
+            "merge_time_s",
+            "rear_distance_m",
+            "rear_speed_kph"
+          ],
+          "risk_hypothesis": "在当前局部代理模型中，汇入窗口内的纵向间距缩小趋势可能导致安全裕度降低。"
+        },
+        "decision_owner": "AI"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:31+08:00",
+      "step": "AI Scenario Factor Plan",
+      "status": "COMPLETED",
+      "summary": "在当前局部代理模型中，较短的后向间距配合较长的汇入时长可能导致纵向安全裕度降低。",
+      "data": {
+        "factor_plan": {
+          "scenario_type": "highway_merge",
+          "factors": [
+            {
+              "name": "rear_distance_m",
+              "priority": "high",
+              "reason": "在当前局部代理数据中，后向间距直接决定纵向安全裕度。"
+            },
+            {
+              "name": "merge_time_s",
+              "priority": "medium",
+              "reason": "汇入时长影响风险窗口的持续时间及重叠阶段的时间点。"
+            },
+            {
+              "name": "rear_speed_kph",
+              "priority": "medium",
+              "reason": "后车速度改变相对接近速率，进而影响最小间距趋势。"
+            },
+            {
+              "name": "ego_speed_kph",
+              "priority": "low",
+              "reason": "自车速度在当前观察中与后车间距变化的关联弱于其他因素。"
+            }
+          ],
+          "hypothesis": "在当前局部代理模型中，较短的后向间距配合较长的汇入时长可能导致纵向安全裕度降低。"
+        },
+        "numeric_ranges_supplied_by_ai": false,
+        "decision_owner": "AI"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:31+08:00",
+      "step": "Parameter Space Generation",
+      "status": "COMPLETED",
+      "summary": "Scenario Registry、Seed 与 AI factor priority 已生成确定性数值空间。",
+      "data": {
+        "plan": {
+          "scenario_type": "highway_merge",
+          "parameter_ranges": {
+            "ego_speed_kph": [
+              65.0,
+              75.0,
+              85.0
+            ],
+            "merge_time_s": [
+              2.0,
+              3.0,
+              4.0
+            ],
+            "rear_distance_m": [
+              15.0,
+              35.0,
+              55.0
+            ],
+            "rear_speed_kph": [
+              90.0,
+              115.0,
+              140.0
+            ]
+          },
+          "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+        },
+        "registry": {
+          "scenario_type": "highway_merge",
+          "actors": {
+            "ego_vehicle": {
+              "canonical_actor_id": "ego_vehicle",
+              "display_name_zh": "自车",
+              "type": "vehicle",
+              "role": "ego"
+            },
+            "rear_vehicle_on_target_lane": {
+              "canonical_actor_id": "rear_vehicle_on_target_lane",
+              "display_name_zh": "目标车道后车",
+              "type": "vehicle",
+              "role": "target_lane_rear"
+            }
+          },
+          "road_ref": "highway_merge_01",
+          "parameters": {
+            "ego_speed_kph": {
+              "canonical_key": "ego_speed_kph",
+              "display_name_zh": "自车速度",
+              "minimum": 0.0,
+              "maximum": 180.0,
+              "coarse_half_span": 20.0,
+              "step": 5.0,
+              "unit": "km/h",
+              "seed_value": 75.0
+            },
+            "merge_time_s": {
+              "canonical_key": "merge_time_s",
+              "display_name_zh": "汇入时长",
+              "minimum": 1.0,
+              "maximum": 8.0,
+              "coarse_half_span": 1.0,
+              "step": 0.5,
+              "unit": "s",
+              "seed_value": 3.0
+            },
+            "rear_distance_m": {
+              "canonical_key": "rear_distance_m",
+              "display_name_zh": "后向间距",
+              "minimum": 3.0,
+              "maximum": 150.0,
+              "coarse_half_span": 20.0,
+              "step": 5.0,
+              "unit": "m",
+              "seed_value": 35.0
+            },
+            "rear_speed_kph": {
+              "canonical_key": "rear_speed_kph",
+              "display_name_zh": "目标车道后车速度",
+              "minimum": 0.0,
+              "maximum": 200.0,
+              "coarse_half_span": 30.0,
+              "step": 5.0,
+              "unit": "km/h",
+              "seed_value": 115.0
+            }
+          },
+          "assumptions": [
+            "自车与目标车道后车保持恒速纵向运动。",
+            "达到 merge_time_s 的 70% 后开始计入车道重叠风险。",
+            "不模拟感知、规划、控制器或高保真车辆动力学。"
+          ]
+        },
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:31+08:00",
+      "step": "Coarse Exploration — Attempt 1",
+      "status": "COMPLETED",
+      "summary": "本地 surrogate 仿真与确定性评测完成。",
+      "data": {
+        "candidate_space_size": 81,
+        "sampling_strategy": "FULL_CARTESIAN",
+        "selected_case_count": 81,
+        "coverage_summary": {
+          "seed_nearest_included": true,
+          "axes": {
+            "ego_speed_kph": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": 65.0,
+              "maximum_selected": 85.0,
+              "covers_extrema": true
+            },
+            "merge_time_s": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": 2.0,
+              "maximum_selected": 4.0,
+              "covers_extrema": true
+            },
+            "rear_distance_m": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": 15.0,
+              "maximum_selected": 55.0,
+              "covers_extrema": true
+            },
+            "rear_speed_kph": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": 90.0,
+              "maximum_selected": 140.0,
+              "covers_extrema": true
+            }
+          }
+        },
+        "effective_plan": {
+          "scenario_type": "highway_merge",
+          "parameter_ranges": {
+            "ego_speed_kph": [
+              65.0,
+              75.0,
+              85.0
+            ],
+            "merge_time_s": [
+              2.0,
+              3.0,
+              4.0
+            ],
+            "rear_distance_m": [
+              15.0,
+              35.0,
+              55.0
+            ],
+            "rear_speed_kph": [
+              90.0,
+              115.0,
+              140.0
+            ]
+          },
+          "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+        },
+        "generated": 81,
+        "valid": 81,
+        "rejected": 0,
+        "result_distribution": {
+          "PASS": 9,
+          "HIGH_RISK": 0,
+          "FAIL": 72
+        }
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:32+08:00",
+      "step": "Metric Sensitivity Analysis",
+      "status": "COMPLETED",
+      "summary": "已基于 TTC/gap 阈值 margin 与轴对齐邻接样本计算局部敏感度。",
+      "data": {
+        "parameters": [
+          {
+            "parameter": "ego_speed_kph",
+            "direction": "increase_for_safer",
+            "strength": 0.064816666667,
+            "signed_median_slope": 0.064816666667,
+            "support_count": 54,
+            "consistent_support_count": 40,
+            "evidence_refs": [
+              "ego_speed_kph:CASE_MERGE_001_C001->CASE_MERGE_001_C028",
+              "ego_speed_kph:CASE_MERGE_001_C028->CASE_MERGE_001_C055",
+              "ego_speed_kph:CASE_MERGE_001_C002->CASE_MERGE_001_C029",
+              "ego_speed_kph:CASE_MERGE_001_C029->CASE_MERGE_001_C056",
+              "ego_speed_kph:CASE_MERGE_001_C003->CASE_MERGE_001_C030",
+              "ego_speed_kph:CASE_MERGE_001_C030->CASE_MERGE_001_C057",
+              "ego_speed_kph:CASE_MERGE_001_C004->CASE_MERGE_001_C031",
+              "ego_speed_kph:CASE_MERGE_001_C031->CASE_MERGE_001_C058",
+              "ego_speed_kph:CASE_MERGE_001_C005->CASE_MERGE_001_C032",
+              "ego_speed_kph:CASE_MERGE_001_C032->CASE_MERGE_001_C059",
+              "ego_speed_kph:CASE_MERGE_001_C006->CASE_MERGE_001_C033",
+              "ego_speed_kph:CASE_MERGE_001_C033->CASE_MERGE_001_C060",
+              "ego_speed_kph:CASE_MERGE_001_C007->CASE_MERGE_001_C034",
+              "ego_speed_kph:CASE_MERGE_001_C034->CASE_MERGE_001_C061",
+              "ego_speed_kph:CASE_MERGE_001_C008->CASE_MERGE_001_C035",
+              "ego_speed_kph:CASE_MERGE_001_C035->CASE_MERGE_001_C062",
+              "ego_speed_kph:CASE_MERGE_001_C009->CASE_MERGE_001_C036",
+              "ego_speed_kph:CASE_MERGE_001_C036->CASE_MERGE_001_C063",
+              "ego_speed_kph:CASE_MERGE_001_C010->CASE_MERGE_001_C037",
+              "ego_speed_kph:CASE_MERGE_001_C037->CASE_MERGE_001_C064",
+              "ego_speed_kph:CASE_MERGE_001_C011->CASE_MERGE_001_C038",
+              "ego_speed_kph:CASE_MERGE_001_C038->CASE_MERGE_001_C065",
+              "ego_speed_kph:CASE_MERGE_001_C012->CASE_MERGE_001_C039",
+              "ego_speed_kph:CASE_MERGE_001_C039->CASE_MERGE_001_C066",
+              "ego_speed_kph:CASE_MERGE_001_C013->CASE_MERGE_001_C040",
+              "ego_speed_kph:CASE_MERGE_001_C040->CASE_MERGE_001_C067",
+              "ego_speed_kph:CASE_MERGE_001_C014->CASE_MERGE_001_C041",
+              "ego_speed_kph:CASE_MERGE_001_C041->CASE_MERGE_001_C068",
+              "ego_speed_kph:CASE_MERGE_001_C015->CASE_MERGE_001_C042",
+              "ego_speed_kph:CASE_MERGE_001_C042->CASE_MERGE_001_C069",
+              "ego_speed_kph:CASE_MERGE_001_C016->CASE_MERGE_001_C043",
+              "ego_speed_kph:CASE_MERGE_001_C043->CASE_MERGE_001_C070",
+              "ego_speed_kph:CASE_MERGE_001_C017->CASE_MERGE_001_C044",
+              "ego_speed_kph:CASE_MERGE_001_C044->CASE_MERGE_001_C071",
+              "ego_speed_kph:CASE_MERGE_001_C018->CASE_MERGE_001_C045",
+              "ego_speed_kph:CASE_MERGE_001_C045->CASE_MERGE_001_C072",
+              "ego_speed_kph:CASE_MERGE_001_C019->CASE_MERGE_001_C046",
+              "ego_speed_kph:CASE_MERGE_001_C046->CASE_MERGE_001_C073",
+              "ego_speed_kph:CASE_MERGE_001_C020->CASE_MERGE_001_C047",
+              "ego_speed_kph:CASE_MERGE_001_C047->CASE_MERGE_001_C074",
+              "ego_speed_kph:CASE_MERGE_001_C021->CASE_MERGE_001_C048",
+              "ego_speed_kph:CASE_MERGE_001_C048->CASE_MERGE_001_C075",
+              "ego_speed_kph:CASE_MERGE_001_C022->CASE_MERGE_001_C049",
+              "ego_speed_kph:CASE_MERGE_001_C049->CASE_MERGE_001_C076",
+              "ego_speed_kph:CASE_MERGE_001_C023->CASE_MERGE_001_C050",
+              "ego_speed_kph:CASE_MERGE_001_C050->CASE_MERGE_001_C077",
+              "ego_speed_kph:CASE_MERGE_001_C024->CASE_MERGE_001_C051",
+              "ego_speed_kph:CASE_MERGE_001_C051->CASE_MERGE_001_C078",
+              "ego_speed_kph:CASE_MERGE_001_C025->CASE_MERGE_001_C052",
+              "ego_speed_kph:CASE_MERGE_001_C052->CASE_MERGE_001_C079",
+              "ego_speed_kph:CASE_MERGE_001_C026->CASE_MERGE_001_C053",
+              "ego_speed_kph:CASE_MERGE_001_C053->CASE_MERGE_001_C080",
+              "ego_speed_kph:CASE_MERGE_001_C027->CASE_MERGE_001_C054",
+              "ego_speed_kph:CASE_MERGE_001_C054->CASE_MERGE_001_C081"
+            ]
+          },
+          {
+            "parameter": "rear_speed_kph",
+            "direction": "decrease_for_safer",
+            "strength": 0.064816666667,
+            "signed_median_slope": -0.064816666667,
+            "support_count": 54,
+            "consistent_support_count": 44,
+            "evidence_refs": [
+              "rear_speed_kph:CASE_MERGE_001_C001->CASE_MERGE_001_C002",
+              "rear_speed_kph:CASE_MERGE_001_C002->CASE_MERGE_001_C003",
+              "rear_speed_kph:CASE_MERGE_001_C004->CASE_MERGE_001_C005",
+              "rear_speed_kph:CASE_MERGE_001_C005->CASE_MERGE_001_C006",
+              "rear_speed_kph:CASE_MERGE_001_C007->CASE_MERGE_001_C008",
+              "rear_speed_kph:CASE_MERGE_001_C008->CASE_MERGE_001_C009",
+              "rear_speed_kph:CASE_MERGE_001_C010->CASE_MERGE_001_C011",
+              "rear_speed_kph:CASE_MERGE_001_C011->CASE_MERGE_001_C012",
+              "rear_speed_kph:CASE_MERGE_001_C013->CASE_MERGE_001_C014",
+              "rear_speed_kph:CASE_MERGE_001_C014->CASE_MERGE_001_C015",
+              "rear_speed_kph:CASE_MERGE_001_C016->CASE_MERGE_001_C017",
+              "rear_speed_kph:CASE_MERGE_001_C017->CASE_MERGE_001_C018",
+              "rear_speed_kph:CASE_MERGE_001_C019->CASE_MERGE_001_C020",
+              "rear_speed_kph:CASE_MERGE_001_C020->CASE_MERGE_001_C021",
+              "rear_speed_kph:CASE_MERGE_001_C022->CASE_MERGE_001_C023",
+              "rear_speed_kph:CASE_MERGE_001_C023->CASE_MERGE_001_C024",
+              "rear_speed_kph:CASE_MERGE_001_C025->CASE_MERGE_001_C026",
+              "rear_speed_kph:CASE_MERGE_001_C026->CASE_MERGE_001_C027",
+              "rear_speed_kph:CASE_MERGE_001_C028->CASE_MERGE_001_C029",
+              "rear_speed_kph:CASE_MERGE_001_C029->CASE_MERGE_001_C030",
+              "rear_speed_kph:CASE_MERGE_001_C031->CASE_MERGE_001_C032",
+              "rear_speed_kph:CASE_MERGE_001_C032->CASE_MERGE_001_C033",
+              "rear_speed_kph:CASE_MERGE_001_C034->CASE_MERGE_001_C035",
+              "rear_speed_kph:CASE_MERGE_001_C035->CASE_MERGE_001_C036",
+              "rear_speed_kph:CASE_MERGE_001_C037->CASE_MERGE_001_C038",
+              "rear_speed_kph:CASE_MERGE_001_C038->CASE_MERGE_001_C039",
+              "rear_speed_kph:CASE_MERGE_001_C040->CASE_MERGE_001_C041",
+              "rear_speed_kph:CASE_MERGE_001_C041->CASE_MERGE_001_C042",
+              "rear_speed_kph:CASE_MERGE_001_C043->CASE_MERGE_001_C044",
+              "rear_speed_kph:CASE_MERGE_001_C044->CASE_MERGE_001_C045",
+              "rear_speed_kph:CASE_MERGE_001_C046->CASE_MERGE_001_C047",
+              "rear_speed_kph:CASE_MERGE_001_C047->CASE_MERGE_001_C048",
+              "rear_speed_kph:CASE_MERGE_001_C049->CASE_MERGE_001_C050",
+              "rear_speed_kph:CASE_MERGE_001_C050->CASE_MERGE_001_C051",
+              "rear_speed_kph:CASE_MERGE_001_C052->CASE_MERGE_001_C053",
+              "rear_speed_kph:CASE_MERGE_001_C053->CASE_MERGE_001_C054",
+              "rear_speed_kph:CASE_MERGE_001_C055->CASE_MERGE_001_C056",
+              "rear_speed_kph:CASE_MERGE_001_C056->CASE_MERGE_001_C057",
+              "rear_speed_kph:CASE_MERGE_001_C058->CASE_MERGE_001_C059",
+              "rear_speed_kph:CASE_MERGE_001_C059->CASE_MERGE_001_C060",
+              "rear_speed_kph:CASE_MERGE_001_C061->CASE_MERGE_001_C062",
+              "rear_speed_kph:CASE_MERGE_001_C062->CASE_MERGE_001_C063",
+              "rear_speed_kph:CASE_MERGE_001_C064->CASE_MERGE_001_C065",
+              "rear_speed_kph:CASE_MERGE_001_C065->CASE_MERGE_001_C066",
+              "rear_speed_kph:CASE_MERGE_001_C067->CASE_MERGE_001_C068",
+              "rear_speed_kph:CASE_MERGE_001_C068->CASE_MERGE_001_C069",
+              "rear_speed_kph:CASE_MERGE_001_C070->CASE_MERGE_001_C071",
+              "rear_speed_kph:CASE_MERGE_001_C071->CASE_MERGE_001_C072",
+              "rear_speed_kph:CASE_MERGE_001_C073->CASE_MERGE_001_C074",
+              "rear_speed_kph:CASE_MERGE_001_C074->CASE_MERGE_001_C075",
+              "rear_speed_kph:CASE_MERGE_001_C076->CASE_MERGE_001_C077",
+              "rear_speed_kph:CASE_MERGE_001_C077->CASE_MERGE_001_C078",
+              "rear_speed_kph:CASE_MERGE_001_C079->CASE_MERGE_001_C080",
+              "rear_speed_kph:CASE_MERGE_001_C080->CASE_MERGE_001_C081"
+            ]
+          },
+          {
+            "parameter": "rear_distance_m",
+            "direction": "increase_for_safer",
+            "strength": 0.053608333333,
+            "signed_median_slope": 0.053608333333,
+            "support_count": 54,
+            "consistent_support_count": 38,
+            "evidence_refs": [
+              "rear_distance_m:CASE_MERGE_001_C001->CASE_MERGE_001_C004",
+              "rear_distance_m:CASE_MERGE_001_C004->CASE_MERGE_001_C007",
+              "rear_distance_m:CASE_MERGE_001_C002->CASE_MERGE_001_C005",
+              "rear_distance_m:CASE_MERGE_001_C005->CASE_MERGE_001_C008",
+              "rear_distance_m:CASE_MERGE_001_C003->CASE_MERGE_001_C006",
+              "rear_distance_m:CASE_MERGE_001_C006->CASE_MERGE_001_C009",
+              "rear_distance_m:CASE_MERGE_001_C010->CASE_MERGE_001_C013",
+              "rear_distance_m:CASE_MERGE_001_C013->CASE_MERGE_001_C016",
+              "rear_distance_m:CASE_MERGE_001_C011->CASE_MERGE_001_C014",
+              "rear_distance_m:CASE_MERGE_001_C014->CASE_MERGE_001_C017",
+              "rear_distance_m:CASE_MERGE_001_C012->CASE_MERGE_001_C015",
+              "rear_distance_m:CASE_MERGE_001_C015->CASE_MERGE_001_C018",
+              "rear_distance_m:CASE_MERGE_001_C019->CASE_MERGE_001_C022",
+              "rear_distance_m:CASE_MERGE_001_C022->CASE_MERGE_001_C025",
+              "rear_distance_m:CASE_MERGE_001_C020->CASE_MERGE_001_C023",
+              "rear_distance_m:CASE_MERGE_001_C023->CASE_MERGE_001_C026",
+              "rear_distance_m:CASE_MERGE_001_C021->CASE_MERGE_001_C024",
+              "rear_distance_m:CASE_MERGE_001_C024->CASE_MERGE_001_C027",
+              "rear_distance_m:CASE_MERGE_001_C028->CASE_MERGE_001_C031",
+              "rear_distance_m:CASE_MERGE_001_C031->CASE_MERGE_001_C034",
+              "rear_distance_m:CASE_MERGE_001_C029->CASE_MERGE_001_C032",
+              "rear_distance_m:CASE_MERGE_001_C032->CASE_MERGE_001_C035",
+              "rear_distance_m:CASE_MERGE_001_C030->CASE_MERGE_001_C033",
+              "rear_distance_m:CASE_MERGE_001_C033->CASE_MERGE_001_C036",
+              "rear_distance_m:CASE_MERGE_001_C037->CASE_MERGE_001_C040",
+              "rear_distance_m:CASE_MERGE_001_C040->CASE_MERGE_001_C043",
+              "rear_distance_m:CASE_MERGE_001_C038->CASE_MERGE_001_C041",
+              "rear_distance_m:CASE_MERGE_001_C041->CASE_MERGE_001_C044",
+              "rear_distance_m:CASE_MERGE_001_C039->CASE_MERGE_001_C042",
+              "rear_distance_m:CASE_MERGE_001_C042->CASE_MERGE_001_C045",
+              "rear_distance_m:CASE_MERGE_001_C046->CASE_MERGE_001_C049",
+              "rear_distance_m:CASE_MERGE_001_C049->CASE_MERGE_001_C052",
+              "rear_distance_m:CASE_MERGE_001_C047->CASE_MERGE_001_C050",
+              "rear_distance_m:CASE_MERGE_001_C050->CASE_MERGE_001_C053",
+              "rear_distance_m:CASE_MERGE_001_C048->CASE_MERGE_001_C051",
+              "rear_distance_m:CASE_MERGE_001_C051->CASE_MERGE_001_C054",
+              "rear_distance_m:CASE_MERGE_001_C055->CASE_MERGE_001_C058",
+              "rear_distance_m:CASE_MERGE_001_C058->CASE_MERGE_001_C061",
+              "rear_distance_m:CASE_MERGE_001_C056->CASE_MERGE_001_C059",
+              "rear_distance_m:CASE_MERGE_001_C059->CASE_MERGE_001_C062",
+              "rear_distance_m:CASE_MERGE_001_C057->CASE_MERGE_001_C060",
+              "rear_distance_m:CASE_MERGE_001_C060->CASE_MERGE_001_C063",
+              "rear_distance_m:CASE_MERGE_001_C064->CASE_MERGE_001_C067",
+              "rear_distance_m:CASE_MERGE_001_C067->CASE_MERGE_001_C070",
+              "rear_distance_m:CASE_MERGE_001_C065->CASE_MERGE_001_C068",
+              "rear_distance_m:CASE_MERGE_001_C068->CASE_MERGE_001_C071",
+              "rear_distance_m:CASE_MERGE_001_C066->CASE_MERGE_001_C069",
+              "rear_distance_m:CASE_MERGE_001_C069->CASE_MERGE_001_C072",
+              "rear_distance_m:CASE_MERGE_001_C073->CASE_MERGE_001_C076",
+              "rear_distance_m:CASE_MERGE_001_C076->CASE_MERGE_001_C079",
+              "rear_distance_m:CASE_MERGE_001_C074->CASE_MERGE_001_C077",
+              "rear_distance_m:CASE_MERGE_001_C077->CASE_MERGE_001_C080",
+              "rear_distance_m:CASE_MERGE_001_C075->CASE_MERGE_001_C078",
+              "rear_distance_m:CASE_MERGE_001_C078->CASE_MERGE_001_C081"
+            ]
+          },
+          {
+            "parameter": "merge_time_s",
+            "direction": "no_reliable_direction",
+            "strength": 0.0,
+            "signed_median_slope": 0.0,
+            "support_count": 54,
+            "consistent_support_count": 0,
+            "evidence_refs": [
+              "merge_time_s:CASE_MERGE_001_C001->CASE_MERGE_001_C010",
+              "merge_time_s:CASE_MERGE_001_C010->CASE_MERGE_001_C019",
+              "merge_time_s:CASE_MERGE_001_C002->CASE_MERGE_001_C011",
+              "merge_time_s:CASE_MERGE_001_C011->CASE_MERGE_001_C020",
+              "merge_time_s:CASE_MERGE_001_C003->CASE_MERGE_001_C012",
+              "merge_time_s:CASE_MERGE_001_C012->CASE_MERGE_001_C021",
+              "merge_time_s:CASE_MERGE_001_C004->CASE_MERGE_001_C013",
+              "merge_time_s:CASE_MERGE_001_C013->CASE_MERGE_001_C022",
+              "merge_time_s:CASE_MERGE_001_C005->CASE_MERGE_001_C014",
+              "merge_time_s:CASE_MERGE_001_C014->CASE_MERGE_001_C023",
+              "merge_time_s:CASE_MERGE_001_C006->CASE_MERGE_001_C015",
+              "merge_time_s:CASE_MERGE_001_C015->CASE_MERGE_001_C024",
+              "merge_time_s:CASE_MERGE_001_C007->CASE_MERGE_001_C016",
+              "merge_time_s:CASE_MERGE_001_C016->CASE_MERGE_001_C025",
+              "merge_time_s:CASE_MERGE_001_C008->CASE_MERGE_001_C017",
+              "merge_time_s:CASE_MERGE_001_C017->CASE_MERGE_001_C026",
+              "merge_time_s:CASE_MERGE_001_C009->CASE_MERGE_001_C018",
+              "merge_time_s:CASE_MERGE_001_C018->CASE_MERGE_001_C027",
+              "merge_time_s:CASE_MERGE_001_C028->CASE_MERGE_001_C037",
+              "merge_time_s:CASE_MERGE_001_C037->CASE_MERGE_001_C046",
+              "merge_time_s:CASE_MERGE_001_C029->CASE_MERGE_001_C038",
+              "merge_time_s:CASE_MERGE_001_C038->CASE_MERGE_001_C047",
+              "merge_time_s:CASE_MERGE_001_C030->CASE_MERGE_001_C039",
+              "merge_time_s:CASE_MERGE_001_C039->CASE_MERGE_001_C048",
+              "merge_time_s:CASE_MERGE_001_C031->CASE_MERGE_001_C040",
+              "merge_time_s:CASE_MERGE_001_C040->CASE_MERGE_001_C049",
+              "merge_time_s:CASE_MERGE_001_C032->CASE_MERGE_001_C041",
+              "merge_time_s:CASE_MERGE_001_C041->CASE_MERGE_001_C050",
+              "merge_time_s:CASE_MERGE_001_C033->CASE_MERGE_001_C042",
+              "merge_time_s:CASE_MERGE_001_C042->CASE_MERGE_001_C051",
+              "merge_time_s:CASE_MERGE_001_C034->CASE_MERGE_001_C043",
+              "merge_time_s:CASE_MERGE_001_C043->CASE_MERGE_001_C052",
+              "merge_time_s:CASE_MERGE_001_C035->CASE_MERGE_001_C044",
+              "merge_time_s:CASE_MERGE_001_C044->CASE_MERGE_001_C053",
+              "merge_time_s:CASE_MERGE_001_C036->CASE_MERGE_001_C045",
+              "merge_time_s:CASE_MERGE_001_C045->CASE_MERGE_001_C054",
+              "merge_time_s:CASE_MERGE_001_C055->CASE_MERGE_001_C064",
+              "merge_time_s:CASE_MERGE_001_C064->CASE_MERGE_001_C073",
+              "merge_time_s:CASE_MERGE_001_C056->CASE_MERGE_001_C065",
+              "merge_time_s:CASE_MERGE_001_C065->CASE_MERGE_001_C074",
+              "merge_time_s:CASE_MERGE_001_C057->CASE_MERGE_001_C066",
+              "merge_time_s:CASE_MERGE_001_C066->CASE_MERGE_001_C075",
+              "merge_time_s:CASE_MERGE_001_C058->CASE_MERGE_001_C067",
+              "merge_time_s:CASE_MERGE_001_C067->CASE_MERGE_001_C076",
+              "merge_time_s:CASE_MERGE_001_C059->CASE_MERGE_001_C068",
+              "merge_time_s:CASE_MERGE_001_C068->CASE_MERGE_001_C077",
+              "merge_time_s:CASE_MERGE_001_C060->CASE_MERGE_001_C069",
+              "merge_time_s:CASE_MERGE_001_C069->CASE_MERGE_001_C078",
+              "merge_time_s:CASE_MERGE_001_C061->CASE_MERGE_001_C070",
+              "merge_time_s:CASE_MERGE_001_C070->CASE_MERGE_001_C079",
+              "merge_time_s:CASE_MERGE_001_C062->CASE_MERGE_001_C071",
+              "merge_time_s:CASE_MERGE_001_C071->CASE_MERGE_001_C080",
+              "merge_time_s:CASE_MERGE_001_C063->CASE_MERGE_001_C072",
+              "merge_time_s:CASE_MERGE_001_C072->CASE_MERGE_001_C081"
+            ]
+          }
+        ],
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:32+08:00",
+      "step": "Boundary Detection",
+      "status": "COMPLETED",
+      "summary": "Transition pairs use state span, normalized interval, seed proximity and metric-threshold evidence; selected anchors prioritize parameter-axis diversity.",
+      "data": {
+        "status": "DETECTED",
+        "transition_pair_count": 21,
+        "selected_anchors": [
+          {
+            "case_a": "CASE_MERGE_001_C064",
+            "result_a": "FAIL",
+            "case_b": "CASE_MERGE_001_C067",
+            "result_b": "PASS",
+            "changed_parameter": "rear_distance_m",
+            "interval": {
+              "min": 15.0,
+              "max": 35.0
+            },
+            "fixed_parameters": {
+              "rear_speed_kph": 90.0,
+              "ego_speed_kph": 85.0,
+              "merge_time_s": 3.0
+            },
+            "severity_delta": 2,
+            "priority": 3,
+            "distance_to_seed": 0.75,
+            "score_components": {
+              "state_transition_value": 3,
+              "transition_type": "PASS↔FAIL",
+              "normalized_parameter_interval": 0.5,
+              "interval_width": 20.0,
+              "seed_proximity": 0.571429,
+              "metric_boundary_evidence": 0.641755
+            },
+            "anchor_score": 311.065921,
+            "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+          },
+          {
+            "case_a": "CASE_MERGE_001_C040",
+            "result_a": "FAIL",
+            "case_b": "CASE_MERGE_001_C067",
+            "result_b": "PASS",
+            "changed_parameter": "ego_speed_kph",
+            "interval": {
+              "min": 75.0,
+              "max": 85.0
+            },
+            "fixed_parameters": {
+              "rear_speed_kph": 90.0,
+              "rear_distance_m": 35.0,
+              "merge_time_s": 3.0
+            },
+            "severity_delta": 2,
+            "priority": 3,
+            "distance_to_seed": 0.559017,
+            "score_components": {
+              "state_transition_value": 3,
+              "transition_type": "PASS↔FAIL",
+              "normalized_parameter_interval": 0.5,
+              "interval_width": 10.0,
+              "seed_proximity": 0.64143,
+              "metric_boundary_evidence": 0.510852
+            },
+            "anchor_score": 310.761408,
+            "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+          },
+          {
+            "case_a": "CASE_MERGE_001_C043",
+            "result_a": "PASS",
+            "case_b": "CASE_MERGE_001_C044",
+            "result_b": "FAIL",
+            "changed_parameter": "rear_speed_kph",
+            "interval": {
+              "min": 90.0,
+              "max": 115.0
+            },
+            "fixed_parameters": {
+              "rear_distance_m": 55.0,
+              "ego_speed_kph": 75.0,
+              "merge_time_s": 3.0
+            },
+            "severity_delta": 2,
+            "priority": 3,
+            "distance_to_seed": 0.559017,
+            "score_components": {
+              "state_transition_value": 3,
+              "transition_type": "PASS↔FAIL",
+              "normalized_parameter_interval": 0.5,
+              "interval_width": 25.0,
+              "seed_proximity": 0.64143,
+              "metric_boundary_evidence": 0.486901
+            },
+            "anchor_score": 310.641656,
+            "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+          }
+        ],
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:32+08:00",
+      "step": "Fine Generalization",
+      "status": "COMPLETED",
+      "summary": "生成 21 个确定性插值样本。",
+      "data": {
+        "generated": 21,
+        "result_distribution": {
+          "PASS": 9,
+          "HIGH_RISK": 5,
+          "FAIL": 7
+        },
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    }
+  ],
+  "ai_generalization_plan": {
+    "scenario_type": "highway_merge",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        65.0,
+        75.0,
+        85.0
+      ],
+      "merge_time_s": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "rear_distance_m": [
+        15.0,
+        35.0,
+        55.0
+      ],
+      "rear_speed_kph": [
+        90.0,
+        115.0,
+        140.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+  },
+  "ai_original_plan": {
+    "scenario_type": "highway_merge",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        65.0,
+        75.0,
+        85.0
+      ],
+      "merge_time_s": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "rear_distance_m": [
+        15.0,
+        35.0,
+        55.0
+      ],
+      "rear_speed_kph": [
+        90.0,
+        115.0,
+        140.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+  },
+  "effective_plan": {
+    "scenario_type": "highway_merge",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        65.0,
+        75.0,
+        85.0
+      ],
+      "merge_time_s": [
+        2.0,
+        3.0,
+        4.0
+      ],
+      "rear_distance_m": [
+        15.0,
+        35.0,
+        55.0
+      ],
+      "rear_speed_kph": [
+        90.0,
+        115.0,
+        140.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[65.0, 75.0, 85.0]；merge_time_s=medium:[2.0, 3.0, 4.0]；rear_distance_m=high:[15.0, 35.0, 55.0]；rear_speed_kph=medium:[90.0, 115.0, 140.0]"
+  },
+  "guardrail_adjustments": [],
+  "local_transition_boundary_facts": [
+    {
+      "changed_parameter": "rear_distance_m",
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "ego_speed_kph": 85.0,
+        "merge_time_s": 3.0
+      },
+      "coarse_interval": {
+        "min": 15.0,
+        "max": 35.0
+      },
+      "refined_interval": {
+        "min": 20.0,
+        "max": 22.5
+      },
+      "ordered_transition_states": [
+        "FAIL",
+        "HIGH_RISK",
+        "PASS"
+      ],
+      "width_reduction": 0.875
+    },
+    {
+      "changed_parameter": "ego_speed_kph",
+      "fixed_parameters": {
+        "rear_speed_kph": 90.0,
+        "rear_distance_m": 35.0,
+        "merge_time_s": 3.0
+      },
+      "coarse_interval": {
+        "min": 75.0,
+        "max": 85.0
+      },
+      "refined_interval": {
+        "min": 78.75,
+        "max": 80.0
+      },
+      "ordered_transition_states": [
+        "FAIL",
+        "HIGH_RISK",
+        "PASS"
+      ],
+      "width_reduction": 0.875
+    },
+    {
+      "changed_parameter": "rear_speed_kph",
+      "fixed_parameters": {
+        "rear_distance_m": 55.0,
+        "ego_speed_kph": 75.0,
+        "merge_time_s": 3.0
+      },
+      "coarse_interval": {
+        "min": 90.0,
+        "max": 115.0
+      },
+      "refined_interval": {
+        "min": 90.0,
+        "max": 93.125
+      },
+      "ordered_transition_states": [
+        "PASS",
+        "HIGH_RISK",
+        "FAIL"
+      ],
+      "width_reduction": 0.875
+    }
+  ],
+  "deterministic_summary": {
+    "source": "DETERMINISTIC_PYTHON",
+    "boundary_summary": "本次发现 3 个局部状态转换区域，涉及后向间距、自车速度、目标车道后车速度。每条结果仅适用于对应固定条件及已采样区间；具体区间见《局部边界摘要》。"
+  },
+  "completed_at": "2026-09-15T23:06:32+08:00",
+  "final_status": "COMPLETED"
+}

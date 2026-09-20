@@ -1,0 +1,3634 @@
+{
+  "schema_version": "2.0",
+  "run_id": "CL-20260915-032",
+  "started_at": "2026-09-15T23:06:32+08:00",
+  "backend": "LocalKinematicSimulator + EvaluationEngine (local surrogate)",
+  "llm_provider": "qwen",
+  "llm_model": "qwen3.8-flash",
+  "source_task_context": {
+    "case_id": "CASE_BRAKE_001",
+    "diff": "REPEATED_FAIL",
+    "severity": "MEDIUM",
+    "version_prev": "V1.8.2",
+    "version_curr": "V1.8.3",
+    "prev_result": "FAIL",
+    "curr_result": "FAIL"
+  },
+  "candidate_filter": {
+    "method": "deterministic_priority_table",
+    "selected_case_id": "CASE_BRAKE_001",
+    "priority": 10,
+    "reason": "确定性候选规则命中：当前版本持续失败，且严重度为中。 priority=10。"
+  },
+  "issue_prioritization": {
+    "source": "deterministic_candidate_filter",
+    "decisions": [
+      {
+        "case_id": "CASE_BRAKE_001",
+        "priority": 10,
+        "should_expand": true,
+        "reason": "确定性候选规则命中：当前版本持续失败，且严重度为中。 priority=10。"
+      }
+    ]
+  },
+  "ai_issue_interpretation": {
+    "scenario_type": "lead_brake",
+    "actors": [
+      "ego_vehicle",
+      "lead_vehicle"
+    ],
+    "interaction_summary": "在本地 surrogate 回归数据中，观察到 ego_vehicle 跟随 lead_vehicle 行驶。当 lead_vehicle 执行制动动作后，两者之间的纵向间距呈现快速缩小的趋势。当前观测到的最小碰撞时间为 1.18 s，最小间距为 3.80 m，且未发生物理接触。",
+    "candidate_factors": [
+      "ego_speed_kph",
+      "initial_gap_m",
+      "lead_decel_mps2",
+      "lead_speed_kph"
+    ],
+    "risk_hypothesis": "基于当前 Local surrogate 的观测结果，较短的最小碰撞时间可能与特定的车速、初始间距及制动强度组合有关。为了更全面地评估该现象在不同工况下的表现，建议扩展对 ego_speed_kph、initial_gap_m 和 lead_decel_mps2 等参数的覆盖范围。鉴于当前分析仅局限于 Local surrogate 数据，建议引入更高保真度的仿真环境以进行进一步的验证与确认。"
+  },
+  "ai_factor_plan": {
+    "scenario_type": "lead_brake",
+    "factors": [
+      {
+        "name": "initial_gap_m",
+        "priority": "high",
+        "reason": "在本地 surrogate 数据中，观察到初始纵向间距是决定最小间距的关键变量；较小的初始间距直接导致观测到的最小间距显著减小。"
+      },
+      {
+        "name": "lead_decel_mps2",
+        "priority": "medium",
+        "reason": "当前观测显示，前车制动加速度的绝对值增大与最小碰撞时间的缩短存在相关性，表明该参数对局部风险指标有直接影响。"
+      },
+      {
+        "name": "ego_speed_kph",
+        "priority": "low",
+        "reason": "在当前局部样本范围内，自车速度的变化对最小碰撞时间的影响相对较弱，表现为次要因素。"
+      }
+    ],
+    "hypothesis": "基于当前 Local surrogate 的观测结果，较短的最小碰撞时间可能与特定的车速、初始间距及制动强度组合有关。为了更全面地评估该现象在不同工况下的表现，建议扩展对 ego_speed_kph、initial_gap_m 和 lead_decel_mps2 等参数的覆盖范围。鉴于当前分析仅局限于 Local surrogate 数据，建议引入更高保真度的仿真环境以进行进一步的验证与确认。"
+  },
+  "parameter_space": {
+    "scenario_type": "lead_brake",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        85.0,
+        100.0,
+        115.0
+      ],
+      "initial_gap_m": [
+        10.0,
+        32.0,
+        50.0
+      ],
+      "lead_decel_mps2": [
+        -6.5,
+        -5.0,
+        -3.5
+      ],
+      "lead_speed_kph": [
+        55.0,
+        75.0,
+        95.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+  },
+  "coarse_attempt_1": {
+    "candidate_space_size": 81,
+    "sampling_strategy": "FULL_CARTESIAN",
+    "selected_case_count": 81,
+    "coverage_summary": {
+      "seed_nearest_included": true,
+      "axes": {
+        "ego_speed_kph": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": 85.0,
+          "maximum_selected": 115.0,
+          "covers_extrema": true
+        },
+        "initial_gap_m": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": 10.0,
+          "maximum_selected": 50.0,
+          "covers_extrema": true
+        },
+        "lead_decel_mps2": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": -6.5,
+          "maximum_selected": -3.5,
+          "covers_extrema": true
+        },
+        "lead_speed_kph": {
+          "candidate_level_count": 3,
+          "selected_level_count": 3,
+          "minimum_selected": 55.0,
+          "maximum_selected": 95.0,
+          "covers_extrema": true
+        }
+      }
+    },
+    "effective_plan": {
+      "scenario_type": "lead_brake",
+      "parameter_ranges": {
+        "ego_speed_kph": [
+          85.0,
+          100.0,
+          115.0
+        ],
+        "initial_gap_m": [
+          10.0,
+          32.0,
+          50.0
+        ],
+        "lead_decel_mps2": [
+          -6.5,
+          -5.0,
+          -3.5
+        ],
+        "lead_speed_kph": [
+          55.0,
+          75.0,
+          95.0
+        ]
+      },
+      "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+    },
+    "generated": 81,
+    "valid": 81,
+    "rejected": 0,
+    "result_distribution": {
+      "PASS": 15,
+      "HIGH_RISK": 6,
+      "FAIL": 60
+    }
+  },
+  "metric_sensitivity": {
+    "method": "axis_aligned_local_metric_slopes",
+    "score_definition": "min(normalized TTC FAIL margin, normalized gap FAIL margin); collision subtracts 2",
+    "thresholds": {
+      "fail_ttc_s": 1.5,
+      "high_risk_ttc_s": 3.0,
+      "fail_gap_m": 4.0,
+      "high_risk_gap_m": 10.0
+    },
+    "parameters": [
+      {
+        "parameter": "lead_decel_mps2",
+        "direction": "increase_for_safer",
+        "strength": 0.011333333333,
+        "signed_median_slope": 0.011333333333,
+        "support_count": 54,
+        "consistent_support_count": 39,
+        "evidence_refs": [
+          "lead_decel_mps2:CASE_BRAKE_001_C001->CASE_BRAKE_001_C004",
+          "lead_decel_mps2:CASE_BRAKE_001_C004->CASE_BRAKE_001_C007",
+          "lead_decel_mps2:CASE_BRAKE_001_C002->CASE_BRAKE_001_C005",
+          "lead_decel_mps2:CASE_BRAKE_001_C005->CASE_BRAKE_001_C008",
+          "lead_decel_mps2:CASE_BRAKE_001_C003->CASE_BRAKE_001_C006",
+          "lead_decel_mps2:CASE_BRAKE_001_C006->CASE_BRAKE_001_C009",
+          "lead_decel_mps2:CASE_BRAKE_001_C010->CASE_BRAKE_001_C013",
+          "lead_decel_mps2:CASE_BRAKE_001_C013->CASE_BRAKE_001_C016",
+          "lead_decel_mps2:CASE_BRAKE_001_C011->CASE_BRAKE_001_C014",
+          "lead_decel_mps2:CASE_BRAKE_001_C014->CASE_BRAKE_001_C017",
+          "lead_decel_mps2:CASE_BRAKE_001_C012->CASE_BRAKE_001_C015",
+          "lead_decel_mps2:CASE_BRAKE_001_C015->CASE_BRAKE_001_C018",
+          "lead_decel_mps2:CASE_BRAKE_001_C019->CASE_BRAKE_001_C022",
+          "lead_decel_mps2:CASE_BRAKE_001_C022->CASE_BRAKE_001_C025",
+          "lead_decel_mps2:CASE_BRAKE_001_C020->CASE_BRAKE_001_C023",
+          "lead_decel_mps2:CASE_BRAKE_001_C023->CASE_BRAKE_001_C026",
+          "lead_decel_mps2:CASE_BRAKE_001_C021->CASE_BRAKE_001_C024",
+          "lead_decel_mps2:CASE_BRAKE_001_C024->CASE_BRAKE_001_C027",
+          "lead_decel_mps2:CASE_BRAKE_001_C028->CASE_BRAKE_001_C031",
+          "lead_decel_mps2:CASE_BRAKE_001_C031->CASE_BRAKE_001_C034",
+          "lead_decel_mps2:CASE_BRAKE_001_C029->CASE_BRAKE_001_C032",
+          "lead_decel_mps2:CASE_BRAKE_001_C032->CASE_BRAKE_001_C035",
+          "lead_decel_mps2:CASE_BRAKE_001_C030->CASE_BRAKE_001_C033",
+          "lead_decel_mps2:CASE_BRAKE_001_C033->CASE_BRAKE_001_C036",
+          "lead_decel_mps2:CASE_BRAKE_001_C037->CASE_BRAKE_001_C040",
+          "lead_decel_mps2:CASE_BRAKE_001_C040->CASE_BRAKE_001_C043",
+          "lead_decel_mps2:CASE_BRAKE_001_C038->CASE_BRAKE_001_C041",
+          "lead_decel_mps2:CASE_BRAKE_001_C041->CASE_BRAKE_001_C044",
+          "lead_decel_mps2:CASE_BRAKE_001_C039->CASE_BRAKE_001_C042",
+          "lead_decel_mps2:CASE_BRAKE_001_C042->CASE_BRAKE_001_C045",
+          "lead_decel_mps2:CASE_BRAKE_001_C046->CASE_BRAKE_001_C049",
+          "lead_decel_mps2:CASE_BRAKE_001_C049->CASE_BRAKE_001_C052",
+          "lead_decel_mps2:CASE_BRAKE_001_C047->CASE_BRAKE_001_C050",
+          "lead_decel_mps2:CASE_BRAKE_001_C050->CASE_BRAKE_001_C053",
+          "lead_decel_mps2:CASE_BRAKE_001_C048->CASE_BRAKE_001_C051",
+          "lead_decel_mps2:CASE_BRAKE_001_C051->CASE_BRAKE_001_C054",
+          "lead_decel_mps2:CASE_BRAKE_001_C055->CASE_BRAKE_001_C058",
+          "lead_decel_mps2:CASE_BRAKE_001_C058->CASE_BRAKE_001_C061",
+          "lead_decel_mps2:CASE_BRAKE_001_C056->CASE_BRAKE_001_C059",
+          "lead_decel_mps2:CASE_BRAKE_001_C059->CASE_BRAKE_001_C062",
+          "lead_decel_mps2:CASE_BRAKE_001_C057->CASE_BRAKE_001_C060",
+          "lead_decel_mps2:CASE_BRAKE_001_C060->CASE_BRAKE_001_C063",
+          "lead_decel_mps2:CASE_BRAKE_001_C064->CASE_BRAKE_001_C067",
+          "lead_decel_mps2:CASE_BRAKE_001_C067->CASE_BRAKE_001_C070",
+          "lead_decel_mps2:CASE_BRAKE_001_C065->CASE_BRAKE_001_C068",
+          "lead_decel_mps2:CASE_BRAKE_001_C068->CASE_BRAKE_001_C071",
+          "lead_decel_mps2:CASE_BRAKE_001_C066->CASE_BRAKE_001_C069",
+          "lead_decel_mps2:CASE_BRAKE_001_C069->CASE_BRAKE_001_C072",
+          "lead_decel_mps2:CASE_BRAKE_001_C073->CASE_BRAKE_001_C076",
+          "lead_decel_mps2:CASE_BRAKE_001_C076->CASE_BRAKE_001_C079",
+          "lead_decel_mps2:CASE_BRAKE_001_C074->CASE_BRAKE_001_C077",
+          "lead_decel_mps2:CASE_BRAKE_001_C077->CASE_BRAKE_001_C080",
+          "lead_decel_mps2:CASE_BRAKE_001_C075->CASE_BRAKE_001_C078",
+          "lead_decel_mps2:CASE_BRAKE_001_C078->CASE_BRAKE_001_C081"
+        ]
+      },
+      {
+        "parameter": "ego_speed_kph",
+        "direction": "decrease_for_safer",
+        "strength": 0.0012,
+        "signed_median_slope": -0.0012,
+        "support_count": 54,
+        "consistent_support_count": 35,
+        "evidence_refs": [
+          "ego_speed_kph:CASE_BRAKE_001_C001->CASE_BRAKE_001_C028",
+          "ego_speed_kph:CASE_BRAKE_001_C028->CASE_BRAKE_001_C055",
+          "ego_speed_kph:CASE_BRAKE_001_C002->CASE_BRAKE_001_C029",
+          "ego_speed_kph:CASE_BRAKE_001_C029->CASE_BRAKE_001_C056",
+          "ego_speed_kph:CASE_BRAKE_001_C003->CASE_BRAKE_001_C030",
+          "ego_speed_kph:CASE_BRAKE_001_C030->CASE_BRAKE_001_C057",
+          "ego_speed_kph:CASE_BRAKE_001_C004->CASE_BRAKE_001_C031",
+          "ego_speed_kph:CASE_BRAKE_001_C031->CASE_BRAKE_001_C058",
+          "ego_speed_kph:CASE_BRAKE_001_C005->CASE_BRAKE_001_C032",
+          "ego_speed_kph:CASE_BRAKE_001_C032->CASE_BRAKE_001_C059",
+          "ego_speed_kph:CASE_BRAKE_001_C006->CASE_BRAKE_001_C033",
+          "ego_speed_kph:CASE_BRAKE_001_C033->CASE_BRAKE_001_C060",
+          "ego_speed_kph:CASE_BRAKE_001_C007->CASE_BRAKE_001_C034",
+          "ego_speed_kph:CASE_BRAKE_001_C034->CASE_BRAKE_001_C061",
+          "ego_speed_kph:CASE_BRAKE_001_C008->CASE_BRAKE_001_C035",
+          "ego_speed_kph:CASE_BRAKE_001_C035->CASE_BRAKE_001_C062",
+          "ego_speed_kph:CASE_BRAKE_001_C009->CASE_BRAKE_001_C036",
+          "ego_speed_kph:CASE_BRAKE_001_C036->CASE_BRAKE_001_C063",
+          "ego_speed_kph:CASE_BRAKE_001_C010->CASE_BRAKE_001_C037",
+          "ego_speed_kph:CASE_BRAKE_001_C037->CASE_BRAKE_001_C064",
+          "ego_speed_kph:CASE_BRAKE_001_C011->CASE_BRAKE_001_C038",
+          "ego_speed_kph:CASE_BRAKE_001_C038->CASE_BRAKE_001_C065",
+          "ego_speed_kph:CASE_BRAKE_001_C012->CASE_BRAKE_001_C039",
+          "ego_speed_kph:CASE_BRAKE_001_C039->CASE_BRAKE_001_C066",
+          "ego_speed_kph:CASE_BRAKE_001_C013->CASE_BRAKE_001_C040",
+          "ego_speed_kph:CASE_BRAKE_001_C040->CASE_BRAKE_001_C067",
+          "ego_speed_kph:CASE_BRAKE_001_C014->CASE_BRAKE_001_C041",
+          "ego_speed_kph:CASE_BRAKE_001_C041->CASE_BRAKE_001_C068",
+          "ego_speed_kph:CASE_BRAKE_001_C015->CASE_BRAKE_001_C042",
+          "ego_speed_kph:CASE_BRAKE_001_C042->CASE_BRAKE_001_C069",
+          "ego_speed_kph:CASE_BRAKE_001_C016->CASE_BRAKE_001_C043",
+          "ego_speed_kph:CASE_BRAKE_001_C043->CASE_BRAKE_001_C070",
+          "ego_speed_kph:CASE_BRAKE_001_C017->CASE_BRAKE_001_C044",
+          "ego_speed_kph:CASE_BRAKE_001_C044->CASE_BRAKE_001_C071",
+          "ego_speed_kph:CASE_BRAKE_001_C018->CASE_BRAKE_001_C045",
+          "ego_speed_kph:CASE_BRAKE_001_C045->CASE_BRAKE_001_C072",
+          "ego_speed_kph:CASE_BRAKE_001_C019->CASE_BRAKE_001_C046",
+          "ego_speed_kph:CASE_BRAKE_001_C046->CASE_BRAKE_001_C073",
+          "ego_speed_kph:CASE_BRAKE_001_C020->CASE_BRAKE_001_C047",
+          "ego_speed_kph:CASE_BRAKE_001_C047->CASE_BRAKE_001_C074",
+          "ego_speed_kph:CASE_BRAKE_001_C021->CASE_BRAKE_001_C048",
+          "ego_speed_kph:CASE_BRAKE_001_C048->CASE_BRAKE_001_C075",
+          "ego_speed_kph:CASE_BRAKE_001_C022->CASE_BRAKE_001_C049",
+          "ego_speed_kph:CASE_BRAKE_001_C049->CASE_BRAKE_001_C076",
+          "ego_speed_kph:CASE_BRAKE_001_C023->CASE_BRAKE_001_C050",
+          "ego_speed_kph:CASE_BRAKE_001_C050->CASE_BRAKE_001_C077",
+          "ego_speed_kph:CASE_BRAKE_001_C024->CASE_BRAKE_001_C051",
+          "ego_speed_kph:CASE_BRAKE_001_C051->CASE_BRAKE_001_C078",
+          "ego_speed_kph:CASE_BRAKE_001_C025->CASE_BRAKE_001_C052",
+          "ego_speed_kph:CASE_BRAKE_001_C052->CASE_BRAKE_001_C079",
+          "ego_speed_kph:CASE_BRAKE_001_C026->CASE_BRAKE_001_C053",
+          "ego_speed_kph:CASE_BRAKE_001_C053->CASE_BRAKE_001_C080",
+          "ego_speed_kph:CASE_BRAKE_001_C027->CASE_BRAKE_001_C054",
+          "ego_speed_kph:CASE_BRAKE_001_C054->CASE_BRAKE_001_C081"
+        ]
+      },
+      {
+        "parameter": "lead_speed_kph",
+        "direction": "increase_for_safer",
+        "strength": 0.0011,
+        "signed_median_slope": 0.0011,
+        "support_count": 54,
+        "consistent_support_count": 35,
+        "evidence_refs": [
+          "lead_speed_kph:CASE_BRAKE_001_C001->CASE_BRAKE_001_C002",
+          "lead_speed_kph:CASE_BRAKE_001_C002->CASE_BRAKE_001_C003",
+          "lead_speed_kph:CASE_BRAKE_001_C004->CASE_BRAKE_001_C005",
+          "lead_speed_kph:CASE_BRAKE_001_C005->CASE_BRAKE_001_C006",
+          "lead_speed_kph:CASE_BRAKE_001_C007->CASE_BRAKE_001_C008",
+          "lead_speed_kph:CASE_BRAKE_001_C008->CASE_BRAKE_001_C009",
+          "lead_speed_kph:CASE_BRAKE_001_C010->CASE_BRAKE_001_C011",
+          "lead_speed_kph:CASE_BRAKE_001_C011->CASE_BRAKE_001_C012",
+          "lead_speed_kph:CASE_BRAKE_001_C013->CASE_BRAKE_001_C014",
+          "lead_speed_kph:CASE_BRAKE_001_C014->CASE_BRAKE_001_C015",
+          "lead_speed_kph:CASE_BRAKE_001_C016->CASE_BRAKE_001_C017",
+          "lead_speed_kph:CASE_BRAKE_001_C017->CASE_BRAKE_001_C018",
+          "lead_speed_kph:CASE_BRAKE_001_C019->CASE_BRAKE_001_C020",
+          "lead_speed_kph:CASE_BRAKE_001_C020->CASE_BRAKE_001_C021",
+          "lead_speed_kph:CASE_BRAKE_001_C022->CASE_BRAKE_001_C023",
+          "lead_speed_kph:CASE_BRAKE_001_C023->CASE_BRAKE_001_C024",
+          "lead_speed_kph:CASE_BRAKE_001_C025->CASE_BRAKE_001_C026",
+          "lead_speed_kph:CASE_BRAKE_001_C026->CASE_BRAKE_001_C027",
+          "lead_speed_kph:CASE_BRAKE_001_C028->CASE_BRAKE_001_C029",
+          "lead_speed_kph:CASE_BRAKE_001_C029->CASE_BRAKE_001_C030",
+          "lead_speed_kph:CASE_BRAKE_001_C031->CASE_BRAKE_001_C032",
+          "lead_speed_kph:CASE_BRAKE_001_C032->CASE_BRAKE_001_C033",
+          "lead_speed_kph:CASE_BRAKE_001_C034->CASE_BRAKE_001_C035",
+          "lead_speed_kph:CASE_BRAKE_001_C035->CASE_BRAKE_001_C036",
+          "lead_speed_kph:CASE_BRAKE_001_C037->CASE_BRAKE_001_C038",
+          "lead_speed_kph:CASE_BRAKE_001_C038->CASE_BRAKE_001_C039",
+          "lead_speed_kph:CASE_BRAKE_001_C040->CASE_BRAKE_001_C041",
+          "lead_speed_kph:CASE_BRAKE_001_C041->CASE_BRAKE_001_C042",
+          "lead_speed_kph:CASE_BRAKE_001_C043->CASE_BRAKE_001_C044",
+          "lead_speed_kph:CASE_BRAKE_001_C044->CASE_BRAKE_001_C045",
+          "lead_speed_kph:CASE_BRAKE_001_C046->CASE_BRAKE_001_C047",
+          "lead_speed_kph:CASE_BRAKE_001_C047->CASE_BRAKE_001_C048",
+          "lead_speed_kph:CASE_BRAKE_001_C049->CASE_BRAKE_001_C050",
+          "lead_speed_kph:CASE_BRAKE_001_C050->CASE_BRAKE_001_C051",
+          "lead_speed_kph:CASE_BRAKE_001_C052->CASE_BRAKE_001_C053",
+          "lead_speed_kph:CASE_BRAKE_001_C053->CASE_BRAKE_001_C054",
+          "lead_speed_kph:CASE_BRAKE_001_C055->CASE_BRAKE_001_C056",
+          "lead_speed_kph:CASE_BRAKE_001_C056->CASE_BRAKE_001_C057",
+          "lead_speed_kph:CASE_BRAKE_001_C058->CASE_BRAKE_001_C059",
+          "lead_speed_kph:CASE_BRAKE_001_C059->CASE_BRAKE_001_C060",
+          "lead_speed_kph:CASE_BRAKE_001_C061->CASE_BRAKE_001_C062",
+          "lead_speed_kph:CASE_BRAKE_001_C062->CASE_BRAKE_001_C063",
+          "lead_speed_kph:CASE_BRAKE_001_C064->CASE_BRAKE_001_C065",
+          "lead_speed_kph:CASE_BRAKE_001_C065->CASE_BRAKE_001_C066",
+          "lead_speed_kph:CASE_BRAKE_001_C067->CASE_BRAKE_001_C068",
+          "lead_speed_kph:CASE_BRAKE_001_C068->CASE_BRAKE_001_C069",
+          "lead_speed_kph:CASE_BRAKE_001_C070->CASE_BRAKE_001_C071",
+          "lead_speed_kph:CASE_BRAKE_001_C071->CASE_BRAKE_001_C072",
+          "lead_speed_kph:CASE_BRAKE_001_C073->CASE_BRAKE_001_C074",
+          "lead_speed_kph:CASE_BRAKE_001_C074->CASE_BRAKE_001_C075",
+          "lead_speed_kph:CASE_BRAKE_001_C076->CASE_BRAKE_001_C077",
+          "lead_speed_kph:CASE_BRAKE_001_C077->CASE_BRAKE_001_C078",
+          "lead_speed_kph:CASE_BRAKE_001_C079->CASE_BRAKE_001_C080",
+          "lead_speed_kph:CASE_BRAKE_001_C080->CASE_BRAKE_001_C081"
+        ]
+      },
+      {
+        "parameter": "initial_gap_m",
+        "direction": "increase_for_safer",
+        "strength": 0.000823232323,
+        "signed_median_slope": 0.000823232323,
+        "support_count": 54,
+        "consistent_support_count": 33,
+        "evidence_refs": [
+          "initial_gap_m:CASE_BRAKE_001_C001->CASE_BRAKE_001_C010",
+          "initial_gap_m:CASE_BRAKE_001_C010->CASE_BRAKE_001_C019",
+          "initial_gap_m:CASE_BRAKE_001_C002->CASE_BRAKE_001_C011",
+          "initial_gap_m:CASE_BRAKE_001_C011->CASE_BRAKE_001_C020",
+          "initial_gap_m:CASE_BRAKE_001_C003->CASE_BRAKE_001_C012",
+          "initial_gap_m:CASE_BRAKE_001_C012->CASE_BRAKE_001_C021",
+          "initial_gap_m:CASE_BRAKE_001_C004->CASE_BRAKE_001_C013",
+          "initial_gap_m:CASE_BRAKE_001_C013->CASE_BRAKE_001_C022",
+          "initial_gap_m:CASE_BRAKE_001_C005->CASE_BRAKE_001_C014",
+          "initial_gap_m:CASE_BRAKE_001_C014->CASE_BRAKE_001_C023",
+          "initial_gap_m:CASE_BRAKE_001_C006->CASE_BRAKE_001_C015",
+          "initial_gap_m:CASE_BRAKE_001_C015->CASE_BRAKE_001_C024",
+          "initial_gap_m:CASE_BRAKE_001_C007->CASE_BRAKE_001_C016",
+          "initial_gap_m:CASE_BRAKE_001_C016->CASE_BRAKE_001_C025",
+          "initial_gap_m:CASE_BRAKE_001_C008->CASE_BRAKE_001_C017",
+          "initial_gap_m:CASE_BRAKE_001_C017->CASE_BRAKE_001_C026",
+          "initial_gap_m:CASE_BRAKE_001_C009->CASE_BRAKE_001_C018",
+          "initial_gap_m:CASE_BRAKE_001_C018->CASE_BRAKE_001_C027",
+          "initial_gap_m:CASE_BRAKE_001_C028->CASE_BRAKE_001_C037",
+          "initial_gap_m:CASE_BRAKE_001_C037->CASE_BRAKE_001_C046",
+          "initial_gap_m:CASE_BRAKE_001_C029->CASE_BRAKE_001_C038",
+          "initial_gap_m:CASE_BRAKE_001_C038->CASE_BRAKE_001_C047",
+          "initial_gap_m:CASE_BRAKE_001_C030->CASE_BRAKE_001_C039",
+          "initial_gap_m:CASE_BRAKE_001_C039->CASE_BRAKE_001_C048",
+          "initial_gap_m:CASE_BRAKE_001_C031->CASE_BRAKE_001_C040",
+          "initial_gap_m:CASE_BRAKE_001_C040->CASE_BRAKE_001_C049",
+          "initial_gap_m:CASE_BRAKE_001_C032->CASE_BRAKE_001_C041",
+          "initial_gap_m:CASE_BRAKE_001_C041->CASE_BRAKE_001_C050",
+          "initial_gap_m:CASE_BRAKE_001_C033->CASE_BRAKE_001_C042",
+          "initial_gap_m:CASE_BRAKE_001_C042->CASE_BRAKE_001_C051",
+          "initial_gap_m:CASE_BRAKE_001_C034->CASE_BRAKE_001_C043",
+          "initial_gap_m:CASE_BRAKE_001_C043->CASE_BRAKE_001_C052",
+          "initial_gap_m:CASE_BRAKE_001_C035->CASE_BRAKE_001_C044",
+          "initial_gap_m:CASE_BRAKE_001_C044->CASE_BRAKE_001_C053",
+          "initial_gap_m:CASE_BRAKE_001_C036->CASE_BRAKE_001_C045",
+          "initial_gap_m:CASE_BRAKE_001_C045->CASE_BRAKE_001_C054",
+          "initial_gap_m:CASE_BRAKE_001_C055->CASE_BRAKE_001_C064",
+          "initial_gap_m:CASE_BRAKE_001_C064->CASE_BRAKE_001_C073",
+          "initial_gap_m:CASE_BRAKE_001_C056->CASE_BRAKE_001_C065",
+          "initial_gap_m:CASE_BRAKE_001_C065->CASE_BRAKE_001_C074",
+          "initial_gap_m:CASE_BRAKE_001_C057->CASE_BRAKE_001_C066",
+          "initial_gap_m:CASE_BRAKE_001_C066->CASE_BRAKE_001_C075",
+          "initial_gap_m:CASE_BRAKE_001_C058->CASE_BRAKE_001_C067",
+          "initial_gap_m:CASE_BRAKE_001_C067->CASE_BRAKE_001_C076",
+          "initial_gap_m:CASE_BRAKE_001_C059->CASE_BRAKE_001_C068",
+          "initial_gap_m:CASE_BRAKE_001_C068->CASE_BRAKE_001_C077",
+          "initial_gap_m:CASE_BRAKE_001_C060->CASE_BRAKE_001_C069",
+          "initial_gap_m:CASE_BRAKE_001_C069->CASE_BRAKE_001_C078",
+          "initial_gap_m:CASE_BRAKE_001_C061->CASE_BRAKE_001_C070",
+          "initial_gap_m:CASE_BRAKE_001_C070->CASE_BRAKE_001_C079",
+          "initial_gap_m:CASE_BRAKE_001_C062->CASE_BRAKE_001_C071",
+          "initial_gap_m:CASE_BRAKE_001_C071->CASE_BRAKE_001_C080",
+          "initial_gap_m:CASE_BRAKE_001_C063->CASE_BRAKE_001_C072",
+          "initial_gap_m:CASE_BRAKE_001_C072->CASE_BRAKE_001_C081"
+        ]
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C001->CASE_BRAKE_001_C028",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C001",
+        "case_b": "CASE_BRAKE_001_C028",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.950666667,
+        "safety_margin_b": -2.946,
+        "safety_margin_delta": 0.004666667,
+        "local_slope": 0.000311111111
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C028->CASE_BRAKE_001_C055",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C028",
+        "case_b": "CASE_BRAKE_001_C055",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.946,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.012666667,
+        "local_slope": 0.000844444444
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C002->CASE_BRAKE_001_C029",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C002",
+        "case_b": "CASE_BRAKE_001_C029",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.948666667,
+        "safety_margin_b": -2.996,
+        "safety_margin_delta": -0.047333333,
+        "local_slope": -0.003155555556
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C029->CASE_BRAKE_001_C056",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C029",
+        "case_b": "CASE_BRAKE_001_C056",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.996,
+        "safety_margin_b": -2.958,
+        "safety_margin_delta": 0.038,
+        "local_slope": 0.002533333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C003->CASE_BRAKE_001_C030",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C003",
+        "case_b": "CASE_BRAKE_001_C030",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.993333333,
+        "safety_margin_b": -2.946,
+        "safety_margin_delta": 0.047333333,
+        "local_slope": 0.003155555556
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C030->CASE_BRAKE_001_C057",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C030",
+        "case_b": "CASE_BRAKE_001_C057",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.946,
+        "safety_margin_b": -2.956666667,
+        "safety_margin_delta": -0.010666667,
+        "local_slope": -0.000711111111
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C004->CASE_BRAKE_001_C031",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C004",
+        "case_b": "CASE_BRAKE_001_C031",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.936,
+        "safety_margin_b": -2.943333333,
+        "safety_margin_delta": -0.007333333,
+        "local_slope": -0.000488888889
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C031->CASE_BRAKE_001_C058",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C031",
+        "case_b": "CASE_BRAKE_001_C058",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.943333333,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.01,
+        "local_slope": 0.000666666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C005->CASE_BRAKE_001_C032",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C005",
+        "case_b": "CASE_BRAKE_001_C032",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.972666667,
+        "safety_margin_b": -2.972,
+        "safety_margin_delta": 0.000666667,
+        "local_slope": 4.4444444e-05
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C032->CASE_BRAKE_001_C059",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C032",
+        "case_b": "CASE_BRAKE_001_C059",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.972,
+        "safety_margin_b": -2.953333333,
+        "safety_margin_delta": 0.018666667,
+        "local_slope": 0.001244444444
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C006->CASE_BRAKE_001_C033",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C006",
+        "case_b": "CASE_BRAKE_001_C033",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 0.866333333,
+        "safety_margin_b": -2.991333333,
+        "safety_margin_delta": -3.857666667,
+        "local_slope": -0.257177777778
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C033->CASE_BRAKE_001_C060",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C033",
+        "case_b": "CASE_BRAKE_001_C060",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.991333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": 0.004666667,
+        "local_slope": 0.000311111111
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C007->CASE_BRAKE_001_C034",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C007",
+        "case_b": "CASE_BRAKE_001_C034",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.987333333,
+        "safety_margin_b": -2.940666667,
+        "safety_margin_delta": 0.046666667,
+        "local_slope": 0.003111111111
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C034->CASE_BRAKE_001_C061",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C034",
+        "case_b": "CASE_BRAKE_001_C061",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.940666667,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.007333333,
+        "local_slope": 0.000488888889
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C008->CASE_BRAKE_001_C035",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C008",
+        "case_b": "CASE_BRAKE_001_C035",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.955333333,
+        "safety_margin_b": -2.942666667,
+        "safety_margin_delta": 0.012666667,
+        "local_slope": 0.000844444444
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C035->CASE_BRAKE_001_C062",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C035",
+        "case_b": "CASE_BRAKE_001_C062",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.942666667,
+        "safety_margin_b": -2.948,
+        "safety_margin_delta": -0.005333333,
+        "local_slope": -0.000355555556
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C009->CASE_BRAKE_001_C036",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C009",
+        "case_b": "CASE_BRAKE_001_C036",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 1.0,
+        "safety_margin_b": -0.435166667,
+        "safety_margin_delta": -1.435166667,
+        "local_slope": -0.095677777778
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C036->CASE_BRAKE_001_C063",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C036",
+        "case_b": "CASE_BRAKE_001_C063",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -0.435166667,
+        "safety_margin_b": -2.938666667,
+        "safety_margin_delta": -2.5035,
+        "local_slope": -0.1669
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C010->CASE_BRAKE_001_C037",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C010",
+        "case_b": "CASE_BRAKE_001_C037",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.949333333,
+        "safety_margin_b": -2.984666667,
+        "safety_margin_delta": -0.035333333,
+        "local_slope": -0.002355555556
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C037->CASE_BRAKE_001_C064",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C037",
+        "case_b": "CASE_BRAKE_001_C064",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.984666667,
+        "safety_margin_b": -2.958666667,
+        "safety_margin_delta": 0.026,
+        "local_slope": 0.001733333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C011->CASE_BRAKE_001_C038",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C011",
+        "case_b": "CASE_BRAKE_001_C038",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.994,
+        "safety_margin_b": -2.979333333,
+        "safety_margin_delta": 0.014666667,
+        "local_slope": 0.000977777778
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C038->CASE_BRAKE_001_C065",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C038",
+        "case_b": "CASE_BRAKE_001_C065",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.979333333,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": 0.032666667,
+        "local_slope": 0.002177777778
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C012->CASE_BRAKE_001_C039",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C012",
+        "case_b": "CASE_BRAKE_001_C039",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 1.489333333,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": -4.436,
+        "local_slope": -0.295733333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C039->CASE_BRAKE_001_C066",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C039",
+        "case_b": "CASE_BRAKE_001_C066",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": -2.974666667,
+        "safety_margin_delta": -0.028,
+        "local_slope": -0.001866666667
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C013->CASE_BRAKE_001_C040",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C013",
+        "case_b": "CASE_BRAKE_001_C040",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.971333333,
+        "safety_margin_b": -2.983333333,
+        "safety_margin_delta": -0.012,
+        "local_slope": -0.0008
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C040->CASE_BRAKE_001_C067",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C040",
+        "case_b": "CASE_BRAKE_001_C067",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.983333333,
+        "safety_margin_b": -2.994,
+        "safety_margin_delta": -0.010666667,
+        "local_slope": -0.000711111111
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C014->CASE_BRAKE_001_C041",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C014",
+        "case_b": "CASE_BRAKE_001_C041",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -0.159333333,
+        "safety_margin_b": -2.985333333,
+        "safety_margin_delta": -2.826,
+        "local_slope": -0.1884
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C041->CASE_BRAKE_001_C068",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C041",
+        "case_b": "CASE_BRAKE_001_C068",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.985333333,
+        "safety_margin_b": -2.988666667,
+        "safety_margin_delta": -0.003333333,
+        "local_slope": -0.000222222222
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C015->CASE_BRAKE_001_C042",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C015",
+        "case_b": "CASE_BRAKE_001_C042",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 4.533,
+        "safety_margin_b": 0.811,
+        "safety_margin_delta": -3.722,
+        "local_slope": -0.248133333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C042->CASE_BRAKE_001_C069",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C042",
+        "case_b": "CASE_BRAKE_001_C069",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 0.811,
+        "safety_margin_b": -2.970666667,
+        "safety_margin_delta": -3.781666667,
+        "local_slope": -0.252111111111
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C016->CASE_BRAKE_001_C043",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C016",
+        "case_b": "CASE_BRAKE_001_C043",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.954666667,
+        "safety_margin_b": -2.957333333,
+        "safety_margin_delta": -0.002666667,
+        "local_slope": -0.000177777778
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C043->CASE_BRAKE_001_C070",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C043",
+        "case_b": "CASE_BRAKE_001_C070",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.957333333,
+        "safety_margin_b": -2.957333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C017->CASE_BRAKE_001_C044",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C017",
+        "case_b": "CASE_BRAKE_001_C044",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 1.77,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": -4.758,
+        "local_slope": -0.3172
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C044->CASE_BRAKE_001_C071",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C044",
+        "case_b": "CASE_BRAKE_001_C071",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.988,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C018->CASE_BRAKE_001_C045",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C018",
+        "case_b": "CASE_BRAKE_001_C045",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 4.666666667,
+        "safety_margin_b": 2.840666667,
+        "safety_margin_delta": -1.826,
+        "local_slope": -0.121733333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C045->CASE_BRAKE_001_C072",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C045",
+        "case_b": "CASE_BRAKE_001_C072",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 2.840666667,
+        "safety_margin_b": 0.252833333,
+        "safety_margin_delta": -2.587833333,
+        "local_slope": -0.172522222222
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C019->CASE_BRAKE_001_C046",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C019",
+        "case_b": "CASE_BRAKE_001_C046",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.943333333,
+        "safety_margin_b": -2.968666667,
+        "safety_margin_delta": -0.025333333,
+        "local_slope": -0.001688888889
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C046->CASE_BRAKE_001_C073",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C046",
+        "case_b": "CASE_BRAKE_001_C073",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.968666667,
+        "safety_margin_b": -2.98,
+        "safety_margin_delta": -0.011333333,
+        "local_slope": -0.000755555556
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C020->CASE_BRAKE_001_C047",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C020",
+        "case_b": "CASE_BRAKE_001_C047",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 0.346666667,
+        "safety_margin_b": -2.990666667,
+        "safety_margin_delta": -3.337333333,
+        "local_slope": -0.222488888889
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C047->CASE_BRAKE_001_C074",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C047",
+        "case_b": "CASE_BRAKE_001_C074",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.990666667,
+        "safety_margin_b": -2.954,
+        "safety_margin_delta": 0.036666667,
+        "local_slope": 0.002444444444
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C021->CASE_BRAKE_001_C048",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C021",
+        "case_b": "CASE_BRAKE_001_C048",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 3.787333333,
+        "safety_margin_b": 0.293333333,
+        "safety_margin_delta": -3.494,
+        "local_slope": -0.232933333333
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C048->CASE_BRAKE_001_C075",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C048",
+        "case_b": "CASE_BRAKE_001_C075",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 0.293333333,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -3.293333333,
+        "local_slope": -0.219555555556
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C022->CASE_BRAKE_001_C049",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C022",
+        "case_b": "CASE_BRAKE_001_C049",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.945333333,
+        "safety_margin_b": -2.981333333,
+        "safety_margin_delta": -0.036,
+        "local_slope": -0.0024
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C049->CASE_BRAKE_001_C076",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C049",
+        "case_b": "CASE_BRAKE_001_C076",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.981333333,
+        "safety_margin_b": -2.956666667,
+        "safety_margin_delta": 0.024666667,
+        "local_slope": 0.001644444444
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C023->CASE_BRAKE_001_C050",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C023",
+        "case_b": "CASE_BRAKE_001_C050",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 2.410666667,
+        "safety_margin_b": -2.947333333,
+        "safety_margin_delta": -5.358,
+        "local_slope": -0.3572
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C050->CASE_BRAKE_001_C077",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C050",
+        "case_b": "CASE_BRAKE_001_C077",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.947333333,
+        "safety_margin_b": -2.971333333,
+        "safety_margin_delta": -0.024,
+        "local_slope": -0.0016
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C024->CASE_BRAKE_001_C051",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C024",
+        "case_b": "CASE_BRAKE_001_C051",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 7.533,
+        "safety_margin_b": 3.739333333,
+        "safety_margin_delta": -3.793666667,
+        "local_slope": -0.252911111111
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C051->CASE_BRAKE_001_C078",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C051",
+        "case_b": "CASE_BRAKE_001_C078",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 3.739333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -6.726,
+        "local_slope": -0.4484
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C025->CASE_BRAKE_001_C052",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C025",
+        "case_b": "CASE_BRAKE_001_C052",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 0.659333333,
+        "safety_margin_b": -2.978,
+        "safety_margin_delta": -3.637333333,
+        "local_slope": -0.242488888889
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C052->CASE_BRAKE_001_C079",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C052",
+        "case_b": "CASE_BRAKE_001_C079",
+        "parameter_delta": 15.0,
+        "safety_margin_a": -2.978,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": 0.011333333,
+        "local_slope": 0.000755555556
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C026->CASE_BRAKE_001_C053",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C026",
+        "case_b": "CASE_BRAKE_001_C053",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 3.681333333,
+        "safety_margin_b": 1.386666667,
+        "safety_margin_delta": -2.294666667,
+        "local_slope": -0.152977777778
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C053->CASE_BRAKE_001_C080",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C053",
+        "case_b": "CASE_BRAKE_001_C080",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 1.386666667,
+        "safety_margin_b": -2.958666667,
+        "safety_margin_delta": -4.345333333,
+        "local_slope": -0.289688888889
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C027->CASE_BRAKE_001_C054",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C027",
+        "case_b": "CASE_BRAKE_001_C054",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 7.666666667,
+        "safety_margin_b": 5.295333333,
+        "safety_margin_delta": -2.371333333,
+        "local_slope": -0.158088888889
+      },
+      {
+        "evidence_id": "ego_speed_kph:CASE_BRAKE_001_C054->CASE_BRAKE_001_C081",
+        "parameter": "ego_speed_kph",
+        "case_a": "CASE_BRAKE_001_C054",
+        "case_b": "CASE_BRAKE_001_C081",
+        "parameter_delta": 15.0,
+        "safety_margin_a": 5.295333333,
+        "safety_margin_b": 1.938666667,
+        "safety_margin_delta": -3.356666667,
+        "local_slope": -0.223777777778
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C001->CASE_BRAKE_001_C010",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C001",
+        "case_b": "CASE_BRAKE_001_C010",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.950666667,
+        "safety_margin_b": -2.949333333,
+        "safety_margin_delta": 0.001333333,
+        "local_slope": 6.0606061e-05
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C010->CASE_BRAKE_001_C019",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C010",
+        "case_b": "CASE_BRAKE_001_C019",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.949333333,
+        "safety_margin_b": -2.943333333,
+        "safety_margin_delta": 0.006,
+        "local_slope": 0.000333333333
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C002->CASE_BRAKE_001_C011",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C002",
+        "case_b": "CASE_BRAKE_001_C011",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.948666667,
+        "safety_margin_b": -2.994,
+        "safety_margin_delta": -0.045333333,
+        "local_slope": -0.002060606061
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C011->CASE_BRAKE_001_C020",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C011",
+        "case_b": "CASE_BRAKE_001_C020",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.994,
+        "safety_margin_b": 0.346666667,
+        "safety_margin_delta": 3.340666667,
+        "local_slope": 0.185592592593
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C003->CASE_BRAKE_001_C012",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C003",
+        "case_b": "CASE_BRAKE_001_C012",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.993333333,
+        "safety_margin_b": 1.489333333,
+        "safety_margin_delta": 4.482666667,
+        "local_slope": 0.203757575758
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C012->CASE_BRAKE_001_C021",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C012",
+        "case_b": "CASE_BRAKE_001_C021",
+        "parameter_delta": 18.0,
+        "safety_margin_a": 1.489333333,
+        "safety_margin_b": 3.787333333,
+        "safety_margin_delta": 2.298,
+        "local_slope": 0.127666666667
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C004->CASE_BRAKE_001_C013",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C004",
+        "case_b": "CASE_BRAKE_001_C013",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.936,
+        "safety_margin_b": -2.971333333,
+        "safety_margin_delta": -0.035333333,
+        "local_slope": -0.001606060606
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C013->CASE_BRAKE_001_C022",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C013",
+        "case_b": "CASE_BRAKE_001_C022",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.971333333,
+        "safety_margin_b": -2.945333333,
+        "safety_margin_delta": 0.026,
+        "local_slope": 0.001444444444
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C005->CASE_BRAKE_001_C014",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C005",
+        "case_b": "CASE_BRAKE_001_C014",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.972666667,
+        "safety_margin_b": -0.159333333,
+        "safety_margin_delta": 2.813333333,
+        "local_slope": 0.127878787879
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C014->CASE_BRAKE_001_C023",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C014",
+        "case_b": "CASE_BRAKE_001_C023",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -0.159333333,
+        "safety_margin_b": 2.410666667,
+        "safety_margin_delta": 2.57,
+        "local_slope": 0.142777777778
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C006->CASE_BRAKE_001_C015",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C006",
+        "case_b": "CASE_BRAKE_001_C015",
+        "parameter_delta": 22.0,
+        "safety_margin_a": 0.866333333,
+        "safety_margin_b": 4.533,
+        "safety_margin_delta": 3.666666667,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C015->CASE_BRAKE_001_C024",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C015",
+        "case_b": "CASE_BRAKE_001_C024",
+        "parameter_delta": 18.0,
+        "safety_margin_a": 4.533,
+        "safety_margin_b": 7.533,
+        "safety_margin_delta": 3.0,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C007->CASE_BRAKE_001_C016",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C007",
+        "case_b": "CASE_BRAKE_001_C016",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.987333333,
+        "safety_margin_b": -2.954666667,
+        "safety_margin_delta": 0.032666667,
+        "local_slope": 0.001484848485
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C016->CASE_BRAKE_001_C025",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C016",
+        "case_b": "CASE_BRAKE_001_C025",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.954666667,
+        "safety_margin_b": 0.659333333,
+        "safety_margin_delta": 3.614,
+        "local_slope": 0.200777777778
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C008->CASE_BRAKE_001_C017",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C008",
+        "case_b": "CASE_BRAKE_001_C017",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.955333333,
+        "safety_margin_b": 1.77,
+        "safety_margin_delta": 4.725333333,
+        "local_slope": 0.214787878788
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C017->CASE_BRAKE_001_C026",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C017",
+        "case_b": "CASE_BRAKE_001_C026",
+        "parameter_delta": 18.0,
+        "safety_margin_a": 1.77,
+        "safety_margin_b": 3.681333333,
+        "safety_margin_delta": 1.911333333,
+        "local_slope": 0.106185185185
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C009->CASE_BRAKE_001_C018",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C009",
+        "case_b": "CASE_BRAKE_001_C018",
+        "parameter_delta": 22.0,
+        "safety_margin_a": 1.0,
+        "safety_margin_b": 4.666666667,
+        "safety_margin_delta": 3.666666667,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C018->CASE_BRAKE_001_C027",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C018",
+        "case_b": "CASE_BRAKE_001_C027",
+        "parameter_delta": 18.0,
+        "safety_margin_a": 4.666666667,
+        "safety_margin_b": 7.666666667,
+        "safety_margin_delta": 3.0,
+        "local_slope": 0.166666666667
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C028->CASE_BRAKE_001_C037",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C028",
+        "case_b": "CASE_BRAKE_001_C037",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.946,
+        "safety_margin_b": -2.984666667,
+        "safety_margin_delta": -0.038666667,
+        "local_slope": -0.001757575758
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C037->CASE_BRAKE_001_C046",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C037",
+        "case_b": "CASE_BRAKE_001_C046",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.984666667,
+        "safety_margin_b": -2.968666667,
+        "safety_margin_delta": 0.016,
+        "local_slope": 0.000888888889
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C029->CASE_BRAKE_001_C038",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C029",
+        "case_b": "CASE_BRAKE_001_C038",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.996,
+        "safety_margin_b": -2.979333333,
+        "safety_margin_delta": 0.016666667,
+        "local_slope": 0.000757575758
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C038->CASE_BRAKE_001_C047",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C038",
+        "case_b": "CASE_BRAKE_001_C047",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.979333333,
+        "safety_margin_b": -2.990666667,
+        "safety_margin_delta": -0.011333333,
+        "local_slope": -0.00062962963
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C030->CASE_BRAKE_001_C039",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C030",
+        "case_b": "CASE_BRAKE_001_C039",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.946,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": -0.000666667,
+        "local_slope": -3.030303e-05
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C039->CASE_BRAKE_001_C048",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C039",
+        "case_b": "CASE_BRAKE_001_C048",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": 0.293333333,
+        "safety_margin_delta": 3.24,
+        "local_slope": 0.18
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C031->CASE_BRAKE_001_C040",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C031",
+        "case_b": "CASE_BRAKE_001_C040",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.943333333,
+        "safety_margin_b": -2.983333333,
+        "safety_margin_delta": -0.04,
+        "local_slope": -0.001818181818
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C040->CASE_BRAKE_001_C049",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C040",
+        "case_b": "CASE_BRAKE_001_C049",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.983333333,
+        "safety_margin_b": -2.981333333,
+        "safety_margin_delta": 0.002,
+        "local_slope": 0.000111111111
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C032->CASE_BRAKE_001_C041",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C032",
+        "case_b": "CASE_BRAKE_001_C041",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.972,
+        "safety_margin_b": -2.985333333,
+        "safety_margin_delta": -0.013333333,
+        "local_slope": -0.000606060606
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C041->CASE_BRAKE_001_C050",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C041",
+        "case_b": "CASE_BRAKE_001_C050",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.985333333,
+        "safety_margin_b": -2.947333333,
+        "safety_margin_delta": 0.038,
+        "local_slope": 0.002111111111
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C033->CASE_BRAKE_001_C042",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C033",
+        "case_b": "CASE_BRAKE_001_C042",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.991333333,
+        "safety_margin_b": 0.811,
+        "safety_margin_delta": 3.802333333,
+        "local_slope": 0.172833333333
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C042->CASE_BRAKE_001_C051",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C042",
+        "case_b": "CASE_BRAKE_001_C051",
+        "parameter_delta": 18.0,
+        "safety_margin_a": 0.811,
+        "safety_margin_b": 3.739333333,
+        "safety_margin_delta": 2.928333333,
+        "local_slope": 0.162685185185
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C034->CASE_BRAKE_001_C043",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C034",
+        "case_b": "CASE_BRAKE_001_C043",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.940666667,
+        "safety_margin_b": -2.957333333,
+        "safety_margin_delta": -0.016666667,
+        "local_slope": -0.000757575758
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C043->CASE_BRAKE_001_C052",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C043",
+        "case_b": "CASE_BRAKE_001_C052",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.957333333,
+        "safety_margin_b": -2.978,
+        "safety_margin_delta": -0.020666667,
+        "local_slope": -0.001148148148
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C035->CASE_BRAKE_001_C044",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C035",
+        "case_b": "CASE_BRAKE_001_C044",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.942666667,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": -0.045333333,
+        "local_slope": -0.002060606061
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C044->CASE_BRAKE_001_C053",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C044",
+        "case_b": "CASE_BRAKE_001_C053",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.988,
+        "safety_margin_b": 1.386666667,
+        "safety_margin_delta": 4.374666667,
+        "local_slope": 0.243037037037
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C036->CASE_BRAKE_001_C045",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C036",
+        "case_b": "CASE_BRAKE_001_C045",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -0.435166667,
+        "safety_margin_b": 2.840666667,
+        "safety_margin_delta": 3.275833333,
+        "local_slope": 0.148901515152
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C045->CASE_BRAKE_001_C054",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C045",
+        "case_b": "CASE_BRAKE_001_C054",
+        "parameter_delta": 18.0,
+        "safety_margin_a": 2.840666667,
+        "safety_margin_b": 5.295333333,
+        "safety_margin_delta": 2.454666667,
+        "local_slope": 0.13637037037
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C055->CASE_BRAKE_001_C064",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C055",
+        "case_b": "CASE_BRAKE_001_C064",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.958666667,
+        "safety_margin_delta": -0.025333333,
+        "local_slope": -0.001151515152
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C064->CASE_BRAKE_001_C073",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C064",
+        "case_b": "CASE_BRAKE_001_C073",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.958666667,
+        "safety_margin_b": -2.98,
+        "safety_margin_delta": -0.021333333,
+        "local_slope": -0.001185185185
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C056->CASE_BRAKE_001_C065",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C056",
+        "case_b": "CASE_BRAKE_001_C065",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.958,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": 0.011333333,
+        "local_slope": 0.000515151515
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C065->CASE_BRAKE_001_C074",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C065",
+        "case_b": "CASE_BRAKE_001_C074",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": -2.954,
+        "safety_margin_delta": -0.007333333,
+        "local_slope": -0.000407407407
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C057->CASE_BRAKE_001_C066",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C057",
+        "case_b": "CASE_BRAKE_001_C066",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.956666667,
+        "safety_margin_b": -2.974666667,
+        "safety_margin_delta": -0.018,
+        "local_slope": -0.000818181818
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C066->CASE_BRAKE_001_C075",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C066",
+        "case_b": "CASE_BRAKE_001_C075",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.974666667,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.025333333,
+        "local_slope": -0.001407407407
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C058->CASE_BRAKE_001_C067",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C058",
+        "case_b": "CASE_BRAKE_001_C067",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.994,
+        "safety_margin_delta": -0.060666667,
+        "local_slope": -0.002757575758
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C067->CASE_BRAKE_001_C076",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C067",
+        "case_b": "CASE_BRAKE_001_C076",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.994,
+        "safety_margin_b": -2.956666667,
+        "safety_margin_delta": 0.037333333,
+        "local_slope": 0.002074074074
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C059->CASE_BRAKE_001_C068",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C059",
+        "case_b": "CASE_BRAKE_001_C068",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.953333333,
+        "safety_margin_b": -2.988666667,
+        "safety_margin_delta": -0.035333333,
+        "local_slope": -0.001606060606
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C068->CASE_BRAKE_001_C077",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C068",
+        "case_b": "CASE_BRAKE_001_C077",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.988666667,
+        "safety_margin_b": -2.971333333,
+        "safety_margin_delta": 0.017333333,
+        "local_slope": 0.000962962963
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C060->CASE_BRAKE_001_C069",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C060",
+        "case_b": "CASE_BRAKE_001_C069",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.970666667,
+        "safety_margin_delta": 0.016,
+        "local_slope": 0.000727272727
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C069->CASE_BRAKE_001_C078",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C069",
+        "case_b": "CASE_BRAKE_001_C078",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.970666667,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.016,
+        "local_slope": -0.000888888889
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C061->CASE_BRAKE_001_C070",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C061",
+        "case_b": "CASE_BRAKE_001_C070",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.957333333,
+        "safety_margin_delta": -0.024,
+        "local_slope": -0.001090909091
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C070->CASE_BRAKE_001_C079",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C070",
+        "case_b": "CASE_BRAKE_001_C079",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.957333333,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -0.009333333,
+        "local_slope": -0.000518518519
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C062->CASE_BRAKE_001_C071",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C062",
+        "case_b": "CASE_BRAKE_001_C071",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.948,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": -0.04,
+        "local_slope": -0.001818181818
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C071->CASE_BRAKE_001_C080",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C071",
+        "case_b": "CASE_BRAKE_001_C080",
+        "parameter_delta": 18.0,
+        "safety_margin_a": -2.988,
+        "safety_margin_b": -2.958666667,
+        "safety_margin_delta": 0.029333333,
+        "local_slope": 0.00162962963
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C063->CASE_BRAKE_001_C072",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C063",
+        "case_b": "CASE_BRAKE_001_C072",
+        "parameter_delta": 22.0,
+        "safety_margin_a": -2.938666667,
+        "safety_margin_b": 0.252833333,
+        "safety_margin_delta": 3.1915,
+        "local_slope": 0.145068181818
+      },
+      {
+        "evidence_id": "initial_gap_m:CASE_BRAKE_001_C072->CASE_BRAKE_001_C081",
+        "parameter": "initial_gap_m",
+        "case_a": "CASE_BRAKE_001_C072",
+        "case_b": "CASE_BRAKE_001_C081",
+        "parameter_delta": 18.0,
+        "safety_margin_a": 0.252833333,
+        "safety_margin_b": 1.938666667,
+        "safety_margin_delta": 1.685833333,
+        "local_slope": 0.093657407407
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C001->CASE_BRAKE_001_C004",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C001",
+        "case_b": "CASE_BRAKE_001_C004",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.950666667,
+        "safety_margin_b": -2.936,
+        "safety_margin_delta": 0.014666667,
+        "local_slope": 0.009777777778
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C004->CASE_BRAKE_001_C007",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C004",
+        "case_b": "CASE_BRAKE_001_C007",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.936,
+        "safety_margin_b": -2.987333333,
+        "safety_margin_delta": -0.051333333,
+        "local_slope": -0.034222222222
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C002->CASE_BRAKE_001_C005",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C002",
+        "case_b": "CASE_BRAKE_001_C005",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.948666667,
+        "safety_margin_b": -2.972666667,
+        "safety_margin_delta": -0.024,
+        "local_slope": -0.016
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C005->CASE_BRAKE_001_C008",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C005",
+        "case_b": "CASE_BRAKE_001_C008",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.972666667,
+        "safety_margin_b": -2.955333333,
+        "safety_margin_delta": 0.017333333,
+        "local_slope": 0.011555555556
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C003->CASE_BRAKE_001_C006",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C003",
+        "case_b": "CASE_BRAKE_001_C006",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.993333333,
+        "safety_margin_b": 0.866333333,
+        "safety_margin_delta": 3.859666667,
+        "local_slope": 2.573111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C006->CASE_BRAKE_001_C009",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C006",
+        "case_b": "CASE_BRAKE_001_C009",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 0.866333333,
+        "safety_margin_b": 1.0,
+        "safety_margin_delta": 0.133666667,
+        "local_slope": 0.089111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C010->CASE_BRAKE_001_C013",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C010",
+        "case_b": "CASE_BRAKE_001_C013",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.949333333,
+        "safety_margin_b": -2.971333333,
+        "safety_margin_delta": -0.022,
+        "local_slope": -0.014666666667
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C013->CASE_BRAKE_001_C016",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C013",
+        "case_b": "CASE_BRAKE_001_C016",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.971333333,
+        "safety_margin_b": -2.954666667,
+        "safety_margin_delta": 0.016666667,
+        "local_slope": 0.011111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C011->CASE_BRAKE_001_C014",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C011",
+        "case_b": "CASE_BRAKE_001_C014",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.994,
+        "safety_margin_b": -0.159333333,
+        "safety_margin_delta": 2.834666667,
+        "local_slope": 1.889777777778
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C014->CASE_BRAKE_001_C017",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C014",
+        "case_b": "CASE_BRAKE_001_C017",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -0.159333333,
+        "safety_margin_b": 1.77,
+        "safety_margin_delta": 1.929333333,
+        "local_slope": 1.286222222222
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C012->CASE_BRAKE_001_C015",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C012",
+        "case_b": "CASE_BRAKE_001_C015",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 1.489333333,
+        "safety_margin_b": 4.533,
+        "safety_margin_delta": 3.043666667,
+        "local_slope": 2.029111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C015->CASE_BRAKE_001_C018",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C015",
+        "case_b": "CASE_BRAKE_001_C018",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 4.533,
+        "safety_margin_b": 4.666666667,
+        "safety_margin_delta": 0.133666667,
+        "local_slope": 0.089111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C019->CASE_BRAKE_001_C022",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C019",
+        "case_b": "CASE_BRAKE_001_C022",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.943333333,
+        "safety_margin_b": -2.945333333,
+        "safety_margin_delta": -0.002,
+        "local_slope": -0.001333333333
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C022->CASE_BRAKE_001_C025",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C022",
+        "case_b": "CASE_BRAKE_001_C025",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.945333333,
+        "safety_margin_b": 0.659333333,
+        "safety_margin_delta": 3.604666667,
+        "local_slope": 2.403111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C020->CASE_BRAKE_001_C023",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C020",
+        "case_b": "CASE_BRAKE_001_C023",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 0.346666667,
+        "safety_margin_b": 2.410666667,
+        "safety_margin_delta": 2.064,
+        "local_slope": 1.376
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C023->CASE_BRAKE_001_C026",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C023",
+        "case_b": "CASE_BRAKE_001_C026",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 2.410666667,
+        "safety_margin_b": 3.681333333,
+        "safety_margin_delta": 1.270666667,
+        "local_slope": 0.847111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C021->CASE_BRAKE_001_C024",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C021",
+        "case_b": "CASE_BRAKE_001_C024",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 3.787333333,
+        "safety_margin_b": 7.533,
+        "safety_margin_delta": 3.745666667,
+        "local_slope": 2.497111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C024->CASE_BRAKE_001_C027",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C024",
+        "case_b": "CASE_BRAKE_001_C027",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 7.533,
+        "safety_margin_b": 7.666666667,
+        "safety_margin_delta": 0.133666667,
+        "local_slope": 0.089111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C028->CASE_BRAKE_001_C031",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C028",
+        "case_b": "CASE_BRAKE_001_C031",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.946,
+        "safety_margin_b": -2.943333333,
+        "safety_margin_delta": 0.002666667,
+        "local_slope": 0.001777777778
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C031->CASE_BRAKE_001_C034",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C031",
+        "case_b": "CASE_BRAKE_001_C034",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.943333333,
+        "safety_margin_b": -2.940666667,
+        "safety_margin_delta": 0.002666667,
+        "local_slope": 0.001777777778
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C029->CASE_BRAKE_001_C032",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C029",
+        "case_b": "CASE_BRAKE_001_C032",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.996,
+        "safety_margin_b": -2.972,
+        "safety_margin_delta": 0.024,
+        "local_slope": 0.016
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C032->CASE_BRAKE_001_C035",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C032",
+        "case_b": "CASE_BRAKE_001_C035",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.972,
+        "safety_margin_b": -2.942666667,
+        "safety_margin_delta": 0.029333333,
+        "local_slope": 0.019555555556
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C030->CASE_BRAKE_001_C033",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C030",
+        "case_b": "CASE_BRAKE_001_C033",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.946,
+        "safety_margin_b": -2.991333333,
+        "safety_margin_delta": -0.045333333,
+        "local_slope": -0.030222222222
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C033->CASE_BRAKE_001_C036",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C033",
+        "case_b": "CASE_BRAKE_001_C036",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.991333333,
+        "safety_margin_b": -0.435166667,
+        "safety_margin_delta": 2.556166667,
+        "local_slope": 1.704111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C037->CASE_BRAKE_001_C040",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C037",
+        "case_b": "CASE_BRAKE_001_C040",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.984666667,
+        "safety_margin_b": -2.983333333,
+        "safety_margin_delta": 0.001333333,
+        "local_slope": 0.000888888889
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C040->CASE_BRAKE_001_C043",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C040",
+        "case_b": "CASE_BRAKE_001_C043",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.983333333,
+        "safety_margin_b": -2.957333333,
+        "safety_margin_delta": 0.026,
+        "local_slope": 0.017333333333
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C038->CASE_BRAKE_001_C041",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C038",
+        "case_b": "CASE_BRAKE_001_C041",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.979333333,
+        "safety_margin_b": -2.985333333,
+        "safety_margin_delta": -0.006,
+        "local_slope": -0.004
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C041->CASE_BRAKE_001_C044",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C041",
+        "case_b": "CASE_BRAKE_001_C044",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.985333333,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": -0.002666667,
+        "local_slope": -0.001777777778
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C039->CASE_BRAKE_001_C042",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C039",
+        "case_b": "CASE_BRAKE_001_C042",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": 0.811,
+        "safety_margin_delta": 3.757666667,
+        "local_slope": 2.505111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C042->CASE_BRAKE_001_C045",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C042",
+        "case_b": "CASE_BRAKE_001_C045",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 0.811,
+        "safety_margin_b": 2.840666667,
+        "safety_margin_delta": 2.029666667,
+        "local_slope": 1.353111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C046->CASE_BRAKE_001_C049",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C046",
+        "case_b": "CASE_BRAKE_001_C049",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.968666667,
+        "safety_margin_b": -2.981333333,
+        "safety_margin_delta": -0.012666667,
+        "local_slope": -0.008444444444
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C049->CASE_BRAKE_001_C052",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C049",
+        "case_b": "CASE_BRAKE_001_C052",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.981333333,
+        "safety_margin_b": -2.978,
+        "safety_margin_delta": 0.003333333,
+        "local_slope": 0.002222222222
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C047->CASE_BRAKE_001_C050",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C047",
+        "case_b": "CASE_BRAKE_001_C050",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.990666667,
+        "safety_margin_b": -2.947333333,
+        "safety_margin_delta": 0.043333333,
+        "local_slope": 0.028888888889
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C050->CASE_BRAKE_001_C053",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C050",
+        "case_b": "CASE_BRAKE_001_C053",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.947333333,
+        "safety_margin_b": 1.386666667,
+        "safety_margin_delta": 4.334,
+        "local_slope": 2.889333333333
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C048->CASE_BRAKE_001_C051",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C048",
+        "case_b": "CASE_BRAKE_001_C051",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 0.293333333,
+        "safety_margin_b": 3.739333333,
+        "safety_margin_delta": 3.446,
+        "local_slope": 2.297333333333
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C051->CASE_BRAKE_001_C054",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C051",
+        "case_b": "CASE_BRAKE_001_C054",
+        "parameter_delta": 1.5,
+        "safety_margin_a": 3.739333333,
+        "safety_margin_b": 5.295333333,
+        "safety_margin_delta": 1.556,
+        "local_slope": 1.037333333333
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C055->CASE_BRAKE_001_C058",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C055",
+        "case_b": "CASE_BRAKE_001_C058",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C058->CASE_BRAKE_001_C061",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C058",
+        "case_b": "CASE_BRAKE_001_C061",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.933333333,
+        "safety_margin_delta": 0.0,
+        "local_slope": 0.0
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C056->CASE_BRAKE_001_C059",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C056",
+        "case_b": "CASE_BRAKE_001_C059",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.958,
+        "safety_margin_b": -2.953333333,
+        "safety_margin_delta": 0.004666667,
+        "local_slope": 0.003111111111
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C059->CASE_BRAKE_001_C062",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C059",
+        "case_b": "CASE_BRAKE_001_C062",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.953333333,
+        "safety_margin_b": -2.948,
+        "safety_margin_delta": 0.005333333,
+        "local_slope": 0.003555555556
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C057->CASE_BRAKE_001_C060",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C057",
+        "case_b": "CASE_BRAKE_001_C060",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.956666667,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.03,
+        "local_slope": -0.02
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C060->CASE_BRAKE_001_C063",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C060",
+        "case_b": "CASE_BRAKE_001_C063",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": -2.938666667,
+        "safety_margin_delta": 0.048,
+        "local_slope": 0.032
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C064->CASE_BRAKE_001_C067",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C064",
+        "case_b": "CASE_BRAKE_001_C067",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.958666667,
+        "safety_margin_b": -2.994,
+        "safety_margin_delta": -0.035333333,
+        "local_slope": -0.023555555556
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C067->CASE_BRAKE_001_C070",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C067",
+        "case_b": "CASE_BRAKE_001_C070",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.994,
+        "safety_margin_b": -2.957333333,
+        "safety_margin_delta": 0.036666667,
+        "local_slope": 0.024444444444
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C065->CASE_BRAKE_001_C068",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C065",
+        "case_b": "CASE_BRAKE_001_C068",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": -2.988666667,
+        "safety_margin_delta": -0.042,
+        "local_slope": -0.028
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C068->CASE_BRAKE_001_C071",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C068",
+        "case_b": "CASE_BRAKE_001_C071",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.988666667,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": 0.000666667,
+        "local_slope": 0.000444444444
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C066->CASE_BRAKE_001_C069",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C066",
+        "case_b": "CASE_BRAKE_001_C069",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.974666667,
+        "safety_margin_b": -2.970666667,
+        "safety_margin_delta": 0.004,
+        "local_slope": 0.002666666667
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C069->CASE_BRAKE_001_C072",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C069",
+        "case_b": "CASE_BRAKE_001_C072",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.970666667,
+        "safety_margin_b": 0.252833333,
+        "safety_margin_delta": 3.2235,
+        "local_slope": 2.149
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C073->CASE_BRAKE_001_C076",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C073",
+        "case_b": "CASE_BRAKE_001_C076",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.98,
+        "safety_margin_b": -2.956666667,
+        "safety_margin_delta": 0.023333333,
+        "local_slope": 0.015555555556
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C076->CASE_BRAKE_001_C079",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C076",
+        "case_b": "CASE_BRAKE_001_C079",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.956666667,
+        "safety_margin_b": -2.966666667,
+        "safety_margin_delta": -0.01,
+        "local_slope": -0.006666666667
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C074->CASE_BRAKE_001_C077",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C074",
+        "case_b": "CASE_BRAKE_001_C077",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.954,
+        "safety_margin_b": -2.971333333,
+        "safety_margin_delta": -0.017333333,
+        "local_slope": -0.011555555556
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C077->CASE_BRAKE_001_C080",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C077",
+        "case_b": "CASE_BRAKE_001_C080",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.971333333,
+        "safety_margin_b": -2.958666667,
+        "safety_margin_delta": 0.012666667,
+        "local_slope": 0.008444444444
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C075->CASE_BRAKE_001_C078",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C075",
+        "case_b": "CASE_BRAKE_001_C078",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -3.0,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": 0.013333333,
+        "local_slope": 0.008888888889
+      },
+      {
+        "evidence_id": "lead_decel_mps2:CASE_BRAKE_001_C078->CASE_BRAKE_001_C081",
+        "parameter": "lead_decel_mps2",
+        "case_a": "CASE_BRAKE_001_C078",
+        "case_b": "CASE_BRAKE_001_C081",
+        "parameter_delta": 1.5,
+        "safety_margin_a": -2.986666667,
+        "safety_margin_b": 1.938666667,
+        "safety_margin_delta": 4.925333333,
+        "local_slope": 3.283555555556
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C001->CASE_BRAKE_001_C002",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C001",
+        "case_b": "CASE_BRAKE_001_C002",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.950666667,
+        "safety_margin_b": -2.948666667,
+        "safety_margin_delta": 0.002,
+        "local_slope": 0.0001
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C002->CASE_BRAKE_001_C003",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C002",
+        "case_b": "CASE_BRAKE_001_C003",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.948666667,
+        "safety_margin_b": -2.993333333,
+        "safety_margin_delta": -0.044666667,
+        "local_slope": -0.002233333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C004->CASE_BRAKE_001_C005",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C004",
+        "case_b": "CASE_BRAKE_001_C005",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.936,
+        "safety_margin_b": -2.972666667,
+        "safety_margin_delta": -0.036666667,
+        "local_slope": -0.001833333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C005->CASE_BRAKE_001_C006",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C005",
+        "case_b": "CASE_BRAKE_001_C006",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.972666667,
+        "safety_margin_b": 0.866333333,
+        "safety_margin_delta": 3.839,
+        "local_slope": 0.19195
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C007->CASE_BRAKE_001_C008",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C007",
+        "case_b": "CASE_BRAKE_001_C008",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.987333333,
+        "safety_margin_b": -2.955333333,
+        "safety_margin_delta": 0.032,
+        "local_slope": 0.0016
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C008->CASE_BRAKE_001_C009",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C008",
+        "case_b": "CASE_BRAKE_001_C009",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.955333333,
+        "safety_margin_b": 1.0,
+        "safety_margin_delta": 3.955333333,
+        "local_slope": 0.197766666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C010->CASE_BRAKE_001_C011",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C010",
+        "case_b": "CASE_BRAKE_001_C011",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.949333333,
+        "safety_margin_b": -2.994,
+        "safety_margin_delta": -0.044666667,
+        "local_slope": -0.002233333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C011->CASE_BRAKE_001_C012",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C011",
+        "case_b": "CASE_BRAKE_001_C012",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.994,
+        "safety_margin_b": 1.489333333,
+        "safety_margin_delta": 4.483333333,
+        "local_slope": 0.224166666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C013->CASE_BRAKE_001_C014",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C013",
+        "case_b": "CASE_BRAKE_001_C014",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.971333333,
+        "safety_margin_b": -0.159333333,
+        "safety_margin_delta": 2.812,
+        "local_slope": 0.1406
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C014->CASE_BRAKE_001_C015",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C014",
+        "case_b": "CASE_BRAKE_001_C015",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -0.159333333,
+        "safety_margin_b": 4.533,
+        "safety_margin_delta": 4.692333333,
+        "local_slope": 0.234616666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C016->CASE_BRAKE_001_C017",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C016",
+        "case_b": "CASE_BRAKE_001_C017",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.954666667,
+        "safety_margin_b": 1.77,
+        "safety_margin_delta": 4.724666667,
+        "local_slope": 0.236233333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C017->CASE_BRAKE_001_C018",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C017",
+        "case_b": "CASE_BRAKE_001_C018",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 1.77,
+        "safety_margin_b": 4.666666667,
+        "safety_margin_delta": 2.896666667,
+        "local_slope": 0.144833333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C019->CASE_BRAKE_001_C020",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C019",
+        "case_b": "CASE_BRAKE_001_C020",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.943333333,
+        "safety_margin_b": 0.346666667,
+        "safety_margin_delta": 3.29,
+        "local_slope": 0.1645
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C020->CASE_BRAKE_001_C021",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C020",
+        "case_b": "CASE_BRAKE_001_C021",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 0.346666667,
+        "safety_margin_b": 3.787333333,
+        "safety_margin_delta": 3.440666667,
+        "local_slope": 0.172033333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C022->CASE_BRAKE_001_C023",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C022",
+        "case_b": "CASE_BRAKE_001_C023",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.945333333,
+        "safety_margin_b": 2.410666667,
+        "safety_margin_delta": 5.356,
+        "local_slope": 0.2678
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C023->CASE_BRAKE_001_C024",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C023",
+        "case_b": "CASE_BRAKE_001_C024",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 2.410666667,
+        "safety_margin_b": 7.533,
+        "safety_margin_delta": 5.122333333,
+        "local_slope": 0.256116666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C025->CASE_BRAKE_001_C026",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C025",
+        "case_b": "CASE_BRAKE_001_C026",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 0.659333333,
+        "safety_margin_b": 3.681333333,
+        "safety_margin_delta": 3.022,
+        "local_slope": 0.1511
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C026->CASE_BRAKE_001_C027",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C026",
+        "case_b": "CASE_BRAKE_001_C027",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 3.681333333,
+        "safety_margin_b": 7.666666667,
+        "safety_margin_delta": 3.985333333,
+        "local_slope": 0.199266666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C028->CASE_BRAKE_001_C029",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C028",
+        "case_b": "CASE_BRAKE_001_C029",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.946,
+        "safety_margin_b": -2.996,
+        "safety_margin_delta": -0.05,
+        "local_slope": -0.0025
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C029->CASE_BRAKE_001_C030",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C029",
+        "case_b": "CASE_BRAKE_001_C030",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.996,
+        "safety_margin_b": -2.946,
+        "safety_margin_delta": 0.05,
+        "local_slope": 0.0025
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C031->CASE_BRAKE_001_C032",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C031",
+        "case_b": "CASE_BRAKE_001_C032",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.943333333,
+        "safety_margin_b": -2.972,
+        "safety_margin_delta": -0.028666667,
+        "local_slope": -0.001433333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C032->CASE_BRAKE_001_C033",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C032",
+        "case_b": "CASE_BRAKE_001_C033",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.972,
+        "safety_margin_b": -2.991333333,
+        "safety_margin_delta": -0.019333333,
+        "local_slope": -0.000966666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C034->CASE_BRAKE_001_C035",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C034",
+        "case_b": "CASE_BRAKE_001_C035",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.940666667,
+        "safety_margin_b": -2.942666667,
+        "safety_margin_delta": -0.002,
+        "local_slope": -0.0001
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C035->CASE_BRAKE_001_C036",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C035",
+        "case_b": "CASE_BRAKE_001_C036",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.942666667,
+        "safety_margin_b": -0.435166667,
+        "safety_margin_delta": 2.5075,
+        "local_slope": 0.125375
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C037->CASE_BRAKE_001_C038",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C037",
+        "case_b": "CASE_BRAKE_001_C038",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.984666667,
+        "safety_margin_b": -2.979333333,
+        "safety_margin_delta": 0.005333333,
+        "local_slope": 0.000266666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C038->CASE_BRAKE_001_C039",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C038",
+        "case_b": "CASE_BRAKE_001_C039",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.979333333,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": 0.032666667,
+        "local_slope": 0.001633333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C040->CASE_BRAKE_001_C041",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C040",
+        "case_b": "CASE_BRAKE_001_C041",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.983333333,
+        "safety_margin_b": -2.985333333,
+        "safety_margin_delta": -0.002,
+        "local_slope": -0.0001
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C041->CASE_BRAKE_001_C042",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C041",
+        "case_b": "CASE_BRAKE_001_C042",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.985333333,
+        "safety_margin_b": 0.811,
+        "safety_margin_delta": 3.796333333,
+        "local_slope": 0.189816666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C043->CASE_BRAKE_001_C044",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C043",
+        "case_b": "CASE_BRAKE_001_C044",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.957333333,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": -0.030666667,
+        "local_slope": -0.001533333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C044->CASE_BRAKE_001_C045",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C044",
+        "case_b": "CASE_BRAKE_001_C045",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.988,
+        "safety_margin_b": 2.840666667,
+        "safety_margin_delta": 5.828666667,
+        "local_slope": 0.291433333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C046->CASE_BRAKE_001_C047",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C046",
+        "case_b": "CASE_BRAKE_001_C047",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.968666667,
+        "safety_margin_b": -2.990666667,
+        "safety_margin_delta": -0.022,
+        "local_slope": -0.0011
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C047->CASE_BRAKE_001_C048",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C047",
+        "case_b": "CASE_BRAKE_001_C048",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.990666667,
+        "safety_margin_b": 0.293333333,
+        "safety_margin_delta": 3.284,
+        "local_slope": 0.1642
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C049->CASE_BRAKE_001_C050",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C049",
+        "case_b": "CASE_BRAKE_001_C050",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.981333333,
+        "safety_margin_b": -2.947333333,
+        "safety_margin_delta": 0.034,
+        "local_slope": 0.0017
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C050->CASE_BRAKE_001_C051",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C050",
+        "case_b": "CASE_BRAKE_001_C051",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.947333333,
+        "safety_margin_b": 3.739333333,
+        "safety_margin_delta": 6.686666667,
+        "local_slope": 0.334333333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C052->CASE_BRAKE_001_C053",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C052",
+        "case_b": "CASE_BRAKE_001_C053",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.978,
+        "safety_margin_b": 1.386666667,
+        "safety_margin_delta": 4.364666667,
+        "local_slope": 0.218233333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C053->CASE_BRAKE_001_C054",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C053",
+        "case_b": "CASE_BRAKE_001_C054",
+        "parameter_delta": 20.0,
+        "safety_margin_a": 1.386666667,
+        "safety_margin_b": 5.295333333,
+        "safety_margin_delta": 3.908666667,
+        "local_slope": 0.195433333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C055->CASE_BRAKE_001_C056",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C055",
+        "case_b": "CASE_BRAKE_001_C056",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.958,
+        "safety_margin_delta": -0.024666667,
+        "local_slope": -0.001233333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C056->CASE_BRAKE_001_C057",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C056",
+        "case_b": "CASE_BRAKE_001_C057",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.958,
+        "safety_margin_b": -2.956666667,
+        "safety_margin_delta": 0.001333333,
+        "local_slope": 6.6666667e-05
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C058->CASE_BRAKE_001_C059",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C058",
+        "case_b": "CASE_BRAKE_001_C059",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.953333333,
+        "safety_margin_delta": -0.02,
+        "local_slope": -0.001
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C059->CASE_BRAKE_001_C060",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C059",
+        "case_b": "CASE_BRAKE_001_C060",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.953333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.033333333,
+        "local_slope": -0.001666666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C061->CASE_BRAKE_001_C062",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C061",
+        "case_b": "CASE_BRAKE_001_C062",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.933333333,
+        "safety_margin_b": -2.948,
+        "safety_margin_delta": -0.014666667,
+        "local_slope": -0.000733333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C062->CASE_BRAKE_001_C063",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C062",
+        "case_b": "CASE_BRAKE_001_C063",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.948,
+        "safety_margin_b": -2.938666667,
+        "safety_margin_delta": 0.009333333,
+        "local_slope": 0.000466666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C064->CASE_BRAKE_001_C065",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C064",
+        "case_b": "CASE_BRAKE_001_C065",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.958666667,
+        "safety_margin_b": -2.946666667,
+        "safety_margin_delta": 0.012,
+        "local_slope": 0.0006
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C065->CASE_BRAKE_001_C066",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C065",
+        "case_b": "CASE_BRAKE_001_C066",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.946666667,
+        "safety_margin_b": -2.974666667,
+        "safety_margin_delta": -0.028,
+        "local_slope": -0.0014
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C067->CASE_BRAKE_001_C068",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C067",
+        "case_b": "CASE_BRAKE_001_C068",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.994,
+        "safety_margin_b": -2.988666667,
+        "safety_margin_delta": 0.005333333,
+        "local_slope": 0.000266666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C068->CASE_BRAKE_001_C069",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C068",
+        "case_b": "CASE_BRAKE_001_C069",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.988666667,
+        "safety_margin_b": -2.970666667,
+        "safety_margin_delta": 0.018,
+        "local_slope": 0.0009
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C070->CASE_BRAKE_001_C071",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C070",
+        "case_b": "CASE_BRAKE_001_C071",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.957333333,
+        "safety_margin_b": -2.988,
+        "safety_margin_delta": -0.030666667,
+        "local_slope": -0.001533333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C071->CASE_BRAKE_001_C072",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C071",
+        "case_b": "CASE_BRAKE_001_C072",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.988,
+        "safety_margin_b": 0.252833333,
+        "safety_margin_delta": 3.240833333,
+        "local_slope": 0.162041666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C073->CASE_BRAKE_001_C074",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C073",
+        "case_b": "CASE_BRAKE_001_C074",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.98,
+        "safety_margin_b": -2.954,
+        "safety_margin_delta": 0.026,
+        "local_slope": 0.0013
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C074->CASE_BRAKE_001_C075",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C074",
+        "case_b": "CASE_BRAKE_001_C075",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.954,
+        "safety_margin_b": -3.0,
+        "safety_margin_delta": -0.046,
+        "local_slope": -0.0023
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C076->CASE_BRAKE_001_C077",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C076",
+        "case_b": "CASE_BRAKE_001_C077",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.956666667,
+        "safety_margin_b": -2.971333333,
+        "safety_margin_delta": -0.014666667,
+        "local_slope": -0.000733333333
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C077->CASE_BRAKE_001_C078",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C077",
+        "case_b": "CASE_BRAKE_001_C078",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.971333333,
+        "safety_margin_b": -2.986666667,
+        "safety_margin_delta": -0.015333333,
+        "local_slope": -0.000766666667
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C079->CASE_BRAKE_001_C080",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C079",
+        "case_b": "CASE_BRAKE_001_C080",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.966666667,
+        "safety_margin_b": -2.958666667,
+        "safety_margin_delta": 0.008,
+        "local_slope": 0.0004
+      },
+      {
+        "evidence_id": "lead_speed_kph:CASE_BRAKE_001_C080->CASE_BRAKE_001_C081",
+        "parameter": "lead_speed_kph",
+        "case_a": "CASE_BRAKE_001_C080",
+        "case_b": "CASE_BRAKE_001_C081",
+        "parameter_delta": 20.0,
+        "safety_margin_a": -2.958666667,
+        "safety_margin_b": 1.938666667,
+        "safety_margin_delta": 4.897333333,
+        "local_slope": 0.244866666667
+      }
+    ]
+  },
+  "ai_adaptive_replan": null,
+  "effective_replan": null,
+  "coarse_attempt_2": null,
+  "ai_feedback": null,
+  "llm_schema_trace": [
+    {
+      "schema_name": "ai_issue_interpretation",
+      "reasoning_effort": "none",
+      "schema_validation_attempt_1": {
+        "status": "SUCCESS",
+        "validation_errors": []
+      },
+      "schema_repair_triggered": false,
+      "schema_validation_attempt_2": null,
+      "schema_retry_count": 0,
+      "repair_result": null
+    },
+    {
+      "schema_name": "ai_scenario_factor_plan",
+      "reasoning_effort": "none",
+      "schema_validation_attempt_1": {
+        "status": "SUCCESS",
+        "validation_errors": []
+      },
+      "schema_repair_triggered": false,
+      "schema_validation_attempt_2": null,
+      "schema_retry_count": 0,
+      "repair_result": null
+    }
+  ],
+  "events": [
+    {
+      "timestamp": "2026-09-15T23:06:32+08:00",
+      "step": "Candidate Filter",
+      "status": "COMPLETED",
+      "summary": "确定性候选规则命中：当前版本持续失败，且严重度为中。 priority=10。",
+      "data": {
+        "method": "deterministic_priority_table",
+        "selected_case_id": "CASE_BRAKE_001",
+        "priority": 10,
+        "reason": "确定性候选规则命中：当前版本持续失败，且严重度为中。 priority=10。"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:36+08:00",
+      "step": "AI Issue Interpretation",
+      "status": "COMPLETED",
+      "summary": "在本地 surrogate 回归数据中，观察到 ego_vehicle 跟随 lead_vehicle 行驶。当 lead_vehicle 执行制动动作后，两者之间的纵向间距呈现快速缩小的趋势。当前观测到的最小碰撞时间为 1.18 s，最小间距为 3.80 m，且未发生物理接触。",
+      "data": {
+        "input_fields": [
+          "diff",
+          "issue_description",
+          "log_summary",
+          "metric_snapshot",
+          "severity",
+          "version_curr",
+          "version_prev"
+        ],
+        "output": {
+          "scenario_type": "lead_brake",
+          "actors": [
+            "ego_vehicle",
+            "lead_vehicle"
+          ],
+          "interaction_summary": "在本地 surrogate 回归数据中，观察到 ego_vehicle 跟随 lead_vehicle 行驶。当 lead_vehicle 执行制动动作后，两者之间的纵向间距呈现快速缩小的趋势。当前观测到的最小碰撞时间为 1.18 s，最小间距为 3.80 m，且未发生物理接触。",
+          "candidate_factors": [
+            "ego_speed_kph",
+            "initial_gap_m",
+            "lead_decel_mps2",
+            "lead_speed_kph"
+          ],
+          "risk_hypothesis": "基于当前 Local surrogate 的观测结果，较短的最小碰撞时间可能与特定的车速、初始间距及制动强度组合有关。为了更全面地评估该现象在不同工况下的表现，建议扩展对 ego_speed_kph、initial_gap_m 和 lead_decel_mps2 等参数的覆盖范围。鉴于当前分析仅局限于 Local surrogate 数据，建议引入更高保真度的仿真环境以进行进一步的验证与确认。"
+        },
+        "decision_owner": "AI"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:41+08:00",
+      "step": "AI Scenario Factor Plan",
+      "status": "COMPLETED",
+      "summary": "基于当前 Local surrogate 的观测结果，较短的最小碰撞时间可能与特定的车速、初始间距及制动强度组合有关。为了更全面地评估该现象在不同工况下的表现，建议扩展对 ego_speed_kph、initial_gap_m 和 lead_decel_mps2 等参数的覆盖范围。鉴于当前分析仅局限于 Local surrogate 数据，建议引入更高保真度的仿真环境以进行进一步的验证与确认。",
+      "data": {
+        "factor_plan": {
+          "scenario_type": "lead_brake",
+          "factors": [
+            {
+              "name": "initial_gap_m",
+              "priority": "high",
+              "reason": "在本地 surrogate 数据中，观察到初始纵向间距是决定最小间距的关键变量；较小的初始间距直接导致观测到的最小间距显著减小。"
+            },
+            {
+              "name": "lead_decel_mps2",
+              "priority": "medium",
+              "reason": "当前观测显示，前车制动加速度的绝对值增大与最小碰撞时间的缩短存在相关性，表明该参数对局部风险指标有直接影响。"
+            },
+            {
+              "name": "ego_speed_kph",
+              "priority": "low",
+              "reason": "在当前局部样本范围内，自车速度的变化对最小碰撞时间的影响相对较弱，表现为次要因素。"
+            }
+          ],
+          "hypothesis": "基于当前 Local surrogate 的观测结果，较短的最小碰撞时间可能与特定的车速、初始间距及制动强度组合有关。为了更全面地评估该现象在不同工况下的表现，建议扩展对 ego_speed_kph、initial_gap_m 和 lead_decel_mps2 等参数的覆盖范围。鉴于当前分析仅局限于 Local surrogate 数据，建议引入更高保真度的仿真环境以进行进一步的验证与确认。"
+        },
+        "numeric_ranges_supplied_by_ai": false,
+        "decision_owner": "AI"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:41+08:00",
+      "step": "Parameter Space Generation",
+      "status": "COMPLETED",
+      "summary": "Scenario Registry、Seed 与 AI factor priority 已生成确定性数值空间。",
+      "data": {
+        "plan": {
+          "scenario_type": "lead_brake",
+          "parameter_ranges": {
+            "ego_speed_kph": [
+              85.0,
+              100.0,
+              115.0
+            ],
+            "initial_gap_m": [
+              10.0,
+              32.0,
+              50.0
+            ],
+            "lead_decel_mps2": [
+              -6.5,
+              -5.0,
+              -3.5
+            ],
+            "lead_speed_kph": [
+              55.0,
+              75.0,
+              95.0
+            ]
+          },
+          "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+        },
+        "registry": {
+          "scenario_type": "lead_brake",
+          "actors": {
+            "ego_vehicle": {
+              "canonical_actor_id": "ego_vehicle",
+              "display_name_zh": "自车",
+              "type": "vehicle",
+              "role": "ego"
+            },
+            "lead_vehicle": {
+              "canonical_actor_id": "lead_vehicle",
+              "display_name_zh": "前车",
+              "type": "vehicle",
+              "role": "lead"
+            }
+          },
+          "road_ref": "highway_follow_01",
+          "parameters": {
+            "ego_speed_kph": {
+              "canonical_key": "ego_speed_kph",
+              "display_name_zh": "自车速度",
+              "minimum": 0.0,
+              "maximum": 180.0,
+              "coarse_half_span": 30.0,
+              "step": 5.0,
+              "unit": "km/h",
+              "seed_value": 100.0
+            },
+            "initial_gap_m": {
+              "canonical_key": "initial_gap_m",
+              "display_name_zh": "初始纵向间距",
+              "minimum": 3.0,
+              "maximum": 150.0,
+              "coarse_half_span": 20.0,
+              "step": 5.0,
+              "unit": "m",
+              "seed_value": 32.0
+            },
+            "lead_decel_mps2": {
+              "canonical_key": "lead_decel_mps2",
+              "display_name_zh": "前车制动加速度",
+              "minimum": -10.0,
+              "maximum": 0.0,
+              "coarse_half_span": 2.0,
+              "step": 0.5,
+              "unit": "m/s²",
+              "seed_value": -5.0
+            },
+            "lead_speed_kph": {
+              "canonical_key": "lead_speed_kph",
+              "display_name_zh": "前车速度",
+              "minimum": 0.0,
+              "maximum": 180.0,
+              "coarse_half_span": 25.0,
+              "step": 5.0,
+              "unit": "km/h",
+              "seed_value": 75.0
+            }
+          },
+          "assumptions": [
+            "前车在固定时刻制动，自车按固定反应时间与减速度响应。",
+            "不模拟感知、规划、控制器或高保真车辆动力学。"
+          ]
+        },
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:41+08:00",
+      "step": "Coarse Exploration — Attempt 1",
+      "status": "COMPLETED",
+      "summary": "本地 surrogate 仿真与确定性评测完成。",
+      "data": {
+        "candidate_space_size": 81,
+        "sampling_strategy": "FULL_CARTESIAN",
+        "selected_case_count": 81,
+        "coverage_summary": {
+          "seed_nearest_included": true,
+          "axes": {
+            "ego_speed_kph": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": 85.0,
+              "maximum_selected": 115.0,
+              "covers_extrema": true
+            },
+            "initial_gap_m": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": 10.0,
+              "maximum_selected": 50.0,
+              "covers_extrema": true
+            },
+            "lead_decel_mps2": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": -6.5,
+              "maximum_selected": -3.5,
+              "covers_extrema": true
+            },
+            "lead_speed_kph": {
+              "candidate_level_count": 3,
+              "selected_level_count": 3,
+              "minimum_selected": 55.0,
+              "maximum_selected": 95.0,
+              "covers_extrema": true
+            }
+          }
+        },
+        "effective_plan": {
+          "scenario_type": "lead_brake",
+          "parameter_ranges": {
+            "ego_speed_kph": [
+              85.0,
+              100.0,
+              115.0
+            ],
+            "initial_gap_m": [
+              10.0,
+              32.0,
+              50.0
+            ],
+            "lead_decel_mps2": [
+              -6.5,
+              -5.0,
+              -3.5
+            ],
+            "lead_speed_kph": [
+              55.0,
+              75.0,
+              95.0
+            ]
+          },
+          "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+        },
+        "generated": 81,
+        "valid": 81,
+        "rejected": 0,
+        "result_distribution": {
+          "PASS": 15,
+          "HIGH_RISK": 6,
+          "FAIL": 60
+        }
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:41+08:00",
+      "step": "Metric Sensitivity Analysis",
+      "status": "COMPLETED",
+      "summary": "已基于 TTC/gap 阈值 margin 与轴对齐邻接样本计算局部敏感度。",
+      "data": {
+        "parameters": [
+          {
+            "parameter": "lead_decel_mps2",
+            "direction": "increase_for_safer",
+            "strength": 0.011333333333,
+            "signed_median_slope": 0.011333333333,
+            "support_count": 54,
+            "consistent_support_count": 39,
+            "evidence_refs": [
+              "lead_decel_mps2:CASE_BRAKE_001_C001->CASE_BRAKE_001_C004",
+              "lead_decel_mps2:CASE_BRAKE_001_C004->CASE_BRAKE_001_C007",
+              "lead_decel_mps2:CASE_BRAKE_001_C002->CASE_BRAKE_001_C005",
+              "lead_decel_mps2:CASE_BRAKE_001_C005->CASE_BRAKE_001_C008",
+              "lead_decel_mps2:CASE_BRAKE_001_C003->CASE_BRAKE_001_C006",
+              "lead_decel_mps2:CASE_BRAKE_001_C006->CASE_BRAKE_001_C009",
+              "lead_decel_mps2:CASE_BRAKE_001_C010->CASE_BRAKE_001_C013",
+              "lead_decel_mps2:CASE_BRAKE_001_C013->CASE_BRAKE_001_C016",
+              "lead_decel_mps2:CASE_BRAKE_001_C011->CASE_BRAKE_001_C014",
+              "lead_decel_mps2:CASE_BRAKE_001_C014->CASE_BRAKE_001_C017",
+              "lead_decel_mps2:CASE_BRAKE_001_C012->CASE_BRAKE_001_C015",
+              "lead_decel_mps2:CASE_BRAKE_001_C015->CASE_BRAKE_001_C018",
+              "lead_decel_mps2:CASE_BRAKE_001_C019->CASE_BRAKE_001_C022",
+              "lead_decel_mps2:CASE_BRAKE_001_C022->CASE_BRAKE_001_C025",
+              "lead_decel_mps2:CASE_BRAKE_001_C020->CASE_BRAKE_001_C023",
+              "lead_decel_mps2:CASE_BRAKE_001_C023->CASE_BRAKE_001_C026",
+              "lead_decel_mps2:CASE_BRAKE_001_C021->CASE_BRAKE_001_C024",
+              "lead_decel_mps2:CASE_BRAKE_001_C024->CASE_BRAKE_001_C027",
+              "lead_decel_mps2:CASE_BRAKE_001_C028->CASE_BRAKE_001_C031",
+              "lead_decel_mps2:CASE_BRAKE_001_C031->CASE_BRAKE_001_C034",
+              "lead_decel_mps2:CASE_BRAKE_001_C029->CASE_BRAKE_001_C032",
+              "lead_decel_mps2:CASE_BRAKE_001_C032->CASE_BRAKE_001_C035",
+              "lead_decel_mps2:CASE_BRAKE_001_C030->CASE_BRAKE_001_C033",
+              "lead_decel_mps2:CASE_BRAKE_001_C033->CASE_BRAKE_001_C036",
+              "lead_decel_mps2:CASE_BRAKE_001_C037->CASE_BRAKE_001_C040",
+              "lead_decel_mps2:CASE_BRAKE_001_C040->CASE_BRAKE_001_C043",
+              "lead_decel_mps2:CASE_BRAKE_001_C038->CASE_BRAKE_001_C041",
+              "lead_decel_mps2:CASE_BRAKE_001_C041->CASE_BRAKE_001_C044",
+              "lead_decel_mps2:CASE_BRAKE_001_C039->CASE_BRAKE_001_C042",
+              "lead_decel_mps2:CASE_BRAKE_001_C042->CASE_BRAKE_001_C045",
+              "lead_decel_mps2:CASE_BRAKE_001_C046->CASE_BRAKE_001_C049",
+              "lead_decel_mps2:CASE_BRAKE_001_C049->CASE_BRAKE_001_C052",
+              "lead_decel_mps2:CASE_BRAKE_001_C047->CASE_BRAKE_001_C050",
+              "lead_decel_mps2:CASE_BRAKE_001_C050->CASE_BRAKE_001_C053",
+              "lead_decel_mps2:CASE_BRAKE_001_C048->CASE_BRAKE_001_C051",
+              "lead_decel_mps2:CASE_BRAKE_001_C051->CASE_BRAKE_001_C054",
+              "lead_decel_mps2:CASE_BRAKE_001_C055->CASE_BRAKE_001_C058",
+              "lead_decel_mps2:CASE_BRAKE_001_C058->CASE_BRAKE_001_C061",
+              "lead_decel_mps2:CASE_BRAKE_001_C056->CASE_BRAKE_001_C059",
+              "lead_decel_mps2:CASE_BRAKE_001_C059->CASE_BRAKE_001_C062",
+              "lead_decel_mps2:CASE_BRAKE_001_C057->CASE_BRAKE_001_C060",
+              "lead_decel_mps2:CASE_BRAKE_001_C060->CASE_BRAKE_001_C063",
+              "lead_decel_mps2:CASE_BRAKE_001_C064->CASE_BRAKE_001_C067",
+              "lead_decel_mps2:CASE_BRAKE_001_C067->CASE_BRAKE_001_C070",
+              "lead_decel_mps2:CASE_BRAKE_001_C065->CASE_BRAKE_001_C068",
+              "lead_decel_mps2:CASE_BRAKE_001_C068->CASE_BRAKE_001_C071",
+              "lead_decel_mps2:CASE_BRAKE_001_C066->CASE_BRAKE_001_C069",
+              "lead_decel_mps2:CASE_BRAKE_001_C069->CASE_BRAKE_001_C072",
+              "lead_decel_mps2:CASE_BRAKE_001_C073->CASE_BRAKE_001_C076",
+              "lead_decel_mps2:CASE_BRAKE_001_C076->CASE_BRAKE_001_C079",
+              "lead_decel_mps2:CASE_BRAKE_001_C074->CASE_BRAKE_001_C077",
+              "lead_decel_mps2:CASE_BRAKE_001_C077->CASE_BRAKE_001_C080",
+              "lead_decel_mps2:CASE_BRAKE_001_C075->CASE_BRAKE_001_C078",
+              "lead_decel_mps2:CASE_BRAKE_001_C078->CASE_BRAKE_001_C081"
+            ]
+          },
+          {
+            "parameter": "ego_speed_kph",
+            "direction": "decrease_for_safer",
+            "strength": 0.0012,
+            "signed_median_slope": -0.0012,
+            "support_count": 54,
+            "consistent_support_count": 35,
+            "evidence_refs": [
+              "ego_speed_kph:CASE_BRAKE_001_C001->CASE_BRAKE_001_C028",
+              "ego_speed_kph:CASE_BRAKE_001_C028->CASE_BRAKE_001_C055",
+              "ego_speed_kph:CASE_BRAKE_001_C002->CASE_BRAKE_001_C029",
+              "ego_speed_kph:CASE_BRAKE_001_C029->CASE_BRAKE_001_C056",
+              "ego_speed_kph:CASE_BRAKE_001_C003->CASE_BRAKE_001_C030",
+              "ego_speed_kph:CASE_BRAKE_001_C030->CASE_BRAKE_001_C057",
+              "ego_speed_kph:CASE_BRAKE_001_C004->CASE_BRAKE_001_C031",
+              "ego_speed_kph:CASE_BRAKE_001_C031->CASE_BRAKE_001_C058",
+              "ego_speed_kph:CASE_BRAKE_001_C005->CASE_BRAKE_001_C032",
+              "ego_speed_kph:CASE_BRAKE_001_C032->CASE_BRAKE_001_C059",
+              "ego_speed_kph:CASE_BRAKE_001_C006->CASE_BRAKE_001_C033",
+              "ego_speed_kph:CASE_BRAKE_001_C033->CASE_BRAKE_001_C060",
+              "ego_speed_kph:CASE_BRAKE_001_C007->CASE_BRAKE_001_C034",
+              "ego_speed_kph:CASE_BRAKE_001_C034->CASE_BRAKE_001_C061",
+              "ego_speed_kph:CASE_BRAKE_001_C008->CASE_BRAKE_001_C035",
+              "ego_speed_kph:CASE_BRAKE_001_C035->CASE_BRAKE_001_C062",
+              "ego_speed_kph:CASE_BRAKE_001_C009->CASE_BRAKE_001_C036",
+              "ego_speed_kph:CASE_BRAKE_001_C036->CASE_BRAKE_001_C063",
+              "ego_speed_kph:CASE_BRAKE_001_C010->CASE_BRAKE_001_C037",
+              "ego_speed_kph:CASE_BRAKE_001_C037->CASE_BRAKE_001_C064",
+              "ego_speed_kph:CASE_BRAKE_001_C011->CASE_BRAKE_001_C038",
+              "ego_speed_kph:CASE_BRAKE_001_C038->CASE_BRAKE_001_C065",
+              "ego_speed_kph:CASE_BRAKE_001_C012->CASE_BRAKE_001_C039",
+              "ego_speed_kph:CASE_BRAKE_001_C039->CASE_BRAKE_001_C066",
+              "ego_speed_kph:CASE_BRAKE_001_C013->CASE_BRAKE_001_C040",
+              "ego_speed_kph:CASE_BRAKE_001_C040->CASE_BRAKE_001_C067",
+              "ego_speed_kph:CASE_BRAKE_001_C014->CASE_BRAKE_001_C041",
+              "ego_speed_kph:CASE_BRAKE_001_C041->CASE_BRAKE_001_C068",
+              "ego_speed_kph:CASE_BRAKE_001_C015->CASE_BRAKE_001_C042",
+              "ego_speed_kph:CASE_BRAKE_001_C042->CASE_BRAKE_001_C069",
+              "ego_speed_kph:CASE_BRAKE_001_C016->CASE_BRAKE_001_C043",
+              "ego_speed_kph:CASE_BRAKE_001_C043->CASE_BRAKE_001_C070",
+              "ego_speed_kph:CASE_BRAKE_001_C017->CASE_BRAKE_001_C044",
+              "ego_speed_kph:CASE_BRAKE_001_C044->CASE_BRAKE_001_C071",
+              "ego_speed_kph:CASE_BRAKE_001_C018->CASE_BRAKE_001_C045",
+              "ego_speed_kph:CASE_BRAKE_001_C045->CASE_BRAKE_001_C072",
+              "ego_speed_kph:CASE_BRAKE_001_C019->CASE_BRAKE_001_C046",
+              "ego_speed_kph:CASE_BRAKE_001_C046->CASE_BRAKE_001_C073",
+              "ego_speed_kph:CASE_BRAKE_001_C020->CASE_BRAKE_001_C047",
+              "ego_speed_kph:CASE_BRAKE_001_C047->CASE_BRAKE_001_C074",
+              "ego_speed_kph:CASE_BRAKE_001_C021->CASE_BRAKE_001_C048",
+              "ego_speed_kph:CASE_BRAKE_001_C048->CASE_BRAKE_001_C075",
+              "ego_speed_kph:CASE_BRAKE_001_C022->CASE_BRAKE_001_C049",
+              "ego_speed_kph:CASE_BRAKE_001_C049->CASE_BRAKE_001_C076",
+              "ego_speed_kph:CASE_BRAKE_001_C023->CASE_BRAKE_001_C050",
+              "ego_speed_kph:CASE_BRAKE_001_C050->CASE_BRAKE_001_C077",
+              "ego_speed_kph:CASE_BRAKE_001_C024->CASE_BRAKE_001_C051",
+              "ego_speed_kph:CASE_BRAKE_001_C051->CASE_BRAKE_001_C078",
+              "ego_speed_kph:CASE_BRAKE_001_C025->CASE_BRAKE_001_C052",
+              "ego_speed_kph:CASE_BRAKE_001_C052->CASE_BRAKE_001_C079",
+              "ego_speed_kph:CASE_BRAKE_001_C026->CASE_BRAKE_001_C053",
+              "ego_speed_kph:CASE_BRAKE_001_C053->CASE_BRAKE_001_C080",
+              "ego_speed_kph:CASE_BRAKE_001_C027->CASE_BRAKE_001_C054",
+              "ego_speed_kph:CASE_BRAKE_001_C054->CASE_BRAKE_001_C081"
+            ]
+          },
+          {
+            "parameter": "lead_speed_kph",
+            "direction": "increase_for_safer",
+            "strength": 0.0011,
+            "signed_median_slope": 0.0011,
+            "support_count": 54,
+            "consistent_support_count": 35,
+            "evidence_refs": [
+              "lead_speed_kph:CASE_BRAKE_001_C001->CASE_BRAKE_001_C002",
+              "lead_speed_kph:CASE_BRAKE_001_C002->CASE_BRAKE_001_C003",
+              "lead_speed_kph:CASE_BRAKE_001_C004->CASE_BRAKE_001_C005",
+              "lead_speed_kph:CASE_BRAKE_001_C005->CASE_BRAKE_001_C006",
+              "lead_speed_kph:CASE_BRAKE_001_C007->CASE_BRAKE_001_C008",
+              "lead_speed_kph:CASE_BRAKE_001_C008->CASE_BRAKE_001_C009",
+              "lead_speed_kph:CASE_BRAKE_001_C010->CASE_BRAKE_001_C011",
+              "lead_speed_kph:CASE_BRAKE_001_C011->CASE_BRAKE_001_C012",
+              "lead_speed_kph:CASE_BRAKE_001_C013->CASE_BRAKE_001_C014",
+              "lead_speed_kph:CASE_BRAKE_001_C014->CASE_BRAKE_001_C015",
+              "lead_speed_kph:CASE_BRAKE_001_C016->CASE_BRAKE_001_C017",
+              "lead_speed_kph:CASE_BRAKE_001_C017->CASE_BRAKE_001_C018",
+              "lead_speed_kph:CASE_BRAKE_001_C019->CASE_BRAKE_001_C020",
+              "lead_speed_kph:CASE_BRAKE_001_C020->CASE_BRAKE_001_C021",
+              "lead_speed_kph:CASE_BRAKE_001_C022->CASE_BRAKE_001_C023",
+              "lead_speed_kph:CASE_BRAKE_001_C023->CASE_BRAKE_001_C024",
+              "lead_speed_kph:CASE_BRAKE_001_C025->CASE_BRAKE_001_C026",
+              "lead_speed_kph:CASE_BRAKE_001_C026->CASE_BRAKE_001_C027",
+              "lead_speed_kph:CASE_BRAKE_001_C028->CASE_BRAKE_001_C029",
+              "lead_speed_kph:CASE_BRAKE_001_C029->CASE_BRAKE_001_C030",
+              "lead_speed_kph:CASE_BRAKE_001_C031->CASE_BRAKE_001_C032",
+              "lead_speed_kph:CASE_BRAKE_001_C032->CASE_BRAKE_001_C033",
+              "lead_speed_kph:CASE_BRAKE_001_C034->CASE_BRAKE_001_C035",
+              "lead_speed_kph:CASE_BRAKE_001_C035->CASE_BRAKE_001_C036",
+              "lead_speed_kph:CASE_BRAKE_001_C037->CASE_BRAKE_001_C038",
+              "lead_speed_kph:CASE_BRAKE_001_C038->CASE_BRAKE_001_C039",
+              "lead_speed_kph:CASE_BRAKE_001_C040->CASE_BRAKE_001_C041",
+              "lead_speed_kph:CASE_BRAKE_001_C041->CASE_BRAKE_001_C042",
+              "lead_speed_kph:CASE_BRAKE_001_C043->CASE_BRAKE_001_C044",
+              "lead_speed_kph:CASE_BRAKE_001_C044->CASE_BRAKE_001_C045",
+              "lead_speed_kph:CASE_BRAKE_001_C046->CASE_BRAKE_001_C047",
+              "lead_speed_kph:CASE_BRAKE_001_C047->CASE_BRAKE_001_C048",
+              "lead_speed_kph:CASE_BRAKE_001_C049->CASE_BRAKE_001_C050",
+              "lead_speed_kph:CASE_BRAKE_001_C050->CASE_BRAKE_001_C051",
+              "lead_speed_kph:CASE_BRAKE_001_C052->CASE_BRAKE_001_C053",
+              "lead_speed_kph:CASE_BRAKE_001_C053->CASE_BRAKE_001_C054",
+              "lead_speed_kph:CASE_BRAKE_001_C055->CASE_BRAKE_001_C056",
+              "lead_speed_kph:CASE_BRAKE_001_C056->CASE_BRAKE_001_C057",
+              "lead_speed_kph:CASE_BRAKE_001_C058->CASE_BRAKE_001_C059",
+              "lead_speed_kph:CASE_BRAKE_001_C059->CASE_BRAKE_001_C060",
+              "lead_speed_kph:CASE_BRAKE_001_C061->CASE_BRAKE_001_C062",
+              "lead_speed_kph:CASE_BRAKE_001_C062->CASE_BRAKE_001_C063",
+              "lead_speed_kph:CASE_BRAKE_001_C064->CASE_BRAKE_001_C065",
+              "lead_speed_kph:CASE_BRAKE_001_C065->CASE_BRAKE_001_C066",
+              "lead_speed_kph:CASE_BRAKE_001_C067->CASE_BRAKE_001_C068",
+              "lead_speed_kph:CASE_BRAKE_001_C068->CASE_BRAKE_001_C069",
+              "lead_speed_kph:CASE_BRAKE_001_C070->CASE_BRAKE_001_C071",
+              "lead_speed_kph:CASE_BRAKE_001_C071->CASE_BRAKE_001_C072",
+              "lead_speed_kph:CASE_BRAKE_001_C073->CASE_BRAKE_001_C074",
+              "lead_speed_kph:CASE_BRAKE_001_C074->CASE_BRAKE_001_C075",
+              "lead_speed_kph:CASE_BRAKE_001_C076->CASE_BRAKE_001_C077",
+              "lead_speed_kph:CASE_BRAKE_001_C077->CASE_BRAKE_001_C078",
+              "lead_speed_kph:CASE_BRAKE_001_C079->CASE_BRAKE_001_C080",
+              "lead_speed_kph:CASE_BRAKE_001_C080->CASE_BRAKE_001_C081"
+            ]
+          },
+          {
+            "parameter": "initial_gap_m",
+            "direction": "increase_for_safer",
+            "strength": 0.000823232323,
+            "signed_median_slope": 0.000823232323,
+            "support_count": 54,
+            "consistent_support_count": 33,
+            "evidence_refs": [
+              "initial_gap_m:CASE_BRAKE_001_C001->CASE_BRAKE_001_C010",
+              "initial_gap_m:CASE_BRAKE_001_C010->CASE_BRAKE_001_C019",
+              "initial_gap_m:CASE_BRAKE_001_C002->CASE_BRAKE_001_C011",
+              "initial_gap_m:CASE_BRAKE_001_C011->CASE_BRAKE_001_C020",
+              "initial_gap_m:CASE_BRAKE_001_C003->CASE_BRAKE_001_C012",
+              "initial_gap_m:CASE_BRAKE_001_C012->CASE_BRAKE_001_C021",
+              "initial_gap_m:CASE_BRAKE_001_C004->CASE_BRAKE_001_C013",
+              "initial_gap_m:CASE_BRAKE_001_C013->CASE_BRAKE_001_C022",
+              "initial_gap_m:CASE_BRAKE_001_C005->CASE_BRAKE_001_C014",
+              "initial_gap_m:CASE_BRAKE_001_C014->CASE_BRAKE_001_C023",
+              "initial_gap_m:CASE_BRAKE_001_C006->CASE_BRAKE_001_C015",
+              "initial_gap_m:CASE_BRAKE_001_C015->CASE_BRAKE_001_C024",
+              "initial_gap_m:CASE_BRAKE_001_C007->CASE_BRAKE_001_C016",
+              "initial_gap_m:CASE_BRAKE_001_C016->CASE_BRAKE_001_C025",
+              "initial_gap_m:CASE_BRAKE_001_C008->CASE_BRAKE_001_C017",
+              "initial_gap_m:CASE_BRAKE_001_C017->CASE_BRAKE_001_C026",
+              "initial_gap_m:CASE_BRAKE_001_C009->CASE_BRAKE_001_C018",
+              "initial_gap_m:CASE_BRAKE_001_C018->CASE_BRAKE_001_C027",
+              "initial_gap_m:CASE_BRAKE_001_C028->CASE_BRAKE_001_C037",
+              "initial_gap_m:CASE_BRAKE_001_C037->CASE_BRAKE_001_C046",
+              "initial_gap_m:CASE_BRAKE_001_C029->CASE_BRAKE_001_C038",
+              "initial_gap_m:CASE_BRAKE_001_C038->CASE_BRAKE_001_C047",
+              "initial_gap_m:CASE_BRAKE_001_C030->CASE_BRAKE_001_C039",
+              "initial_gap_m:CASE_BRAKE_001_C039->CASE_BRAKE_001_C048",
+              "initial_gap_m:CASE_BRAKE_001_C031->CASE_BRAKE_001_C040",
+              "initial_gap_m:CASE_BRAKE_001_C040->CASE_BRAKE_001_C049",
+              "initial_gap_m:CASE_BRAKE_001_C032->CASE_BRAKE_001_C041",
+              "initial_gap_m:CASE_BRAKE_001_C041->CASE_BRAKE_001_C050",
+              "initial_gap_m:CASE_BRAKE_001_C033->CASE_BRAKE_001_C042",
+              "initial_gap_m:CASE_BRAKE_001_C042->CASE_BRAKE_001_C051",
+              "initial_gap_m:CASE_BRAKE_001_C034->CASE_BRAKE_001_C043",
+              "initial_gap_m:CASE_BRAKE_001_C043->CASE_BRAKE_001_C052",
+              "initial_gap_m:CASE_BRAKE_001_C035->CASE_BRAKE_001_C044",
+              "initial_gap_m:CASE_BRAKE_001_C044->CASE_BRAKE_001_C053",
+              "initial_gap_m:CASE_BRAKE_001_C036->CASE_BRAKE_001_C045",
+              "initial_gap_m:CASE_BRAKE_001_C045->CASE_BRAKE_001_C054",
+              "initial_gap_m:CASE_BRAKE_001_C055->CASE_BRAKE_001_C064",
+              "initial_gap_m:CASE_BRAKE_001_C064->CASE_BRAKE_001_C073",
+              "initial_gap_m:CASE_BRAKE_001_C056->CASE_BRAKE_001_C065",
+              "initial_gap_m:CASE_BRAKE_001_C065->CASE_BRAKE_001_C074",
+              "initial_gap_m:CASE_BRAKE_001_C057->CASE_BRAKE_001_C066",
+              "initial_gap_m:CASE_BRAKE_001_C066->CASE_BRAKE_001_C075",
+              "initial_gap_m:CASE_BRAKE_001_C058->CASE_BRAKE_001_C067",
+              "initial_gap_m:CASE_BRAKE_001_C067->CASE_BRAKE_001_C076",
+              "initial_gap_m:CASE_BRAKE_001_C059->CASE_BRAKE_001_C068",
+              "initial_gap_m:CASE_BRAKE_001_C068->CASE_BRAKE_001_C077",
+              "initial_gap_m:CASE_BRAKE_001_C060->CASE_BRAKE_001_C069",
+              "initial_gap_m:CASE_BRAKE_001_C069->CASE_BRAKE_001_C078",
+              "initial_gap_m:CASE_BRAKE_001_C061->CASE_BRAKE_001_C070",
+              "initial_gap_m:CASE_BRAKE_001_C070->CASE_BRAKE_001_C079",
+              "initial_gap_m:CASE_BRAKE_001_C062->CASE_BRAKE_001_C071",
+              "initial_gap_m:CASE_BRAKE_001_C071->CASE_BRAKE_001_C080",
+              "initial_gap_m:CASE_BRAKE_001_C063->CASE_BRAKE_001_C072",
+              "initial_gap_m:CASE_BRAKE_001_C072->CASE_BRAKE_001_C081"
+            ]
+          }
+        ],
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:42+08:00",
+      "step": "Boundary Detection",
+      "status": "COMPLETED",
+      "summary": "Transition pairs use state span, normalized interval, seed proximity and metric-threshold evidence; selected anchors prioritize parameter-axis diversity.",
+      "data": {
+        "status": "DETECTED",
+        "transition_pair_count": 54,
+        "selected_anchors": [
+          {
+            "case_a": "CASE_BRAKE_001_C014",
+            "result_a": "FAIL",
+            "case_b": "CASE_BRAKE_001_C023",
+            "result_b": "PASS",
+            "changed_parameter": "initial_gap_m",
+            "interval": {
+              "min": 32.0,
+              "max": 50.0
+            },
+            "fixed_parameters": {
+              "ego_speed_kph": 85.0,
+              "lead_speed_kph": 75.0,
+              "lead_decel_mps2": -5.0
+            },
+            "severity_delta": 2,
+            "priority": 3,
+            "distance_to_seed": 0.548293,
+            "score_components": {
+              "state_transition_value": 3,
+              "transition_type": "PASS↔FAIL",
+              "normalized_parameter_interval": 0.45,
+              "interval_width": 18.0,
+              "seed_proximity": 0.645873,
+              "metric_boundary_evidence": 0.703034
+            },
+            "anchor_score": 312.244533,
+            "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+          },
+          {
+            "case_a": "CASE_BRAKE_001_C014",
+            "result_a": "FAIL",
+            "case_b": "CASE_BRAKE_001_C017",
+            "result_b": "PASS",
+            "changed_parameter": "lead_decel_mps2",
+            "interval": {
+              "min": -5.0,
+              "max": -3.5
+            },
+            "fixed_parameters": {
+              "ego_speed_kph": 85.0,
+              "lead_speed_kph": 75.0,
+              "initial_gap_m": 32.0
+            },
+            "severity_delta": 2,
+            "priority": 3,
+            "distance_to_seed": 0.559017,
+            "score_components": {
+              "state_transition_value": 3,
+              "transition_type": "PASS↔FAIL",
+              "normalized_parameter_interval": 0.5,
+              "interval_width": 1.5,
+              "seed_proximity": 0.64143,
+              "metric_boundary_evidence": 0.778108
+            },
+            "anchor_score": 312.097689,
+            "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+          },
+          {
+            "case_a": "CASE_BRAKE_001_C009",
+            "result_a": "PASS",
+            "case_b": "CASE_BRAKE_001_C036",
+            "result_b": "FAIL",
+            "changed_parameter": "ego_speed_kph",
+            "interval": {
+              "min": 85.0,
+              "max": 100.0
+            },
+            "fixed_parameters": {
+              "lead_speed_kph": 95.0,
+              "initial_gap_m": 10.0,
+              "lead_decel_mps2": -3.5
+            },
+            "severity_delta": 2,
+            "priority": 3,
+            "distance_to_seed": 0.930054,
+            "score_components": {
+              "state_transition_value": 3,
+              "transition_type": "PASS↔FAIL",
+              "normalized_parameter_interval": 0.5,
+              "interval_width": 15.0,
+              "seed_proximity": 0.51812,
+              "metric_boundary_evidence": 0.885208
+            },
+            "anchor_score": 312.01664,
+            "diversity_reason": "该 Anchor 是此参数轴上评分最高的候选，用于保证 Parameter Axis Diversity。"
+          }
+        ],
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    },
+    {
+      "timestamp": "2026-09-15T23:06:42+08:00",
+      "step": "Fine Generalization",
+      "status": "COMPLETED",
+      "summary": "生成 21 个确定性插值样本。",
+      "data": {
+        "generated": 21,
+        "result_distribution": {
+          "PASS": 10,
+          "HIGH_RISK": 10,
+          "FAIL": 1
+        },
+        "decision_owner": "DETERMINISTIC_PYTHON"
+      }
+    }
+  ],
+  "ai_generalization_plan": {
+    "scenario_type": "lead_brake",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        85.0,
+        100.0,
+        115.0
+      ],
+      "initial_gap_m": [
+        10.0,
+        32.0,
+        50.0
+      ],
+      "lead_decel_mps2": [
+        -6.5,
+        -5.0,
+        -3.5
+      ],
+      "lead_speed_kph": [
+        55.0,
+        75.0,
+        95.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+  },
+  "ai_original_plan": {
+    "scenario_type": "lead_brake",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        85.0,
+        100.0,
+        115.0
+      ],
+      "initial_gap_m": [
+        10.0,
+        32.0,
+        50.0
+      ],
+      "lead_decel_mps2": [
+        -6.5,
+        -5.0,
+        -3.5
+      ],
+      "lead_speed_kph": [
+        55.0,
+        75.0,
+        95.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+  },
+  "effective_plan": {
+    "scenario_type": "lead_brake",
+    "parameter_ranges": {
+      "ego_speed_kph": [
+        85.0,
+        100.0,
+        115.0
+      ],
+      "initial_gap_m": [
+        10.0,
+        32.0,
+        50.0
+      ],
+      "lead_decel_mps2": [
+        -6.5,
+        -5.0,
+        -3.5
+      ],
+      "lead_speed_kph": [
+        55.0,
+        75.0,
+        95.0
+      ]
+    },
+    "rationale": "Scenario Registry 根据 Seed 与 AI factor priority 生成：ego_speed_kph=low:[85.0, 100.0, 115.0]；initial_gap_m=high:[10.0, 32.0, 50.0]；lead_decel_mps2=medium:[-6.5, -5.0, -3.5]；lead_speed_kph=medium:[55.0, 75.0, 95.0]"
+  },
+  "guardrail_adjustments": [],
+  "local_transition_boundary_facts": [
+    {
+      "changed_parameter": "initial_gap_m",
+      "fixed_parameters": {
+        "ego_speed_kph": 85.0,
+        "lead_speed_kph": 75.0,
+        "lead_decel_mps2": -5.0
+      },
+      "coarse_interval": {
+        "min": 32.0,
+        "max": 50.0
+      },
+      "refined_interval": {
+        "min": 38.75,
+        "max": 41.0
+      },
+      "ordered_transition_states": [
+        "FAIL",
+        "HIGH_RISK",
+        "PASS"
+      ],
+      "width_reduction": 0.875
+    },
+    {
+      "changed_parameter": "lead_decel_mps2",
+      "fixed_parameters": {
+        "ego_speed_kph": 85.0,
+        "lead_speed_kph": 75.0,
+        "initial_gap_m": 32.0
+      },
+      "coarse_interval": {
+        "min": -5.0,
+        "max": -3.5
+      },
+      "refined_interval": {
+        "min": -4.4375,
+        "max": -4.25
+      },
+      "ordered_transition_states": [
+        "FAIL",
+        "HIGH_RISK",
+        "PASS"
+      ],
+      "width_reduction": 0.875
+    },
+    {
+      "changed_parameter": "ego_speed_kph",
+      "fixed_parameters": {
+        "lead_speed_kph": 95.0,
+        "initial_gap_m": 10.0,
+        "lead_decel_mps2": -3.5
+      },
+      "coarse_interval": {
+        "min": 85.0,
+        "max": 100.0
+      },
+      "refined_interval": {
+        "min": 88.75,
+        "max": 90.625
+      },
+      "ordered_transition_states": [
+        "PASS",
+        "HIGH_RISK",
+        "FAIL"
+      ],
+      "width_reduction": 0.875
+    }
+  ],
+  "deterministic_summary": {
+    "source": "DETERMINISTIC_PYTHON",
+    "boundary_summary": "本次发现 3 个局部状态转换区域，涉及初始纵向间距、前车制动加速度、自车速度。每条结果仅适用于对应固定条件及已采样区间；具体区间见《局部边界摘要》。"
+  },
+  "completed_at": "2026-09-15T23:06:42+08:00",
+  "final_status": "COMPLETED"
+}

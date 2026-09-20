@@ -1,0 +1,50 @@
+[
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_MERGE_001",
+    "scenario_type": "highway_merge",
+    "description": "高速匝道汇入时，目标车道后方车辆快速接近。",
+    "actors": {
+      "ego_vehicle": {"type": "vehicle", "role": "ego"},
+      "rear_vehicle_on_target_lane": {"type": "vehicle", "role": "target_lane_rear"}
+    },
+    "road": {"road_ref": "highway_merge_01"},
+    "parameters": {
+      "ego_speed_kph": 75.0,
+      "rear_speed_kph": 115.0,
+      "rear_distance_m": 35.0,
+      "merge_time_s": 3.0
+    },
+    "constraints": {
+      "ego_speed_kph": {"min": 0.0, "max": 180.0, "unit": "kph"},
+      "rear_speed_kph": {"min": 0.0, "max": 200.0, "unit": "kph"},
+      "rear_distance_m": {"min": 3.0, "max": 150.0, "unit": "m"},
+      "merge_time_s": {"min": 1.0, "max": 8.0, "unit": "s"}
+    },
+    "provenance": {"source": "seed_asset", "source_case_id": "CASE_MERGE_001"}
+  },
+  {
+    "schema_version": "1.0",
+    "case_id": "CASE_BRAKE_001",
+    "scenario_type": "lead_brake",
+    "description": "高速跟车过程中前车执行较强制动。",
+    "actors": {
+      "ego_vehicle": {"type": "vehicle", "role": "ego"},
+      "lead_vehicle": {"type": "vehicle", "role": "lead"}
+    },
+    "road": {"road_ref": "highway_follow_01"},
+    "parameters": {
+      "ego_speed_kph": 100.0,
+      "lead_speed_kph": 75.0,
+      "initial_gap_m": 32.0,
+      "lead_decel_mps2": -5.0
+    },
+    "constraints": {
+      "ego_speed_kph": {"min": 0.0, "max": 180.0, "unit": "kph"},
+      "lead_speed_kph": {"min": 0.0, "max": 180.0, "unit": "kph"},
+      "initial_gap_m": {"min": 3.0, "max": 150.0, "unit": "m"},
+      "lead_decel_mps2": {"min": -10.0, "max": 0.0, "unit": "m/s²"}
+    },
+    "provenance": {"source": "seed_asset", "source_case_id": "CASE_BRAKE_001"}
+  }
+]

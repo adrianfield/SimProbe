@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "platform_version": "v0.4.5.2-final",
+  "run_id": "CL-20260915-031",
+  "created_at": "2026-09-15T23:06:22+08:00",
+  "updated_at": "2026-09-15T23:06:32+08:00",
+  "source_version": "V1.8.3",
+  "seed_case_id": "CASE_MERGE_001",
+  "scenario_type": "highway_merge",
+  "status": "COMPLETED",
+  "selection_reason": "确定性候选规则命中：当前版本新增失败，且严重度为高。 priority=0。",
+  "backend": {
+    "simulation": "LocalKinematicSimulator",
+    "evaluation": "EvaluationEngine",
+    "mode": "local_surrogate"
+  },
+  "assets": {
+    "files": 98,
+    "directories": 8,
+    "scenario_cases": 102,
+    "trajectories": 81
+  },
+  "completed_at": "2026-09-15T23:06:32+08:00",
+  "summary": {
+    "coarse_generated": 81,
+    "coarse_valid": 81,
+    "coarse_rejected": 0,
+    "coarse_results": {
+      "PASS": 9,
+      "HIGH_RISK": 0,
+      "FAIL": 72
+    },
+    "candidate_space_size": 81,
+    "sampling_strategy": "FULL_CARTESIAN",
+    "transition_pairs": 21,
+    "fine_generated": 21,
+    "fine_valid": 21,
+    "fine_rejected": 0,
+    "fine_results": {
+      "PASS": 9,
+      "HIGH_RISK": 5,
+      "FAIL": 7
+    }
+  },
+  "boundary_status": "DETECTED"
+}

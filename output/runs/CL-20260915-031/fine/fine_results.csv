@@ -1,0 +1,22 @@
+﻿generated_case_id,seed_case_id,scenario_type,round_name,result,collision,min_gap_m,min_ttc_s,metrics
+CASE_MERGE_001_F001,CASE_MERGE_001,highway_merge,fine,HIGH_RISK,False,6.389,4.6,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F002,CASE_MERGE_001,highway_merge,fine,HIGH_RISK,False,8.889,6.4,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F003,CASE_MERGE_001,highway_merge,fine,PASS,False,11.389,8.2,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F004,CASE_MERGE_001,highway_merge,fine,PASS,False,13.889,10.0,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F005,CASE_MERGE_001,highway_merge,fine,PASS,False,16.389,11.8,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F006,CASE_MERGE_001,highway_merge,fine,PASS,False,18.889,13.6,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F007,CASE_MERGE_001,highway_merge,fine,PASS,False,21.389,15.4,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F008,CASE_MERGE_001,highway_merge,fine,FAIL,False,4.444,1.164,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F009,CASE_MERGE_001,highway_merge,fine,HIGH_RISK,False,7.222,2.08,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F010,CASE_MERGE_001,highway_merge,fine,HIGH_RISK,False,10.0,3.2,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F011,CASE_MERGE_001,highway_merge,fine,PASS,False,12.778,4.6,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F012,CASE_MERGE_001,highway_merge,fine,PASS,False,15.556,6.4,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F013,CASE_MERGE_001,highway_merge,fine,PASS,False,18.333,8.8,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F014,CASE_MERGE_001,highway_merge,fine,PASS,False,21.111,12.16,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F015,CASE_MERGE_001,highway_merge,fine,HIGH_RISK,False,14.722,2.924,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F016,CASE_MERGE_001,highway_merge,fine,FAIL,False,7.778,1.318,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F017,CASE_MERGE_001,highway_merge,fine,FAIL,False,0.833,0.123,{'trajectory_frames': 81.0}
+CASE_MERGE_001_F018,CASE_MERGE_001,highway_merge,fine,FAIL,True,-0.0,0.1,{'trajectory_frames': 73.0}
+CASE_MERGE_001_F019,CASE_MERGE_001,highway_merge,fine,FAIL,True,-0.295,0.065,{'trajectory_frames': 66.0}
+CASE_MERGE_001_F020,CASE_MERGE_001,highway_merge,fine,FAIL,True,-0.313,0.067,{'trajectory_frames': 60.0}
+CASE_MERGE_001_F021,CASE_MERGE_001,highway_merge,fine,FAIL,True,-0.313,0.069,{'trajectory_frames': 55.0}

@@ -1,0 +1,8 @@
+streamlit>=1.40
+altair>=5.0
+pandas>=2.2
+pydantic>=2.8
+python-dotenv>=1.0
+openai>=1.50
+openpyxl>=3.1
+xlsxwriter>=3.2

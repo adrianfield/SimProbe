@@ -1,0 +1,58 @@
+{
+  "schema_version": 2,
+  "platform_version": "v0.4.5.2-final",
+  "batch_id": "BATCH-20260915-016",
+  "source_daily_name": "sample_daily.xlsx",
+  "source_daily_sha256": "6cfea05c8d0e1193438ec143a9f3364761ff0b1f5ea22e3c09f72f0e8651a2ee",
+  "created_at": "2026-09-15T23:06:22+08:00",
+  "updated_at": "2026-09-15T23:06:42+08:00",
+  "candidate_groups": {
+    "candidate_case_ids": [
+      "CASE_MERGE_001",
+      "CASE_BRAKE_001"
+    ],
+    "ineligible_case_ids": [],
+    "non_candidate_case_ids": [
+      "CASE_STABLE_001",
+      "CASE_FIXED_001"
+    ]
+  },
+  "candidate_case_ids": [
+    "CASE_MERGE_001",
+    "CASE_BRAKE_001"
+  ],
+  "ineligible_case_ids": [],
+  "non_candidate_case_ids": [
+    "CASE_STABLE_001",
+    "CASE_FIXED_001"
+  ],
+  "selected_case_ids": [
+    "CASE_MERGE_001",
+    "CASE_BRAKE_001"
+  ],
+  "run_ids": [
+    "CL-20260915-031",
+    "CL-20260915-032"
+  ],
+  "run_outcomes": [
+    {
+      "case_id": "CASE_MERGE_001",
+      "seed_case_ref": "data/seed_scenarios.json#CASE_MERGE_001",
+      "seed_case_id": "CASE_MERGE_001",
+      "scenario_type": "highway_merge",
+      "run_id": "CL-20260915-031",
+      "status": "COMPLETED"
+    },
+    {
+      "case_id": "CASE_BRAKE_001",
+      "seed_case_ref": "data/seed_scenarios.json#CASE_BRAKE_001",
+      "seed_case_id": "CASE_BRAKE_001",
+      "scenario_type": "lead_brake",
+      "run_id": "CL-20260915-032",
+      "status": "COMPLETED"
+    }
+  ],
+  "status": "COMPLETED",
+  "report_path": "report/closed_loop_analysis.xlsx",
+  "delivery_zip": "BATCH-20260915-016_user_delivery.zip"
+}

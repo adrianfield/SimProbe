@@ -1,0 +1,22 @@
+﻿generated_case_id,seed_case_id,scenario_type,round_name,result,collision,min_gap_m,min_ttc_s,metrics
+CASE_BRAKE_001_F001,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,6.197,1.769,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F002,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,8.447,2.25,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F003,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,10.697,2.731,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F004,CASE_BRAKE_001,lead_brake,fine,PASS,False,12.947,3.212,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F005,CASE_BRAKE_001,lead_brake,fine,PASS,False,15.197,3.693,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F006,CASE_BRAKE_001,lead_brake,fine,PASS,False,17.447,4.174,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F007,CASE_BRAKE_001,lead_brake,fine,PASS,False,19.697,4.655,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F008,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,5.628,1.864,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F009,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,7.448,2.852,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F010,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,9.451,3.386,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F011,CASE_BRAKE_001,lead_brake,fine,PASS,False,11.597,3.641,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F012,CASE_BRAKE_001,lead_brake,fine,PASS,False,13.728,3.772,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F013,CASE_BRAKE_001,lead_brake,fine,PASS,False,15.483,3.892,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F014,CASE_BRAKE_001,lead_brake,fine,PASS,False,16.952,4.02,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F015,CASE_BRAKE_001,lead_brake,fine,PASS,False,10.0,9.36,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F016,CASE_BRAKE_001,lead_brake,fine,PASS,False,10.0,6.154,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F017,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,9.029,4.409,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F018,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,7.718,3.312,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F019,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,6.299,2.558,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F020,CASE_BRAKE_001,lead_brake,fine,HIGH_RISK,False,4.771,2.009,{'trajectory_frames': 81.0}
+CASE_BRAKE_001_F021,CASE_BRAKE_001,lead_brake,fine,FAIL,False,3.135,1.583,{'trajectory_frames': 81.0}
