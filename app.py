@@ -81,16 +81,16 @@ st.markdown(
     [data-testid="stSidebar"] [role="radiogroup"] label {
         padding:.55rem .72rem; border-radius:.18rem; margin:.1rem 0; border-left:3px solid transparent;
     }
-    [data-testid="stSidebar"] label[data-testid="stRadioOption"] > div > div > div:first-child { display:none !important; }
+    [data-testid="stSidebar"] label[data-testid="stRadioOption"] [data-baseweb="radio"],
+    [data-testid="stSidebar"] label[data-testid="stRadioOption"] > span:has(input[type="radio"]) + div > div:first-child {
+        display:none !important;
+    }
     [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) {
         background:#242F3A; border-left-color:#2F5D7C;
     }
     [data-testid="stSidebar"] label[data-testid="stRadioOption"]:has(input:checked) [data-testid="stMarkdownContainer"] p::before { color:#fff; }
     [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) [data-testid="stMarkdownContainer"] p,
     [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) svg { color:#fff !important; fill:#fff !important; }
-    [data-testid="stSidebar"] [role="radiogroup"] label:has(input:checked) [data-baseweb="radio"] > div:first-child {
-        border-color:#fff !important; background:#fff !important;
-    }
     .block-container { padding-top:1.4rem; max-width:1500px; }
     .platform-head { display:flex; align-items:flex-start; justify-content:space-between;
         margin-bottom:1rem; }
