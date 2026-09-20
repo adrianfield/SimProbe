@@ -33,6 +33,12 @@ Qwen 负责场景语义理解、候选探索因素规划，以及在首轮探索
 
 ---
 
+## 产品预览
+
+![SimProbe Overview](docs/images/overview.png)
+
+---
+
 ## 核心设计
 
 SimProbe 不追求“全链路 LLM 化”。
@@ -295,6 +301,14 @@ SimProbe 当前提供五个主要入口：
 - **评测分析**：边界结论、风险切片、参数敏感度和样本分布
 - **场景探索**：上传 Daily Report、筛选候选任务并执行探索
 
+### 局部边界分析
+
+![Boundary Analysis](docs/images/boundary-analysis.png)
+
+### 场景探索
+
+![Scenario Exploration](docs/images/scenario-exploration.png)
+
 ---
 
 ## LLM 与确定性引擎职责
@@ -441,6 +455,8 @@ SimProbe/
 │   ├── runs/
 │   └── batches/
 ├── scripts/
+├── docs/
+│   └── images/
 ├── .streamlit/
 ├── requirements.txt
 └── .env.example
